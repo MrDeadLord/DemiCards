@@ -1,0 +1,1 @@
+{"unikName":"heal ally cr","type":"heal","fullName":"heal ally creature by 2","target":"Elly creature","att":0,"hp":2}

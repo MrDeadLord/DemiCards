@@ -1,0 +1,1 @@
+{"_name":"apple","_inGameName":"Вкусное яблочко","_cost":1,"_manaSpell":false,"_creature":{"instanceID":0},"_bonusName":"heal by 2","_bonusType":"","_bonusFullName":"Исцеляет вкусившего на 2","_bonusTarget":"","_bonusAtt":0,"_bonusHP":2}
