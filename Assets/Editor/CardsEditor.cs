@@ -74,11 +74,8 @@ public class CardsEditor : EditorWindow
         //Загрузка бонусов
         if (File.Exists(bonusesPath))
         {
-            for(int i = 0; i < File.ReadAllLines(path).Length; i++)
-            {
-                bonusList.Add(new BonusData());
-                JsonUtility.FromJsonOverwrite(File.ReadAllLines(path)[i], bonusList[i]);
-            }
+            foreach (string s in File.ReadAllLines(bonusesPath))
+                bonusList.Add(JsonUtility.FromJson<BonusData>(s));
 
             //Добавление названий бонусов
             foreach (BonusData bd in bonusList)
@@ -195,69 +192,25 @@ public class CardsEditor : EditorWindow
 
         if (!_isCreature)
             EditorGUILayout.HelpBox("BonusInfo:" +
-                "\n"+_bonus.unikName +
-                "\n"+_bonus.type +
-                "\n"+_bonus.fullName +
-                "\n"+_bonus.target +
-                "\n"+_bonus.att + "/" + _bonus.hp, MessageType.Info);
+                "\n" + _bonus.unikName +
+                "\n" + _bonus.type +
+                "\n" + _bonus.fullName +
+                "\n" + _bonus.target +
+                "\n" + _bonus.att + "/" + _bonus.hp, MessageType.Info);
 
         GUILayout.Space(10);
         GUILayout.Label("Сохранить можно только если все поля заполнены");
 
         GUILayout.BeginHorizontal();
-        using(new EditorGUI.DisabledGroupScope(_name == string.Empty || _inGameName == string.Empty))
+        using (new EditorGUI.DisabledGroupScope(_name == string.Empty || _inGameName == string.Empty))
         {
             //Save button
-            if(GUILayout.Button(new GUIContent("Save", "Сохраняет карту и добавляет ее в список. Не сохраняет в файл")))
+            if (GUILayout.Button(new GUIContent("Save", "Сохраняет карту и добавляет ее в список. Не сохраняет в файл")))
             {
-                
+
             }
         }
 
         GUILayout.EndHorizontal();
     }
-
-    /// <summary>
-    /// Полное содержание бонуса
-    /// </summary>
-    class BonusData
-    {
-        /// <summary>
-        /// Название бонуса/заклинания
-        /// </summary>
-        public string unikName;
-        /// <summary>
-        /// Тип бонуса/заклинания(Для вызова в функции)
-        /// </summary>
-        public string type;
-        /// <summary>
-        /// Полное описание бонуса
-        /// </summary>
-        public string fullName;
-        /// <summary>
-        /// Цель/цели заклинания/бонуса
-        /// </summary>
-        public string target;
-        /// <summary>
-        /// Значение атаки. Если оно не нужно - 0
-        /// </summary>
-        public int att;
-        /// <summary>
-        /// Значение HP. Если оно не нужно - 0
-        /// </summary>
-        public int hp;
-    }
-
-    /*class CardData
-    {
-        public string unikName;
-        public string inGameName;
-
-        public int cost;
-        public bool isManaSpell;
-
-        public bool isCreature;
-        public GameObject creature;
-        public BonusData bonus;
-    }*/
 }

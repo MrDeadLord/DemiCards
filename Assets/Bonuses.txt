@@ -1,3 +1,4 @@
 {"unikName":"heal ally cr","type":"heal","fullName":"heal ally creature by 2","target":"Elly creature","att":0,"hp":2}
 {"unikName":"+/+ ally cr","type":"bust/bust","fullName":"+1/+1 выбранному существу","target":"Elly creature","att":1,"hp":1}
 {"unikName":"+/- ally cr","type":"bust/debust","fullName":"+2/-1 союзному существу","target":"Elly creature","att":2,"hp":1}
+{"unikName":"heal yourself","type":"heal","fullName":"Исцеляет заклинателя на 2","target":"Summoner","att":0,"hp":2}

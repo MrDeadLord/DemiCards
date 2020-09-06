@@ -67,7 +67,7 @@ public class CardsMod : Editor
         else
         {
             cards.IsCreature = false;
-            cards.BonusName = EditorGUILayout.TextField("Название заклинания", bonusName);
+            cards.CardsBonus.unikName = EditorGUILayout.TextField("Название заклинания", bonusName);
         }
 
         #endregion

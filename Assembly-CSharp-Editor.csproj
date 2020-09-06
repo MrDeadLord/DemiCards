@@ -58,7 +58,6 @@
     <Compile Include="Assets\Editor\LookAtButton.cs" />
     <Compile Include="Assets\Editor\CardsEditor.cs" />
     <Compile Include="Assets\Editor\BonusesEditor.cs" />
-    <Compile Include="Assets\Editor\NewCardsEditor.cs" />
     <Compile Include="Assets\Editor\MultiplyCreate.cs" />
     <Compile Include="Assets\Editor\CardsMod.cs" />
   </ItemGroup>

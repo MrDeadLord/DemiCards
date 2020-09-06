@@ -1,6 +1,4 @@
-﻿using DeadLords.Helpers;
-using System.Runtime.InteropServices;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace DeadLords
 {
@@ -21,12 +19,7 @@ namespace DeadLords
         [Space(10)]
         [Header("Бонус, если его нет - не заполнять")]
 
-        [SerializeField] [Tooltip("Название заклинания")] private string _bonusName;
-        [SerializeField] [Tooltip("Тип бонуса/заклинания(Для вызова в функции)")] private string _bonusType;
-        [SerializeField] [Tooltip("Полное описание бонуса")] private string _bonusFullName;
-        [SerializeField] [Tooltip("Цель/цели заклинания/бонуса")] private string _bonusTarget;
-        [SerializeField] [Tooltip("Значение атаки. Если оно не нужно - 0")] private int _bonusAtt;
-        [SerializeField] [Tooltip("Значение HP. Если оно не нужно - 0")] private int _bonusHP;
+        private BonusData _cardsBonus;
         #endregion
 
         /// <summary>
@@ -38,11 +31,12 @@ namespace DeadLords
         /// </summary>
         private bool _isActive = false;
 
+        #region Unity time
         private void Start()
         {
             if (_creature != null)
                 _isCreature = true;
-            else if (_bonusName != string.Empty)
+            else if (_cardsBonus != null)
                 _isCreature = false;
         }
 
@@ -56,6 +50,7 @@ namespace DeadLords
             else
                 ActivateBonus();
         }
+        #endregion
 
         private void Summon()
         {
@@ -126,56 +121,11 @@ namespace DeadLords
             set { _creature = value; }
         }
 
-        #region Бонус и вся его инфа
-        /// <summary>
-        /// Имя бонуса
-        /// </summary>
-        public string BonusName
+        public BonusData CardsBonus
         {
-            get { return _bonusName; }
-            set { _bonusName = value; }
+            get { return _cardsBonus; }
+            set { _cardsBonus = value; }
         }
-        /// <summary>
-        /// Тип бонуса
-        /// </summary>
-        public string BonusType
-        {
-            get { return _bonusType; }
-            set { _bonusType = value; }
-        }
-        /// <summary>
-        /// Полное описание бонуса
-        /// </summary>
-        public string BonusFullName
-        {
-            get { return _bonusFullName; }
-            set { _bonusFullName = value; }
-        }
-        /// <summary>
-        /// Цель бонуса
-        /// </summary>
-        public string BonusTarget
-        {
-            get { return _bonusTarget; }
-            set { _bonusTarget = value; }
-        }
-        /// <summary>
-        /// Значение Attack бонуса
-        /// </summary>
-        public int BonusAtt
-        {
-            get { return _bonusAtt; }
-            set { _bonusAtt = value; }
-        }
-        /// <summary>
-        /// Значение НР бонуса
-        /// </summary>
-        public int BonusHP
-        {
-            get { return _bonusHP; }
-            set { _bonusHP = value; }
-        }
-        #endregion
 
         /// <summary>
         /// Если нужно применить карту - true
