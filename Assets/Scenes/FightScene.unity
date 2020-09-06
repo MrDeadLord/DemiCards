@@ -3405,12 +3405,6 @@ MonoBehaviour:
   _cost: 0
   _manaSpell: 0
   _creature: {fileID: 0}
-  _bonusName: 
-  _bonusType: 
-  _bonusFullName: 
-  _bonusTarget: 
-  _bonusAtt: 0
-  _bonusHP: 0
 --- !u!23 &1587040429
 MeshRenderer:
   m_ObjectHideFlags: 0

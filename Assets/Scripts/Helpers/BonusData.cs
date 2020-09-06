@@ -5,13 +5,13 @@
     /// </summary>
     public string unikName;
     /// <summary>
-    /// Тип бонуса/заклинания(Для вызова в функции)
-    /// </summary>
-    public string type;
-    /// <summary>
     /// Полное описание бонуса
     /// </summary>
     public string fullName;
+    /// <summary>
+    /// Тип бонуса/заклинания(Для вызова в функции)
+    /// </summary>
+    public string type;    
     /// <summary>
     /// Цель/цели заклинания/бонуса
     /// </summary>

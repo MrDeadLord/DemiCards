@@ -120,12 +120,12 @@ public class BonusesEditor : EditorWindow
             _editTypesButt = true;
 
         var backup = _allBonusTypes;
-        
+
         GUILayout.Space(10);
 
         GUILayout.Label("Edit bonus types");
         _selectedTypeIndex = EditorGUILayout.Popup(_selectedTypeIndex, _allBonusTypes.ToArray());
-        
+
         if (_allBonusTypes.Count == 0 || _allBonusTypes[_selectedTypeIndex] == string.Empty)
         {
             GUILayout.BeginHorizontal();
@@ -142,6 +142,8 @@ public class BonusesEditor : EditorWindow
                         _allBonusTypes[_selectedTypeIndex] = newType;
 
                     newType = string.Empty;
+
+                    Debug.Log("Type added!");
                 }
             }
 
@@ -202,7 +204,7 @@ public class BonusesEditor : EditorWindow
         BonusData bd = new BonusData();
 
         GUILayout.BeginHorizontal();
-        GUILayout.Label(new GUIContent("Название заклинания", "Уникальное имя"));
+        GUILayout.Label(new GUIContent("Название заклинания:", "Уникальное имя"));
         _unikName = GUILayout.TextArea(_unikName);
         GUILayout.EndHorizontal();
 
@@ -213,10 +215,10 @@ public class BonusesEditor : EditorWindow
         _type = _allBonusTypes[_selectedTypeIndex];
         _editTypesButt = GUILayout.Button(new GUIContent("Edit", "Изменить список типов"));
         GUILayout.EndHorizontal();
-                
+
         GUILayout.Space(5);
         GUILayout.BeginHorizontal();
-        GUILayout.Label(new GUIContent("Полное описание бонуса/заклинания:",
+        GUILayout.Label(new GUIContent("Полное описание бонуса/заклинания(для игрока):",
             "Beta: пока нужно следить что бы описание совпадало с остальными данными"));
         _fullName = GUILayout.TextArea(_fullName);
         GUILayout.EndHorizontal();
@@ -312,7 +314,7 @@ public class BonusesEditor : EditorWindow
 
         GUILayout.Space(5);
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Полное описание бонуса/заклинания:");
+        GUILayout.Label("Полное описание бонуса/заклинания(для игрока):");
         GUILayout.Label(bonusList[selected].fullName);
         _fullName = bonusList[selected].fullName;
         GUILayout.EndHorizontal();
@@ -345,16 +347,13 @@ public class BonusesEditor : EditorWindow
                 "\nCreature-cr, destroy - dist," +
                 "\nЕсли необходимо сделать, например, +att/-hp, будет написано bust/debust", MessageType.Info);
 
-        #region Сохранение
+        #region Сохранение в файл
         if (GUILayout.Button(new GUIContent("Save", "Сохраняет все новое/редактированное в файл")))
         {
             List<string> saveNames = new List<string>();    //Списокдля сохранения
 
             foreach (BonusData bd in bonusList)
-            {
-                string str = JsonUtility.ToJson(bd);
-                saveNames.Add(str);
-            }
+                saveNames.Add(JsonUtility.ToJson(bd));
 
             File.WriteAllLines(path, saveNames.ToArray());
             Debug.Log("Bonuses saved");
@@ -374,7 +373,7 @@ public class BonusesEditor : EditorWindow
         BonusData bd = new BonusData();
 
         GUILayout.BeginHorizontal();
-        GUILayout.Label(new GUIContent("Название заклинания", "Уникальное имя"));
+        GUILayout.Label(new GUIContent("Название заклинания:", "Уникальное имя"));
         _unikName = GUILayout.TextArea(_unikName);
         GUILayout.EndHorizontal();
 
@@ -387,7 +386,7 @@ public class BonusesEditor : EditorWindow
         GUILayout.EndHorizontal();
 
         GUILayout.Space(5);
-        GUILayout.Label(new GUIContent("Полное описание бонуса/заклинания:",
+        GUILayout.Label(new GUIContent("Полное описание бонуса/заклинания(для игрока):",
             "Beta: пока нужно следить что бы описание совпадало с остальными данными"));
         _fullName = EditorGUILayout.TextArea(_fullName);
 

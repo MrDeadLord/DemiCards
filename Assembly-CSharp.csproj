@@ -86,6 +86,7 @@
     <Compile Include="Assets\Scripts\LeanTween\LTDescrOptional.cs" />
     <Compile Include="Assets\Scripts\LeanTween\LTDescr.cs" />
     <Compile Include="Assets\Scripts\Helpers\BonusData.cs" />
+    <Compile Include="Assets\Scripts\Helpers\CreaturesCollection.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Bonuses.txt" />

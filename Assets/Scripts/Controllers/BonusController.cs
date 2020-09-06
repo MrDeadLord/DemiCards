@@ -30,6 +30,9 @@ namespace DeadLords
                 case "heal":
                     HealObject(target, hp);
                     break;
+                case "heal ally cr":
+                    HealObject(target, hp);
+                    break;
                 case "heal all ally cr":
                     HealAllAllyCreatures(speller, hp);
                     break;
