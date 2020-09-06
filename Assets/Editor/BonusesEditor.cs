@@ -92,18 +92,23 @@ public class BonusesEditor : EditorWindow
         GUILayout.Label("Работа со списком ВСЕХ бонусов в игре", EditorStyles.boldLabel);
         GUILayout.Space(10);
 
-        if (_allBonusTypes.Count == 0)
+        if (_allBonusTypes.Count == 0)  //Если нет типов бонусов
             EditBonusTypes();
-        else if (bonusList.Count == 0 && !_editTypesButt)   //Кнопки находятся в ShowBonus
+        else if (bonusList.Count == 0 && !_editTypesButt)   ///Ничего не нажато, а бонусов нет. Кнопки находятся в ShowBonus
             AddBonus();
-        else if (!editButt && !addButt && !_editTypesButt)  //Кнопки находятся в ShowBonus
+        else if (!editButt && !addButt && !_editTypesButt)  //Список типов есть, бонусы есть, ничего не нажато. Кнопки находятся в ShowBonus
             ShowBonus(selectedBonus);
         else if (editButt)
             EditBonus(selectedBonus);
         else if (addButt)
             AddBonus();
-        else if (_editTypesButt)
+
+        if (_editTypesButt)
+        {
+            addButt = false;
+            editButt = false;
             EditBonusTypes();
+        }
     }
 
     /// <summary>
@@ -115,7 +120,7 @@ public class BonusesEditor : EditorWindow
             _editTypesButt = true;
 
         var backup = _allBonusTypes;
-
+        
         GUILayout.Space(10);
 
         GUILayout.Label("Edit bonus types");
@@ -154,7 +159,7 @@ public class BonusesEditor : EditorWindow
                     _allBonusTypes[_selectedTypeIndex] = newType;
             }
 
-            if(GUILayout.Button("Add new"))
+            if (GUILayout.Button("Add new"))
             {
                 if (!_allBonusTypes.Contains(newType))
                     _allBonusTypes.Add(newType);
@@ -208,10 +213,7 @@ public class BonusesEditor : EditorWindow
         _type = _allBonusTypes[_selectedTypeIndex];
         _editTypesButt = GUILayout.Button(new GUIContent("Edit", "Изменить список типов"));
         GUILayout.EndHorizontal();
-
-        if (_editTypesButt)
-            EditBonusTypes();
-
+                
         GUILayout.Space(5);
         GUILayout.BeginHorizontal();
         GUILayout.Label(new GUIContent("Полное описание бонуса/заклинания:",
@@ -267,7 +269,7 @@ public class BonusesEditor : EditorWindow
                 bonusNames.Add(bd.unikName);
 
                 addButt = false;    //Что бы вернуться к окну Info
-            }            
+            }
         }
 
         //Кнопка отмены
@@ -287,7 +289,7 @@ public class BonusesEditor : EditorWindow
     {
         GUILayout.BeginHorizontal();
         selectedBonus = EditorGUILayout.Popup(selectedBonus, bonusNames.ToArray());
-        
+
         editButt = GUILayout.Button("Edit");
         addButt = GUILayout.Button("Add new");
         GUILayout.EndHorizontal();
@@ -384,9 +386,6 @@ public class BonusesEditor : EditorWindow
         _editTypesButt = GUILayout.Button(new GUIContent("Edit", "Изменить список типов"));
         GUILayout.EndHorizontal();
 
-        if (_editTypesButt)
-            EditBonusTypes();
-
         GUILayout.Space(5);
         GUILayout.Label(new GUIContent("Полное описание бонуса/заклинания:",
             "Beta: пока нужно следить что бы описание совпадало с остальными данными"));
@@ -446,33 +445,5 @@ public class BonusesEditor : EditorWindow
             editButt = false;
         GUILayout.EndHorizontal();
         #endregion
-    }
-
-    class BonusData
-    {
-        /// <summary>
-        /// Название бонуса/заклинания
-        /// </summary>
-        public string unikName;
-        /// <summary>
-        /// Тип бонуса/заклинания(Для вызова в функции)
-        /// </summary>
-        public string type;
-        /// <summary>
-        /// Полное описание бонуса
-        /// </summary>
-        public string fullName;
-        /// <summary>
-        /// Цель/цели заклинания/бонуса
-        /// </summary>
-        public string target;
-        /// <summary>
-        /// Значение атаки. Если оно не нужно - 0
-        /// </summary>
-        public int att;
-        /// <summary>
-        /// Значение HP. Если оно не нужно - 0
-        /// </summary>
-        public int hp;
     }
 }

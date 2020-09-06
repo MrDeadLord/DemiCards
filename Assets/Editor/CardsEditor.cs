@@ -14,7 +14,7 @@ public class CardsEditor : EditorWindow
     /// <summary>
     /// Список существующих карт
     /// </summary>
-    List<Card> existingCards = new List<Card>();
+    List<CardData> existingCards = new List<CardData>();
     /// <summary>
     /// Имена существующих карт
     /// </summary>
@@ -80,13 +80,6 @@ public class CardsEditor : EditorWindow
                 JsonUtility.FromJsonOverwrite(File.ReadAllLines(path)[i], bonusList[i]);
             }
 
-            /*//Добавление бонусов в список бонусов
-            foreach (string s in File.ReadAllLines(path))
-            {
-                bonusList.Add(new BonusData());
-                bonusList.Add(JsonUtility.FromJsonOverwrite(s));
-            }*/
-                
             //Добавление названий бонусов
             foreach (BonusData bd in bonusList)
                 bonusNames.Add(bd.unikName);
@@ -104,10 +97,10 @@ public class CardsEditor : EditorWindow
                 return;
 
             foreach (string str in File.ReadLines(path))
-                existingCards.Add(JsonUtility.FromJson<Card>(str));
+                existingCards.Add(JsonUtility.FromJson<CardData>(str));
 
-            foreach (Card c in existingCards)
-                existingCardsNames.Add(c.Name);
+            foreach (CardData c in existingCards)
+                existingCardsNames.Add(c.cardName);
         }
         else
             File.Create(path);
@@ -255,7 +248,7 @@ public class CardsEditor : EditorWindow
         public int hp;
     }
 
-    class CardData
+    /*class CardData
     {
         public string unikName;
         public string inGameName;
@@ -266,5 +259,5 @@ public class CardsEditor : EditorWindow
         public bool isCreature;
         public GameObject creature;
         public BonusData bonus;
-    }
+    }*/
 }

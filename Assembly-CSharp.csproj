@@ -75,6 +75,7 @@
     <Compile Include="Assets\Scripts\SaveLoad.cs" />
     <Compile Include="Assets\Scripts\LeanTween\LeanAudio.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
+    <Compile Include="Assets\Scripts\Helpers\CardData.cs" />
     <Compile Include="Assets\Scripts\Controllers\BaseController.cs" />
     <Compile Include="Assets\Scripts\Controllers\SceneLiveController.cs" />
     <Compile Include="Assets\Scripts\Controllers\BonusController.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Assets\Scripts\LeanTween\LeanTweenExt.cs" />
     <Compile Include="Assets\Scripts\LeanTween\LTDescrOptional.cs" />
     <Compile Include="Assets\Scripts\LeanTween\LTDescr.cs" />
+    <Compile Include="Assets\Scripts\Helpers\BonusData.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Bonuses.txt" />
