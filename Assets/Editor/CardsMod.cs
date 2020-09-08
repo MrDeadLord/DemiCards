@@ -24,7 +24,7 @@ public class CardsMod : Editor
         DrawDefaultInspector();
         Card cards = (Card)target;
 
-        if(GUILayout.Button(new GUIContent("Save", "Сохраняет вариацию карты в файл")))
+        if (GUILayout.Button(new GUIContent("Save", "Сохраняет вариацию карты в файл")))
         {
 
         }
@@ -60,15 +60,10 @@ public class CardsMod : Editor
         GUILayout.EndHorizontal();
 
         if (spellIndex == 0)
-        {
             cards.CardsCreature = EditorGUILayout.ObjectField(cards.CardsCreature, typeof(GameObject), true) as GameObject;
-            cards.IsCreature = true;
-        }
         else
-        {
-            cards.IsCreature = false;
             cards.CardsBonus.unikName = EditorGUILayout.TextField("Название заклинания", bonusName);
-        }
+
 
         #endregion
 

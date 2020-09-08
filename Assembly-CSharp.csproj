@@ -55,6 +55,8 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Helpers\BonusData.cs" />
+    <Compile Include="Assets\Scripts\Helpers\CreaturesCollection.cs" />
     <Compile Include="Assets\Scripts\Save &amp; Load\SaveLoadManager.cs" />
     <Compile Include="Assets\Scripts\Inventory.cs" />
     <Compile Include="Assets\Scripts\Cards\Card.cs" />
@@ -85,8 +87,6 @@
     <Compile Include="Assets\Scripts\LeanTween\LeanTweenExt.cs" />
     <Compile Include="Assets\Scripts\LeanTween\LTDescrOptional.cs" />
     <Compile Include="Assets\Scripts\LeanTween\LTDescr.cs" />
-    <Compile Include="Assets\Scripts\Helpers\BonusData.cs" />
-    <Compile Include="Assets\Scripts\Helpers\CreaturesCollection.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Bonuses.txt" />

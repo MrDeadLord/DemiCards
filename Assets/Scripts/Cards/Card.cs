@@ -23,29 +23,17 @@ namespace DeadLords
         #endregion
 
         /// <summary>
-        /// True если карта с вызовом существа
-        /// </summary>
-        private bool _isCreature;
-        /// <summary>
         /// true если карта на столе, false - в руке
         /// </summary>
         private bool _isActive = false;
 
-        #region Unity time
-        private void Start()
-        {
-            if (_creature != null)
-                _isCreature = true;
-            else if (_cardsBonus != null)
-                _isCreature = false;
-        }
-
+        #region Unity time        
         private void Update()
         {
             if (!_isActive)
                 return;
 
-            if (_isCreature)
+            if (_creature.name != string.Empty)
                 Summon();
             else
                 ActivateBonus();
@@ -103,15 +91,7 @@ namespace DeadLords
         {
             get { return _manaSpell; }
             set { _manaSpell = value; }
-        }
-        /// <summary>
-        /// Существо ли это?
-        /// </summary>
-        public bool IsCreature
-        {
-            get { return _isCreature; }
-            set { _isCreature = value; }
-        }
+        }        
         /// <summary>
         /// Существо, если карта - вызов существа
         /// </summary>

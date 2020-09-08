@@ -9,5 +9,5 @@ public class CardData
     public bool manaSpell;
     public string creatureName;
 
-    public BonusData cardsBonus;
+    public int cardsBonusIndex;
 }

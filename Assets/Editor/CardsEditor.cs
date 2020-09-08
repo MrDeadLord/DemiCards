@@ -43,7 +43,7 @@ public class CardsEditor : EditorWindow
 
     //Кнопки и индексы внутри окна
     int selectedCardIndex = 0;  //Индекс выбранной карты
-    int costType, spellType, bonusIndex;    //Индексы выбранных типов
+    int costType, spellType;    //Индексы выбранных типов
     bool editButt = false, addButt = false; //Кнопки редактирования и добавления
 
     //CardData для записи
@@ -52,9 +52,10 @@ public class CardsEditor : EditorWindow
     int _cost;
     bool _isManaSpell;
     bool _isCreature;
+    int _bonusIndex;
 
     GameObject _creature;
-    BonusData _bonus;
+    BonusData _bonus;   //Для интерфейса
 
     #endregion
 
@@ -68,7 +69,7 @@ public class CardsEditor : EditorWindow
     {
         bonusesPath = Application.dataPath + "/Bonuses.txt";
         path = Application.dataPath + "/AllCards.txt";
-        
+
         #region Загрузка существующих данных(бонусы и карты)
         //Загрузка бонусов
         if (File.Exists(bonusesPath))
@@ -117,7 +118,7 @@ public class CardsEditor : EditorWindow
         else if (addButt)
             CreateCard();
     }
-    
+
     private void InfoScreen()
     {
         GUILayout.BeginHorizontal();
@@ -157,32 +158,35 @@ public class CardsEditor : EditorWindow
         //Если заклинание
         else
         {
-            GUILayout.Label("Bonus info:", EditorStyles.boldLabel);
+            _bonus = bonusList[cardsList[selectedCardIndex].cardsBonusIndex];
+
+            GUILayout.Space(10);
+            GUILayout.Label("Spell info:", EditorStyles.boldLabel);
 
             GUILayout.BeginHorizontal();
             GUILayout.Label("Название(для редактора):");
-            GUILayout.Label(cardsList[selectedCardIndex].cardsBonus.unikName);
+            GUILayout.Label(_bonus.unikName);
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
             GUILayout.Label("Полное описание(для игрока):");
-            GUILayout.Label(cardsList[selectedCardIndex].cardsBonus.fullName);
+            GUILayout.Label(_bonus.fullName);
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
             GUILayout.Label("Тип заклинания(для редактора):");
-            GUILayout.Label(cardsList[selectedCardIndex].cardsBonus.type);
+            GUILayout.Label(_bonus.type);
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
             GUILayout.Label("Цль(-и):");
-            GUILayout.Label(cardsList[selectedCardIndex].cardsBonus.target);
+            GUILayout.Label(_bonus.target);
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
             GUILayout.Label("Значения attack/HP:");
-            GUILayout.Label(cardsList[selectedCardIndex].cardsBonus.att.ToString());
-            GUILayout.Label(cardsList[selectedCardIndex].cardsBonus.hp.ToString());
+            GUILayout.Label(_bonus.att.ToString());
+            GUILayout.Label(_bonus.hp.ToString());
             GUILayout.EndHorizontal();
         }
 
@@ -191,10 +195,12 @@ public class CardsEditor : EditorWindow
         {
             var saveList = new List<string>();  //писок зашифрованных Json-ом строк
 
-            foreach(CardData cd in cardsList)            
+            foreach (CardData cd in cardsList)
                 saveList.Add(JsonUtility.ToJson(cd));
 
             File.WriteAllLines(path, saveList.ToArray());
+
+            Debug.Log("Saved in " + path);
         }
         #endregion
     }
@@ -261,16 +267,16 @@ public class CardsEditor : EditorWindow
         else
         {
             _isCreature = false;
-            bonusIndex = EditorGUILayout.Popup(bonusIndex, bonusNames.ToArray());
+            _bonusIndex = EditorGUILayout.Popup(_bonusIndex, bonusNames.ToArray());
 
-            _bonus = bonusList[bonusIndex];
+            _bonus = bonusList[_bonusIndex];
         }
         GUILayout.EndHorizontal();
 
         //Помогайка
         GUILayout.Space(10);
         if (!_isCreature)
-            EditorGUILayout.HelpBox("BonusInfo:" +
+            EditorGUILayout.HelpBox("Spell Info:" +
                 "\n" + _bonus.unikName +
                 "\n" + _bonus.type +
                 "\n" + _bonus.fullName +
@@ -284,6 +290,22 @@ public class CardsEditor : EditorWindow
             //Save button
             if (GUILayout.Button(new GUIContent("Save", "Сохранение изменений. Не сохраняет в файл")))
             {
+                cd.cardName = _name;
+                cd.inGameName = _inGameName;
+                cd.cost = _cost;
+                cd.manaSpell = _isManaSpell;
+
+                if (_isCreature)
+                {
+                    cd.creatureName = _creature.name;
+                    cd.cardsBonusIndex = 0;
+                }
+                else
+                {
+                    cd.creatureName = string.Empty;
+                    cd.cardsBonusIndex = _bonusIndex;
+                }
+
                 cardsList[selectedCardIndex] = cd;
                 cardsNames[selectedCardIndex] = cd.cardName;
 
@@ -348,32 +370,46 @@ public class CardsEditor : EditorWindow
         else
         {
             _isCreature = false;
-            bonusIndex = EditorGUILayout.Popup(bonusIndex, bonusNames.ToArray());
+            _bonusIndex = EditorGUILayout.Popup(_bonusIndex, bonusNames.ToArray());
 
-            _bonus = bonusList[bonusIndex];
+            _bonus = bonusList[_bonusIndex];
         }
         GUILayout.EndHorizontal();
 
         //Помогайка
         GUILayout.Space(10);
         if (!_isCreature)
-            EditorGUILayout.HelpBox("BonusInfo:" +
+            EditorGUILayout.HelpBox("Spell Info:" +
                 "\n" + _bonus.unikName +
                 "\n" + _bonus.type +
                 "\n" + _bonus.fullName +
                 "\n" + _bonus.target +
                 "\n" + _bonus.att + "/" + _bonus.hp, MessageType.Info);
 
-        GUILayout.Space(5);
-        GUILayout.Label("Сохранить можно только если все поля заполнены");
-
         #region Сохранение в кэш/отмена
+        GUILayout.Space(5);
         GUILayout.BeginHorizontal();
         using (new EditorGUI.DisabledGroupScope(_name == string.Empty || _inGameName == string.Empty))
         {
             //Save button
             if (GUILayout.Button(new GUIContent("Save", "Сохраняет карту и добавляет ее в список. Не сохраняет в файл")))
             {
+                cd.cardName = _name;
+                cd.inGameName = _inGameName;
+                cd.cost = _cost;
+                cd.manaSpell = _isManaSpell;
+
+                if (_isCreature)
+                {
+                    cd.creatureName = _creature.name;
+                    cd.cardsBonusIndex = 0;
+                }                    
+                else
+                {
+                    cd.creatureName = string.Empty;
+                    cd.cardsBonusIndex = _bonusIndex;
+                }                    
+
                 cardsList.Add(cd);
                 cardsNames.Add(cd.cardName);
 
@@ -381,7 +417,7 @@ public class CardsEditor : EditorWindow
             }
         }
 
-        using(new EditorGUI.DisabledGroupScope(cardsList.Count == 0))
+        using (new EditorGUI.DisabledGroupScope(cardsList.Count == 0))
         {
             if (GUILayout.Button(new GUIContent("Cancel", "Отменить изменения")))
                 addButt = false;
