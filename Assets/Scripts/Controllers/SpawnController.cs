@@ -27,7 +27,7 @@ namespace DeadLords.Controllers
         /// <summary>
         /// Точки где есть существа врага
         /// </summary>
-        private List<Vector3> _exEnemPoints = new List<Vector3>();
+        private List<Vector3> _exEnemysPoints = new List<Vector3>();
 
         private void Start()
         {
@@ -51,7 +51,7 @@ namespace DeadLords.Controllers
             }
             else
             {
-                if (_exEnemPoints.Count == _spawnEnemy.Length)
+                if (_exEnemysPoints.Count == _spawnEnemy.Length)
                     return false;
                 else
                     return true;
@@ -84,7 +84,7 @@ namespace DeadLords.Controllers
             }
             else
             {
-                while (_exEnemPoints.Contains(_spawnEnemy[_indexE].position))
+                while (_exEnemysPoints.Contains(_spawnEnemy[_indexE].position))
                 {
                     if (_indexE < _spawnEnemy.Length)
                         _indexE++;
@@ -96,7 +96,7 @@ namespace DeadLords.Controllers
 
                 GameObject newCr = Instantiate(spawnObj, _spawnPoint, Quaternion.identity);
                 newCr.tag = "CreatureEnemy";
-                _exEnemPoints.Add(newCr.transform.position);
+                _exEnemysPoints.Add(newCr.transform.position);
             }
         }
 
@@ -109,7 +109,10 @@ namespace DeadLords.Controllers
             if (target.tag == "CreaturePlayer")
                 _exPlPoints.Remove(target.transform.position);
             else
-                _exEnemPoints.Remove(target.transform.position);
+                _exEnemysPoints.Remove(target.transform.position);
         }
+
+        public List<Vector3> PlayersExCr { get { return _exPlPoints; } }
+        public List<Vector3> EnemysExCr { get { return _exEnemysPoints; } }
     }
 }

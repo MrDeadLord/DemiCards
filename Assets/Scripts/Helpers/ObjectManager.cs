@@ -24,7 +24,7 @@ namespace DeadLords.Helpers
         [Header("Карты")]
         [SerializeField] [Tooltip("Точки расположения четного кол-ва карт")] private List<Button> cardsEven;
         [SerializeField] [Tooltip("Точки расположения нечетного кол-ва карт")] private List<Button> cardsOdd;
-                
+
         #region Доступ к переменным извне
         public Transform PlayerSpawnPoints { get { return playerSpawnPoints; } }
         public Transform EnemySpawnPoints { get { return enemySpawnPoints; } }

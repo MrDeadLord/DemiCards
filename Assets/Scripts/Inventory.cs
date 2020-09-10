@@ -6,10 +6,16 @@ namespace DeadLords
     public class Inventory : MonoBehaviour
     {
         private Item[] _items;  //Все вещи в инвентаре
-        private List<Card> _cards;  //Все карты, что есть у игрока
+        [SerializeField] private List<Card> _cards;  //Все карты, что есть у игрока
 
-        private Item[] _wearedItems;    //Надетые вещи
-        private List<Card> _cardsDeck;  //Активная коллода
+        /// <summary>
+        /// Надетые вещи
+        /// </summary>
+        private Item[] _wearedItems;
+        /// <summary>
+        /// Активная коллода
+        /// </summary>
+        [SerializeField] private List<Card> _cardsDeck;
 
         #region Получение данных
         /// <summary>

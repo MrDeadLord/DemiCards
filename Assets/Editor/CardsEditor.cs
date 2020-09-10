@@ -59,6 +59,7 @@ public class CardsEditor : EditorWindow
 
     #endregion
 
+    #region Обязательные методы интерфейса
     [MenuItem("DeadLords/Cards Editor", false, 52)]
     public static void CardsEditorWindow()
     {
@@ -118,7 +119,7 @@ public class CardsEditor : EditorWindow
         else if (addButt)
             CreateCard();
     }
-
+    #endregion
     private void InfoScreen()
     {
         GUILayout.BeginHorizontal();

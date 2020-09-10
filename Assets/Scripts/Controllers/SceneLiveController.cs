@@ -11,44 +11,55 @@ namespace DeadLords.Controllers
     public class SceneLiveController : BaseController
     {
         public int totalTurns = 0;
-                        
+
         private bool _isPlayersTurn;    //true если ходит игрок, иначе - противник
 
         private List<Card> _playersHand, _enemysHand;
         private List<Card> _playersDeck, _enemysDeck;
+        private List<Card> _playersPlayedCards, _enemysPlayedCards;
+        private List<Creature> _playersDeadCr, _enemysDeadCr;
 
         private int _playersMaxHandSize = 11, _enemysMaxHandSize = 11;
 
-        private int _cardsTake = 3; //Кол-во карт получаемых в начале хода
+        private int _cardsTake = 2; //Кол-во карт получаемых в начале хода
 
-        private List<Button> _cardsEven;    //Четное расположение
-        private List<Button> _cardsOdd;     //Нечетное расположение
+        /// <summary>
+        /// Четное расположение
+        /// </summary>
+        private List<Button> _cardsEven;
+        /// <summary>
+        /// Нечетное расположение
+        /// </summary>
+        private List<Button> _cardsOdd;
 
         private void Start()
         {
             #region Инициализируем кол-во карт у игрока и врага
             _playersMaxHandSize = Main.Instance.GetObjectManager.Player.GetComponent<BaseStats>().MaxHandSize;
             _playersDeck = Main.Instance.GetObjectManager.Player.GetComponent<Inventory>().CardsDeck;
+            
 
             _enemysMaxHandSize = Main.Instance.GetObjectManager.Enemy.GetComponent<BaseStats>().MaxHandSize;
             _enemysDeck = Main.Instance.GetObjectManager.Enemy.GetComponent<Inventory>().CardsDeck;
             #endregion
 
-            var r = new System.Random();
-
-            if (r.Next(0, 1) == 0)
-                _isPlayersTurn = true;
-            else
-                _isPlayersTurn = false;
-
             _cardsEven = Main.Instance.GetObjectManager.GetCardsEven;
             _cardsOdd = Main.Instance.GetObjectManager.GetCardsOdd;
+                        
+            //Выбор кто будет ходить первым если это начало боя
+            if (totalTurns == 0)
+            {
+                var r = new System.Random();
 
-            foreach (Button butt in _cardsEven)
-                butt.enabled = false;
-
-            foreach (Button butt in _cardsOdd)
-                butt.enabled = false;
+                if (r.Next(0, 1) == 0)
+                    _isPlayersTurn = true;
+                else
+                    _isPlayersTurn = false;
+            }
+            else if(totalTurns != 0)
+            {
+                //Сюда вписать код загрузки данных из файла сохранения после того как сделаю скрипты сохранения и загрузки
+            }
         }
 
         private void Update()
@@ -85,15 +96,12 @@ namespace DeadLords.Controllers
 
         private void PlacingCards()
         {
-            if (_playersHand.Count % 2 == 0)
+            switch (PlayersHand.Count)
             {
-                switch (_playersHand.Count)
-                {
-                    case 2:
-                        Card first = _cardsEven[3].GetComponent<Card>();
-                        first = _playersHand[0];
-                        break;
-                }
+                case 1:
+                    _cardsOdd[5].enabled = true;
+                    
+                    break;
             }
         }
 
@@ -103,9 +111,19 @@ namespace DeadLords.Controllers
             set { _isPlayersTurn = value; }
         }
 
+        //Карты на руках
         public List<Card> PlayersHand { get { return _playersHand; } }
         public List<Card> EnemysHand { get { return _enemysHand; } }
 
+        //Сыграные карты
+        public List<Card> PlayersPlayedCards { get { return _playersPlayedCards; } }
+        public List<Card> EnemysPlayedCards { get { return _enemysPlayedCards; } }
+
+        //Мертвые существа
+        public List<Creature> PlayersDeadCr { get { return _playersDeadCr; } }
+        public List<Creature> EnemysDeadCr { get { return _enemysDeadCr; } }
+
+        //Коллоды
         public List<Card> PlaeyrsDeck
         {
             get { return _playersDeck; }

@@ -15,6 +15,7 @@ namespace DeadLords
         private SpawnController _spawnController;
         private SceneLiveController _sceneLiveController;
         private BonusController _bonusController;
+        private AllCreatures _allCreatures;
 
         private void Start()
         {
@@ -28,6 +29,7 @@ namespace DeadLords
 
             _dayLightController = GetComponent<DayLightController>();
             _objectManager = GetComponent<ObjectManager>();
+            _allCreatures = GetComponent<AllCreatures>();
         }
 
         #region Получение контроллеров извне
@@ -43,6 +45,8 @@ namespace DeadLords
         public SceneLiveController GetSceneLiveController { get { return _sceneLiveController; } }
 
         public BonusController GetBonusController { get { return _bonusController; } }
+
+        public AllCreatures GetAllCreatures { get { return _allCreatures; } }
 
         #endregion
     }
