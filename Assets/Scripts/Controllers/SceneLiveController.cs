@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using DeadLords;
+using System.IO;
 
 namespace DeadLords.Controllers
 {
@@ -10,6 +11,7 @@ namespace DeadLords.Controllers
     /// </summary>
     public class SceneLiveController : BaseController
     {
+        #region Переменные
         public int totalTurns = 0;
 
         private bool _isPlayersTurn;    //true если ходит игрок, иначе - противник
@@ -32,12 +34,16 @@ namespace DeadLords.Controllers
         /// </summary>
         private List<Button> _cardsOdd;
 
+        string cardsPathPlayer = Application.dataPath + "/SaveData/Player's Deck.txt";
+        string cardsPathEnemy = Application.dataPath + "/SaveData/Enemy's Deck.txt";
+        #endregion
+
         private void Start()
         {
             #region Инициализируем кол-во карт у игрока и врага
             _playersMaxHandSize = Main.Instance.GetObjectManager.Player.GetComponent<BaseStats>().MaxHandSize;
             _playersDeck = Main.Instance.GetObjectManager.Player.GetComponent<Inventory>().CardsDeck;
-            
+
 
             _enemysMaxHandSize = Main.Instance.GetObjectManager.Enemy.GetComponent<BaseStats>().MaxHandSize;
             _enemysDeck = Main.Instance.GetObjectManager.Enemy.GetComponent<Inventory>().CardsDeck;
@@ -45,7 +51,7 @@ namespace DeadLords.Controllers
 
             _cardsEven = Main.Instance.GetObjectManager.GetCardsEven;
             _cardsOdd = Main.Instance.GetObjectManager.GetCardsOdd;
-                        
+
             //Выбор кто будет ходить первым если это начало боя
             if (totalTurns == 0)
             {
@@ -55,8 +61,17 @@ namespace DeadLords.Controllers
                     _isPlayersTurn = true;
                 else
                     _isPlayersTurn = false;
+
+                if (File.Exists(cardsPathPlayer))
+                {
+                    for(int i = 0; i < File.ReadAllLines(cardsPathPlayer).Length; i++)
+                    {
+                        _playersDeck.Add(new Card());
+                        _playersDeck[i].CardsData = JsonUtility.FromJson<CardData>(File.ReadAllLines(cardsPathPlayer)[i]);
+                    }
+                }
             }
-            else if(totalTurns != 0)
+            else if (totalTurns != 0)
             {
                 //Сюда вписать код загрузки данных из файла сохранения после того как сделаю скрипты сохранения и загрузки
             }
@@ -100,7 +115,7 @@ namespace DeadLords.Controllers
             {
                 case 1:
                     _cardsOdd[5].enabled = true;
-                    
+
                     break;
             }
         }

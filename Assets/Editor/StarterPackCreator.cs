@@ -46,7 +46,7 @@ public class StarterPackCreator : EditorWindow
     string allBonusesPath;
 
     /// <summary>
-    /// Составленная коллода
+    /// Составленная коллода. Список имен для интерфейса
     /// </summary>
     List<string> deck = new List<string>();
     /// <summary>
@@ -64,7 +64,7 @@ public class StarterPackCreator : EditorWindow
 
     private void OnEnable()
     {
-        path = Application.dataPath + "/SaveData/Player's Deck";
+        path = Application.dataPath + "/SaveData/Player's Deck.txt";
         allCardsPath = Application.dataPath + "/AllCards.txt";
         allBonusesPath = Application.dataPath + "/Bonuses.txt";
 
@@ -82,6 +82,17 @@ public class StarterPackCreator : EditorWindow
         foreach (string s in File.ReadLines(allBonusesPath))
         {
             allBonuses.Add(JsonUtility.FromJson<BonusData>(s));
+        }
+
+        if (File.Exists(path))
+        {
+            foreach(string st in File.ReadAllLines(path))
+            {
+                completeDeck.Add(JsonUtility.FromJson<CardData>(st));
+            }
+
+            foreach (CardData cd in completeDeck)
+                deck.Add(cd.cardName);
         }
     }
 
@@ -121,10 +132,12 @@ public class StarterPackCreator : EditorWindow
                 , MessageType.Info);
         }
 
+        GUILayout.Space(10);
         selectedDecksCard = GUILayout.SelectionGrid(selectedDecksCard, deck.ToArray(), deck.Count);
 
+        GUILayout.Space(10);
         GUILayout.BeginHorizontal();
-        if (GUILayout.Button(new GUIContent("Add", "Добавить в коллоду")))
+        if (GUILayout.Button(new GUIContent("Add", "Добавить в коллоду выбранную карту")))
         {
             completeDeck.Add(allCards[selectedCard]);
 
@@ -140,6 +153,7 @@ public class StarterPackCreator : EditorWindow
         }
         GUILayout.EndHorizontal();
 
+        GUILayout.Space(5);
         if (GUILayout.Button(new GUIContent("Save", "Сохранение в файл")))
         {
             List<string> saveList = new List<string>(); //Лист для сохранения. Зашифрованый в json

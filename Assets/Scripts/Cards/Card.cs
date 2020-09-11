@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
 
 namespace DeadLords
 {
@@ -35,6 +37,9 @@ namespace DeadLords
         }
         #endregion
 
+        /// <summary>
+        /// Призыв существа
+        /// </summary>
         private void Summon()
         {
             if (Main.Instance.GetSpawnController.CanSpawn(transform.parent.tag))
@@ -49,20 +54,37 @@ namespace DeadLords
             }
         }
 
+        /// <summary>
+        /// Активация заклинания
+        /// </summary>
         private void ActivateBonus()
         {
+            _cardsBonus = BonusConvert(_cardData.cardsBonusIndex);
+        }
 
+        /// <summary>
+        /// Получение бонуса из id
+        /// </summary>
+        /// <param name="id">Bonus id</param>
+        /// <returns></returns>
+        private BonusData BonusConvert(int id)
+        {
+            string path = Application.dataPath + "/Bonuses.txt";
+
+            var bd = new BonusData();
+
+            bd = JsonUtility.FromJson<BonusData>(File.ReadAllLines(path)[id]);
+
+            return bd;
         }
 
         #region Для редактора
-        /// <summary>
-        /// Название карты
-        /// </summary>
-        public string Name
+        public CardData CardsData
         {
-            get { return _cardData.cardName; }
-            set { _cardData.cardName = value; }
-        }        
+            get { return _cardData; }
+            set { _cardData = value; }
+        }
+
         public BonusData CardsBonus
         {
             get { return _cardsBonus; }

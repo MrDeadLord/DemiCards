@@ -6,7 +6,10 @@ using UnityEngine;
 public class BonusesEditor : EditorWindow
 {
     #region Переменные
-    string path = string.Empty; //Путь к файлу
+    /// <summary>
+    /// Путь к файлу сохранения бонусов
+    /// </summary>
+    string path = string.Empty;
     bool editButt, addButt;  //Кнопки рядом с выбором бонуса/заклинания
 
     /// <summary>

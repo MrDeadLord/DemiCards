@@ -55,11 +55,11 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Editor\StarterPackCreator.cs" />
     <Compile Include="Assets\Editor\LookAtButton.cs" />
     <Compile Include="Assets\Editor\CardsEditor.cs" />
     <Compile Include="Assets\Editor\BonusesEditor.cs" />
     <Compile Include="Assets\Editor\MultiplyCreate.cs" />
-    <Compile Include="Assets\Editor\StarterPackCreator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

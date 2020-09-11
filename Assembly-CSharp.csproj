@@ -80,17 +80,19 @@
     <Compile Include="Assets\Scripts\Controllers\SceneLiveController.cs" />
     <Compile Include="Assets\Scripts\Controllers\BonusController.cs" />
     <Compile Include="Assets\Scripts\Controllers\DayLightController.cs" />
+    <Compile Include="Assets\Scripts\Helpers\AllCreatures.cs" />
     <Compile Include="Assets\Scripts\BaseStats.cs" />
     <Compile Include="Assets\Scripts\Controllers\SpawnController.cs" />
     <Compile Include="Assets\Scripts\LeanTween\LeanTweenExt.cs" />
     <Compile Include="Assets\Scripts\LeanTween\LTDescrOptional.cs" />
     <Compile Include="Assets\Scripts\LeanTween\LTDescr.cs" />
-    <Compile Include="Assets\Scripts\Helpers\AllCreatures.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Bonuses.txt" />
      <None Include="Assets\AllBonusTypes.txt" />
      <None Include="Assets\AllCards.txt" />
+     <None Include="Assets\SaveData\Player&apos;s Deck.txt" />
+     <None Include="Assets\SaveData\Enemy&apos;s Deck.txt" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.1.3f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
