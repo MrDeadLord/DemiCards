@@ -642,6 +642,7 @@ GameObject:
   - component: {fileID: 158523011}
   - component: {fileID: 158523010}
   - component: {fileID: 158523014}
+  - component: {fileID: 158523015}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -738,6 +739,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83c25ee4d8c44664789c2b519efc6209, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &158523015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 158523009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55a8a5fc1ec930b418e0e7e3f48d9016, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHP: 10
+  _maxMana: 5
+  _startActionPoints: 2
+  _maxHandSize: 11
 --- !u!1 &176783906
 GameObject:
   m_ObjectHideFlags: 0
@@ -969,7 +986,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c830a18cc80950c44b373313a47bf14d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crList: []
+  crList:
+  - {fileID: -8846072719195705773, guid: 0160f3a43bd4e70429eeb3bf32053a03, type: 3}
 --- !u!1 &194921862
 GameObject:
   m_ObjectHideFlags: 0
@@ -3307,9 +3325,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cards: []
-  _cardsDeck:
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1 &1390643401
 GameObject:
   m_ObjectHideFlags: 0

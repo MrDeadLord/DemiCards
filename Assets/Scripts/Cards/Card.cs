@@ -46,7 +46,7 @@ namespace DeadLords
         {
             if (Main.Instance.GetSpawnController.CanSpawn(transform.parent.tag))
             {
-                //Main.Instance.GetSpawnController.Spawn(_creature, transform.parent.tag);
+                Main.Instance.GetSpawnController.Spawn(_creature.GetComponent<GameObject>(), transform.parent.tag);
                 Destroy(gameObject);
             }
             else
@@ -61,9 +61,9 @@ namespace DeadLords
         /// </summary>
         private void ActivateBonus()
         {
-            
+
         }
-                
+
         #region Для редактора
         /// <summary>
         /// Содержание карты

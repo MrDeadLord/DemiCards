@@ -94,7 +94,12 @@ namespace DeadLords.Controllers
 
         private void EnemysTurn()
         {
-
+            for (int i = 0; i < _cardsTake; i++)    //Берем то кол-во карт, которое допускает _cardsTake
+            {
+                int n = (int)Random.Range(0, _enemysDeck.Count);   //Случайное число в пределах колоды
+                _enemysHand.Add(_enemysDeck[n]);  //Добавление карты из колоды в руку
+                _enemysDeck.RemoveAt(n);   //Удаление карты из коллоды
+            }
         }
 
         private void PlacingCards()
