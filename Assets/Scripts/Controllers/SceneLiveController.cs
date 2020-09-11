@@ -33,9 +33,6 @@ namespace DeadLords.Controllers
         /// Нечетное расположение
         /// </summary>
         private List<Button> _cardsOdd;
-
-        string cardsPathPlayer = Application.dataPath + "/SaveData/Player's Deck.txt";
-        string cardsPathEnemy = Application.dataPath + "/SaveData/Enemy's Deck.txt";
         #endregion
 
         private void Start()
@@ -61,15 +58,6 @@ namespace DeadLords.Controllers
                     _isPlayersTurn = true;
                 else
                     _isPlayersTurn = false;
-
-                if (File.Exists(cardsPathPlayer))
-                {
-                    for(int i = 0; i < File.ReadAllLines(cardsPathPlayer).Length; i++)
-                    {
-                        _playersDeck.Add(new Card());
-                        _playersDeck[i].CardsData = JsonUtility.FromJson<CardData>(File.ReadAllLines(cardsPathPlayer)[i]);
-                    }
-                }
             }
             else if (totalTurns != 0)
             {

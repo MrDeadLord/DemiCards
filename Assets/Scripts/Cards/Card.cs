@@ -12,12 +12,14 @@ namespace DeadLords
     {
         [SerializeField] [Tooltip("Полное содержание карты")] private CardData _cardData;
 
-        #region Бонус, если он есть
-        [Space(10)]
-        [Header("Бонус, если его нет - не заполнять")]
-
+        /// <summary>
+        /// Полное содержание бонуса(если карта - заклинание)
+        /// </summary>
         private BonusData _cardsBonus;
-        #endregion
+        /// <summary>
+        /// Существо, если это призыв. Иначе - null
+        /// </summary>
+        private Creature _creature;
 
         /// <summary>
         /// true если карта на столе, false - в руке
@@ -59,37 +61,35 @@ namespace DeadLords
         /// </summary>
         private void ActivateBonus()
         {
-            _cardsBonus = BonusConvert(_cardData.cardsBonusIndex);
+            
         }
-
-        /// <summary>
-        /// Получение бонуса из id
-        /// </summary>
-        /// <param name="id">Bonus id</param>
-        /// <returns></returns>
-        private BonusData BonusConvert(int id)
-        {
-            string path = Application.dataPath + "/Bonuses.txt";
-
-            var bd = new BonusData();
-
-            bd = JsonUtility.FromJson<BonusData>(File.ReadAllLines(path)[id]);
-
-            return bd;
-        }
-
+                
         #region Для редактора
+        /// <summary>
+        /// Содержание карты
+        /// </summary>
         public CardData CardsData
         {
             get { return _cardData; }
             set { _cardData = value; }
         }
-
+        /// <summary>
+        /// Существо карты
+        /// </summary>
+        public Creature CardsCreature
+        {
+            get { return _creature; }
+            set { _creature = value; }
+        }
+        /// <summary>
+        /// Заклинание карты
+        /// </summary>
         public BonusData CardsBonus
         {
             get { return _cardsBonus; }
             set { _cardsBonus = value; }
         }
+
         /// <summary>
         /// Если нужно применить карту - true
         /// </summary>

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 namespace DeadLords
@@ -16,9 +17,79 @@ namespace DeadLords
         /// <summary>
         /// Активная коллода
         /// </summary>
-        [SerializeField] private List<Card> _cardsDeck;
+        private List<Card> _cardsDeck;
+
+        /// <summary>
+        /// Путь к коллоде
+        /// </summary>
+        private string pathDeck;
         #endregion
 
+        private void Awake()
+        {
+            if(gameObject.tag == "Player")
+            {
+                pathDeck = Application.dataPath + "/SaveData/Player's Deck.txt";
+            }
+            else
+            {
+                pathDeck = Application.dataPath + "/SaveData/Enemy's Deck.txt";
+            }
+
+            LoadDeck();
+        }
+
+        private void LoadDeck()
+        {
+            //Вытягивание карт из файла
+            if (File.Exists(pathDeck))
+            {
+                for (int i = 0; i < File.ReadAllLines(pathDeck).Length; i++)
+                {
+                    _cardsDeck.Add(new Card());
+                    CardData ca = new CardData();
+                    ca = JsonUtility.FromJson<CardData>(File.ReadAllLines(pathDeck)[i]);
+
+                    _cardsDeck[i].CardsData = ca;
+                    //Получение бонуса или существа
+                    if(ca.creatureName == string.Empty)
+                    {
+                        _cardsDeck[i].CardsBonus = BonusConvert(ca.cardsBonusIndex);
+                    }
+                    else
+                    {
+                        var creatures = Main.Instance.GetAllCreatures.crList;   //Список всех существ(Добавляется через редактор)
+
+                        //В каждом существе ищем нужное нам имя
+                        foreach(Creature cr in creatures)
+                        {
+                            //Если имя совпало - присваиваем карте существо
+                            if (cr.name == ca.creatureName)
+                            {
+                                _cardsDeck[i].CardsCreature = cr;
+                                return;
+                            }                                
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Получение бонуса из id
+        /// </summary>
+        /// <param name="id">Bonus id</param>
+        /// <returns></returns>
+        private BonusData BonusConvert(int id)
+        {
+            string path = Application.dataPath + "/Bonuses.txt";
+
+            var bd = new BonusData();
+
+            bd = JsonUtility.FromJson<BonusData>(File.ReadAllLines(path)[id]);
+
+            return bd;
+        }
 
         #region Получение данных
         /// <summary>
