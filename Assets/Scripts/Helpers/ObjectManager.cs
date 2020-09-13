@@ -22,8 +22,7 @@ namespace DeadLords.Helpers
 
         [Space(10)]
         [Header("Карты")]
-        [SerializeField] [Tooltip("Точки расположения четного кол-ва карт")] private List<Button> cardsEven;
-        [SerializeField] [Tooltip("Точки расположения нечетного кол-ва карт")] private List<Button> cardsOdd;
+        [SerializeField] [Tooltip("Точки расположения карт")] private List<Button> cardsButtons;
 
         #region Доступ к переменным извне
         public Transform PlayerSpawnPoints { get { return playerSpawnPoints; } }
@@ -33,8 +32,7 @@ namespace DeadLords.Helpers
         public Creature[] CrPlayer { get { return crPlayer; } }
         public Creature[] CrEnemy { get { return crEnemy; } }
 
-        public List<Button> GetCardsEven { get { return cardsEven; } }
-        public List<Button> GetCardsOdd { get { return cardsOdd; } }
+        public List<Button> GetCardsButtons { get { return cardsButtons; } }
         #endregion
     }
 }

@@ -7,13 +7,30 @@ public class StarterPackCreator : EditorWindow
 {
     #region Переменные
     /// <summary>
-    /// Путь сохранения пака, т.е. player's deck
+    /// Путь сохранения пака игрока(player's deck)
     /// </summary>
     string path;
     /// <summary>
-    /// Финальный список карт для сохранения
+    /// Путь сохранения пака для врага(enemy's deck)
+    /// </summary>
+    string pathEnemy;
+    /// <summary>
+    /// Финальный список карт для сохранения игрока
     /// </summary>
     List<CardData> completeDeck = new List<CardData>();
+    /// <summary>
+    /// Финальный список карт для сохранения врага
+    /// </summary>
+    List<CardData> completeDeckEnemy = new List<CardData>();
+
+    /// <summary>
+    /// Выбранный игрок или враг кому будет создаваться коллода
+    /// </summary>
+    int selectedSum;
+    /// <summary>
+    /// Варианты кому создаем коллоду
+    /// </summary>
+    string[] summs = { "Player", "Enemy" };
 
     /// <summary>
     /// Выбранная карта
@@ -46,9 +63,13 @@ public class StarterPackCreator : EditorWindow
     string allBonusesPath;
 
     /// <summary>
-    /// Составленная коллода. Список имен для интерфейса
+    /// Составленная коллода игрока. Список имен для интерфейса
     /// </summary>
     List<string> deck = new List<string>();
+    /// <summary>
+    /// Составленная коллода врага. Список имен для интерфейса
+    /// </summary>
+    List<string> deckEnemy = new List<string>();
     /// <summary>
     /// Выбранная карта из уже существующих
     /// </summary>
@@ -64,9 +85,11 @@ public class StarterPackCreator : EditorWindow
 
     private void OnEnable()
     {
-        path = Application.dataPath + "/SaveData/Player's Deck.txt";
         allCardsPath = Application.dataPath + "/AllCards.txt";
         allBonusesPath = Application.dataPath + "/Bonuses.txt";
+
+        path = Application.dataPath + "/SaveData/Player's Deck.txt";
+        pathEnemy = Application.dataPath + "/SaveData/Enemy's Deck.txt";
 
         CardData card;
 
@@ -84,9 +107,10 @@ public class StarterPackCreator : EditorWindow
             allBonuses.Add(JsonUtility.FromJson<BonusData>(s));
         }
 
+        //Если коллода игрока уже есть - загружаем и ее
         if (File.Exists(path))
         {
-            foreach(string st in File.ReadAllLines(path))
+            foreach (string st in File.ReadAllLines(path))
             {
                 completeDeck.Add(JsonUtility.FromJson<CardData>(st));
             }
@@ -94,16 +118,42 @@ public class StarterPackCreator : EditorWindow
             foreach (CardData cd in completeDeck)
                 deck.Add(cd.cardName);
         }
+
+        //Если коллода врага уже есть - загружаем и ее
+        if (File.Exists(pathEnemy))
+        {
+            foreach (string st in File.ReadAllLines(pathEnemy))
+            {
+                completeDeckEnemy.Add(JsonUtility.FromJson<CardData>(st));
+            }
+
+            foreach (CardData cd in completeDeckEnemy)
+                deckEnemy.Add(cd.cardName);
+        }
     }
 
     private void OnGUI()
     {
-        CreatePack();
+        selectedSum = GUILayout.SelectionGrid(selectedSum, summs, summs.Length);
+        GUILayout.Space(10);
+
+        if (selectedSum == 0)
+        {
+            CreatePack();
+        }
+        else
+        {
+            CreatePack();
+        }
     }
     #endregion
+
     void CreatePack()
     {
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Список всех карт:");
         selectedCard = EditorGUILayout.Popup(selectedCard, allCardsNames.ToArray());
+        GUILayout.EndHorizontal();
 
         string type;
 
@@ -114,13 +164,13 @@ public class StarterPackCreator : EditorWindow
 
 
         EditorGUILayout.HelpBox("Card info:"
-            + "\n" + allCards[selectedCard].cardName
-            + "\n" + allCards[selectedCard].inGameName
-            + "\n" + allCards[selectedCard].cost.ToString()
-            + "\n" + type
-            + "\n" + allCards[selectedCard].creatureName
-            + "\n" + allCards[selectedCard].cardsBonusIndex.ToString(), MessageType.Info);
+            + "\n" + "Card name:          " + allCards[selectedCard].cardName
+            + "\n" + "Card's ingame name: " + allCards[selectedCard].inGameName
+            + "\n" + "Cost: " + allCards[selectedCard].cost.ToString() + type
+            + "\n" + "Creature name:      " + allCards[selectedCard].creatureName
+            + "\n" + "Bonus index:        " + allCards[selectedCard].cardsBonusIndex.ToString(), MessageType.Info);
 
+        //Если это заклинание
         if (allCards[selectedCard].creatureName == string.Empty)
         {
             EditorGUILayout.HelpBox("Spell info:"
@@ -139,31 +189,60 @@ public class StarterPackCreator : EditorWindow
         GUILayout.BeginHorizontal();
         if (GUILayout.Button(new GUIContent("Add", "Добавить в коллоду выбранную карту")))
         {
-            completeDeck.Add(allCards[selectedCard]);
+            //Добавляем карту в коллоду выбранному сопернику
+            if(selectedSum == 0)
+            {
+                completeDeck.Add(allCards[selectedCard]);
 
-            deck.Add(allCardsNames[selectedCard]);
-            
+                deck.Add(allCardsNames[selectedCard]);
+            }
+            else
+            {
+                completeDeckEnemy.Add(allCards[selectedCard]);
+
+                deckEnemy.Add(allCardsNames[selectedCard]);
+            }
+
         }
 
         if (GUILayout.Button(new GUIContent("Delete", "Удалить выбранную карту из коллоды")))
         {
-            completeDeck.RemoveAt(selectedDecksCard);
+            //Удаляем карту в выбранной коллоде
+            if (selectedSum == 0)
+            {
+                completeDeck.RemoveAt(selectedDecksCard);
 
-            deck.RemoveAt(selectedDecksCard);
+                deck.RemoveAt(selectedDecksCard);
+            }
+            else
+            {
+                completeDeckEnemy.RemoveAt(selectedDecksCard);
+
+                deckEnemy.RemoveAt(selectedDecksCard);
+            }
+                
         }
         GUILayout.EndHorizontal();
 
         GUILayout.Space(5);
         if (GUILayout.Button(new GUIContent("Save", "Сохранение в файл")))
         {
-            List<string> saveList = new List<string>(); //Лист для сохранения. Зашифрованый в json
+            List<string> saveList = new List<string>(); //Лист для сохранения. Будет зашифрован в json
 
+            //Сохранение пака игрока
             foreach (CardData cd in completeDeck)
                 saveList.Add(JsonUtility.ToJson(cd));
 
             File.WriteAllLines(path, saveList);
 
+            //Сохранение пака врага
+            foreach (CardData cd in completeDeckEnemy)
+                saveList.Add(JsonUtility.ToJson(cd));
+
+            File.WriteAllLines(pathEnemy, saveList);
+
             Debug.Log("Saved in " + path);
+            Debug.Log("Saved in " + pathEnemy);
         }
     }
 }

@@ -17,7 +17,8 @@ namespace DeadLords.Controllers
         private bool _isPlayersTurn;    //true если ходит игрок, иначе - противник
 
         private List<Card> _playersHand, _enemysHand;
-        private List<Card> _playersDeck, _enemysDeck;
+        private List<Card> _playersDeck = new List<Card>();
+        private List<Card> _enemysDeck = new List<Card>();
         private List<Card> _playersPlayedCards, _enemysPlayedCards;
         private List<Creature> _playersDeadCr, _enemysDeadCr;
 
@@ -26,13 +27,14 @@ namespace DeadLords.Controllers
         private int _cardsTake = 2; //Кол-во карт получаемых в начале хода
 
         /// <summary>
-        /// Четное расположение
+        /// Кнопки/места расположения карт
         /// </summary>
-        private List<Button> _cardsEven;
+        private List<Button> _cardsButtons;
+
         /// <summary>
-        /// Нечетное расположение
+        /// Список карт в кнопках
         /// </summary>
-        private List<Button> _cardsOdd;
+        private List<Card> _cards;
         #endregion
 
         private void Start()
@@ -46,8 +48,12 @@ namespace DeadLords.Controllers
             _enemysDeck = Main.Instance.GetObjectManager.Enemy.GetComponent<Inventory>().CardsDeck;
             #endregion
 
-            _cardsEven = Main.Instance.GetObjectManager.GetCardsEven;
-            _cardsOdd = Main.Instance.GetObjectManager.GetCardsOdd;
+            _cardsButtons = Main.Instance.GetObjectManager.GetCardsButtons;
+
+            foreach(Button butt in _cardsButtons)
+            {
+                _cards.Add(butt.GetComponent<Card>());
+            }
 
             //Выбор кто будет ходить первым если это начало боя
             if (totalTurns == 0)
@@ -67,6 +73,9 @@ namespace DeadLords.Controllers
 
         private void Update()
         {
+            if (!Enabled)
+                return;
+
             if (IsPlayersTurn)
                 PlayersTurn();
             else
@@ -74,7 +83,7 @@ namespace DeadLords.Controllers
         }
 
 
-        public void EndOfaTurn()
+        public void EndOfTurn()
         {
             totalTurns++;
             _isPlayersTurn = !_isPlayersTurn;
@@ -90,6 +99,10 @@ namespace DeadLords.Controllers
             }
 
             PlacingCards();
+
+
+
+            base.Off();
         }
 
         private void EnemysTurn()
@@ -100,15 +113,185 @@ namespace DeadLords.Controllers
                 _enemysHand.Add(_enemysDeck[n]);  //Добавление карты из колоды в руку
                 _enemysDeck.RemoveAt(n);   //Удаление карты из коллоды
             }
+
+            //Здесь прописать ИИ врага
+
+            EndOfTurn();
+            base.Off();
         }
 
+        /// <summary>
+        /// Расстановка карт в интерфейс для игрока
+        /// </summary>
         private void PlacingCards()
         {
-            switch (PlayersHand.Count)
+            switch (_playersHand.Count)
             {
                 case 1:
-                    _cardsOdd[5].enabled = true;
+                    _cardsButtons[5].enabled = true;
+                    _cards[5] = _playersHand[0];
+                    break;
+                case 2:
+                    _cardsButtons[3].enabled = true;
+                    _cardsButtons[7].enabled = true;
 
+                    _cards[3] = _playersHand[0];
+                    _cards[7] = _playersHand[1];
+                    break;
+                case 3:
+                    _cardsButtons[3].enabled = true;
+                    _cardsButtons[5].enabled = true;
+                    _cardsButtons[7].enabled = true;
+
+                    _cards[3] = _playersHand[0];
+                    _cards[5] = _playersHand[1];
+                    _cards[7] = _playersHand[2];
+                    break;
+                case 4:
+                    _cardsButtons[2].enabled = true;
+                    _cardsButtons[4].enabled = true;
+                    _cardsButtons[6].enabled = true;
+                    _cardsButtons[8].enabled = true;
+
+                    _cards[2] = _playersHand[0];
+                    _cards[4] = _playersHand[1];
+                    _cards[6] = _playersHand[2];
+                    _cards[8] = _playersHand[3];
+                    break;
+                case 5:
+                    _cardsButtons[1].enabled = true;
+                    _cardsButtons[3].enabled = true;
+                    _cardsButtons[5].enabled = true;
+                    _cardsButtons[7].enabled = true;
+                    _cardsButtons[9].enabled = true;
+
+                    _cards[1] = _playersHand[0];
+                    _cards[3] = _playersHand[1];
+                    _cards[5] = _playersHand[2];
+                    _cards[7] = _playersHand[3];
+                    _cards[9] = _playersHand[4];
+                    break;
+                case 6:
+                    _cardsButtons[0].enabled = true;
+                    _cardsButtons[2].enabled = true;
+                    _cardsButtons[4].enabled = true;
+                    _cardsButtons[6].enabled = true;
+                    _cardsButtons[8].enabled = true;
+                    _cardsButtons[10].enabled = true;
+
+                    _cards[0] = _playersHand[0];
+                    _cards[2] = _playersHand[1];
+                    _cards[4] = _playersHand[2];
+                    _cards[6] = _playersHand[3];
+                    _cards[8] = _playersHand[4];
+                    _cards[10] = _playersHand[5];
+                    break;                
+                case 7:
+                    _cardsButtons[2].enabled = true;
+                    _cardsButtons[3].enabled = true;
+                    _cardsButtons[4].enabled = true;
+                    _cardsButtons[5].enabled = true;
+                    _cardsButtons[6].enabled = true;
+                    _cardsButtons[7].enabled = true;
+                    _cardsButtons[8].enabled = true;
+
+                    _cards[2] = _playersHand[0];
+                    _cards[3] = _playersHand[1];
+                    _cards[4] = _playersHand[2];
+                    _cards[5] = _playersHand[3];
+                    _cards[6] = _playersHand[4];
+                    _cards[7] = _playersHand[5];
+                    _cards[8] = _playersHand[6];
+                    break;
+                case 8:
+                    _cardsButtons[1].enabled = true;
+                    _cardsButtons[2].enabled = true;
+                    _cardsButtons[3].enabled = true;
+                    _cardsButtons[4].enabled = true;
+                    _cardsButtons[5].enabled = true;
+                    _cardsButtons[6].enabled = true;
+                    _cardsButtons[8].enabled = true;
+                    _cardsButtons[11].enabled = true;
+
+                    _cards[1] = _playersHand[0];
+                    _cards[2] = _playersHand[1];
+                    _cards[3] = _playersHand[2];
+                    _cards[4] = _playersHand[3];
+                    _cards[5] = _playersHand[4];
+                    _cards[6] = _playersHand[5];
+                    _cards[8] = _playersHand[6];
+                    _cards[11] = _playersHand[7];
+                    break;
+                case 9:
+                    _cardsButtons[1].enabled = true;
+                    _cardsButtons[2].enabled = true;
+                    _cardsButtons[3].enabled = true;
+                    _cardsButtons[4].enabled = true;
+                    _cardsButtons[5].enabled = true;
+                    _cardsButtons[6].enabled = true;
+                    _cardsButtons[7].enabled = true;
+                    _cardsButtons[8].enabled = true;
+                    _cardsButtons[9].enabled = true;
+
+                    _cards[1] = _playersHand[0];
+                    _cards[2] = _playersHand[1];
+                    _cards[3] = _playersHand[2];
+                    _cards[4] = _playersHand[3];
+                    _cards[5] = _playersHand[4];
+                    _cards[6] = _playersHand[5];
+                    _cards[7] = _playersHand[6];
+                    _cards[8] = _playersHand[7];
+                    _cards[9] = _playersHand[8];
+                    break;
+                case 10:
+                    _cardsButtons[0].enabled = true;
+                    _cardsButtons[2].enabled = true;
+                    _cardsButtons[3].enabled = true;
+                    _cardsButtons[4].enabled = true;
+                    _cardsButtons[5].enabled = true;
+                    _cardsButtons[6].enabled = true;
+                    _cardsButtons[7].enabled = true;
+                    _cardsButtons[8].enabled = true;
+                    _cardsButtons[9].enabled = true;
+                    _cardsButtons[10].enabled = true;
+
+                    _cards[0] = _playersHand[0];
+                    _cards[2] = _playersHand[1];
+                    _cards[3] = _playersHand[2];
+                    _cards[4] = _playersHand[3];
+                    _cards[5] = _playersHand[4];
+                    _cards[6] = _playersHand[5];
+                    _cards[7] = _playersHand[6];
+                    _cards[8] = _playersHand[7];
+                    _cards[9] = _playersHand[8];
+                    _cards[10] = _playersHand[9];
+                    break;
+                case 11:
+                    _cardsButtons[0].enabled = true;
+                    _cardsButtons[1].enabled = true;
+                    _cardsButtons[2].enabled = true;
+                    _cardsButtons[3].enabled = true;
+                    _cardsButtons[4].enabled = true;
+                    _cardsButtons[5].enabled = true;
+                    _cardsButtons[6].enabled = true;
+                    _cardsButtons[7].enabled = true;
+                    _cardsButtons[8].enabled = true;
+                    _cardsButtons[9].enabled = true;
+                    _cardsButtons[10].enabled = true;
+                    _cardsButtons[11].enabled = true;
+
+                    _cards[0] = _playersHand[0];
+                    _cards[1] = _playersHand[1];
+                    _cards[2] = _playersHand[2];
+                    _cards[3] = _playersHand[3];
+                    _cards[4] = _playersHand[4];
+                    _cards[5] = _playersHand[5];
+                    _cards[6] = _playersHand[6];
+                    _cards[7] = _playersHand[7];
+                    _cards[8] = _playersHand[8];
+                    _cards[9] = _playersHand[9];
+                    _cards[10] = _playersHand[9];
+                    _cards[11] = _playersHand[10];
                     break;
             }
         }

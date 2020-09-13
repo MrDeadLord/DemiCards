@@ -45,22 +45,22 @@ namespace DeadLords
             if (File.Exists(pathDeck))
             {
                 for (int i = 0; i < File.ReadAllLines(pathDeck).Length; i++)
-                {
+                {                    
                     var card = new Card();  //Создание новой карты
                     
                     CardData ca = new CardData();
                     ca = JsonUtility.FromJson<CardData>(File.ReadAllLines(pathDeck)[i]);
                     card.CardsData = ca;
-
+                    Debug.Log(ca.cardName);
                     //Получение бонуса или существа
-                    if(ca.creatureName == string.Empty)
+                    if (ca.creatureName == string.Empty)
                     {
                         card.CardsBonus = BonusConvert(ca.cardsBonusIndex);
                     }
                     else
                     {
-                        var creatures = new List<Creature>();
-                        creatures = Main.Instance.GetAllCreatures.crList;   //Список всех существ(Добавляется через редактор)
+                        //var creatures = new List<Creature>();
+                        var creatures = Main.Instance.GetAllCreatures.crList;   //Список всех существ(Добавляется через редактор)
 
                         //В каждом существе ищем нужное нам имя
                         foreach (Creature cr in creatures)
