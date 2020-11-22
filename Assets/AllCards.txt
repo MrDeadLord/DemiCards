@@ -1,4 +1,4 @@
 {"cardName":"apple +2","inGameName":"Спелое яблочко","cost":1,"manaSpell":false,"creatureName":"","cardsBonusIndex":3}
-{"cardName":"+/+ ally cr","inGameName":"Призыв к оружию","cost":1,"manaSpell":false,"creatureName":"","cardsBonusIndex":1}
+{"cardName":"+/+ ally cr","inGameName":"Призыв к оружию","cost":1,"manaSpell":false,"creatureName":"","cardsBonusIndex":0}
 {"cardName":"+/- ally cr","inGameName":"Боевая стимуляция","cost":1,"manaSpell":false,"creatureName":"","cardsBonusIndex":2}
 {"cardName":"summon Creature1","inGameName":"Призыв Creature1","cost":1,"manaSpell":false,"creatureName":"Creature1","cardsBonusIndex":0}

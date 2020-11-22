@@ -9,6 +9,7 @@ namespace DeadLords.Controllers
         /// Точки спауна существ игрока
         /// </summary>
         private Transform[] _spawnPlayer;
+
         /// <summary>
         /// Точки спауна существ врага
         /// </summary>
@@ -18,12 +19,14 @@ namespace DeadLords.Controllers
         /// Точка, где появится призываемое существо
         /// </summary>
         private Vector3 _spawnPoint;
+
         private int _indexP = 0, _indexE = 0;
 
         /// <summary>
         /// Точки, где есть существа игрока
         /// </summary>
         private List<Vector3> _exPlPoints = new List<Vector3>();
+
         /// <summary>
         /// Точки где есть существа врага
         /// </summary>

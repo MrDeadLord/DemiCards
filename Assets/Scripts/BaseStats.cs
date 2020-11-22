@@ -9,6 +9,7 @@ namespace DeadLords
         [SerializeField] private int _maxMana;
         [SerializeField] private int _startActionPoints;
         [SerializeField] [Range(0, 11)] private int _maxHandSize;
+        [SerializeField] [Tooltip("Кол-во карт, что берутся в начале хода")] [Range(0, 5)] private int _cardsTake;
 
         private int _curHP;
         private int _curMana;
@@ -83,10 +84,10 @@ namespace DeadLords
 
         private void Death()
         {
-
         }
 
         #region Получение данных в других классах
+
         public int GetMaxHP { get { return _maxHP; } }
         public int GetCurHP { get { return _curHP; } }
         public int GetMaxMana { get { return _maxMana; } }
@@ -97,11 +98,22 @@ namespace DeadLords
             get { return _maxHandSize; }
             set { _maxHandSize = value; }
         }
+
+        /// <summary>
+        /// Кол-во карт, что берутся в начале хода
+        /// </summary>
+        public int CardsTake
+        {
+            get { return _cardsTake; }
+            set { _cardsTake = value; }
+        }
+
         public int StartActionPoints
         {
             get { return _startActionPoints; }
             set { _startActionPoints = value; }
         }
-        #endregion
+
+        #endregion Получение данных в других классах
     }
 }

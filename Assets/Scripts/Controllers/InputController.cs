@@ -15,19 +15,16 @@ namespace DeadLords.Controllers
             _cam = Camera.main;
             _gyroSupp = SystemInfo.supportsGyroscope;
             _gyro = Input.gyro;
-            //_cards = Main.Instance.GetSceneLiveForms.PlayersHand;
         }
 
         private void Update()
         {
-            
         }
 
         private void WatchTheCards()
         {
             if (Input.touches[0].phase == TouchPhase.Began || Input.touches[0].phase == TouchPhase.Moved)
             {
-                
             }
         }
     }

@@ -8,35 +8,40 @@ namespace DeadLords
     {
         public static Main Instance { get; private set; }
 
+        /// <summary>
+        /// Флаг того, что колода игрока загружена
+        /// </summary>
+        public bool deckLoadedPl { get; set; }
+        /// <summary>
+        /// Флаг того, что колода врага загружена
+        /// </summary>
+        public bool deckLoadedEn { get; set; }
+
         private GameObject _controllers;
         private InputController _inputController;
-        private DayLightController _dayLightController;
         private ObjectManager _objectManager;
         private SpawnController _spawnController;
         private SceneLiveController _sceneLiveController;
         private BonusController _bonusController;
-        private AllCreatures _allCreatures;
+        private PlayersTurn _playersTurn;
 
-        private void Start()
+        private void Awake()
         {
             Instance = this;
-
+            
             _controllers = new GameObject("Controllers");
             _inputController = _controllers.AddComponent<InputController>();
             _spawnController = _controllers.AddComponent<SpawnController>();
             _sceneLiveController = _controllers.AddComponent<SceneLiveController>();
             _bonusController = _controllers.AddComponent<BonusController>();
+            _playersTurn = _controllers.AddComponent<PlayersTurn>();
 
-            _dayLightController = GetComponent<DayLightController>();
             _objectManager = GetComponent<ObjectManager>();
-            _allCreatures = GetComponent<AllCreatures>();
         }
 
         #region Получение контроллеров извне
 
         public InputController GetInputController { get { return _inputController; } }
-
-        public DayLightController GetDayLightController { get { return _dayLightController; } }
 
         public ObjectManager GetObjectManager { get { return _objectManager; } }
 
@@ -46,8 +51,8 @@ namespace DeadLords
 
         public BonusController GetBonusController { get { return _bonusController; } }
 
-        public AllCreatures GetAllCreatures { get { return _allCreatures; } }
+        public PlayersTurn GetPlayersTurn { get { return _playersTurn; } }
 
-        #endregion
+        #endregion Получение контроллеров извне
     }
 }

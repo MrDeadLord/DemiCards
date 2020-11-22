@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace DeadLords
 {
+    /// <summary>
+    /// Здесь происходит вызов нужных бонусов/заклинаний
+    /// </summary>
     public class BonusController : BaseController
     {
         //Частые названия сокращены:
@@ -12,7 +15,9 @@ namespace DeadLords
         //Нулевое значение ничего не изменит
         //!!!НЕ ЗАБЫВАТЬ ПОПОЛНЯТЬ DeadLords/BonusNames!!!
 
-        SceneLiveController lc = Main.Instance.GetSceneLiveController;
+        private SceneLiveController lc = Main.Instance.GetSceneLiveController;
+        Deck _playersDeck, _enemysDeck;
+        Hand _playersHand, _enemysHand;
 
         /// <summary>
         /// Вызов бонуса
@@ -27,64 +32,84 @@ namespace DeadLords
             switch (type)
             {
                 #region HEAL
+
                 case "heal":
                     HealObject(target, hp);
                     break;
+
                 case "heal ally cr":
                     HealObject(target, hp);
                     break;
+
                 case "heal all ally cr":
                     HealAllAllyCreatures(speller, hp);
                     break;
+
                 case "heal all cr":
                     HealAllCreatures(hp);
                     break;
-                #endregion
+
+                #endregion HEAL
 
                 #region Single Bust/Debust
+
                 case "bust/bust":
                     BustDebust(target, att, hp, "+/+");
                     break;
+
                 case "debust/debust":
                     BustDebust(target, att, hp, "-/-");
                     break;
+
                 case "bust/debust":
                     BustDebust(target, att, hp, "+/-");
                     break;
+
                 case "debust/bust":
                     BustDebust(target, att, hp, "-/+");
                     break;
-                #endregion
+
+                #endregion Single Bust/Debust
 
                 #region Bust/Debust all allyes
+
                 case "bust/bust all allyes cr":
                     BustDebuffAllAllyCreatures(speller, att, hp, "+/+");
                     break;
+
                 case "debust/debust all allyes cr":
                     BustDebuffAllAllyCreatures(speller, att, hp, "-/-");
                     break;
+
                 case "bust/debust all allyes cr":
                     BustDebuffAllAllyCreatures(speller, att, hp, "+/-");
                     break;
+
                 case "debust/bust all allyes cr":
                     BustDebuffAllAllyCreatures(speller, att, hp, "-/+");
                     break;
-                #endregion
+
+                #endregion Bust/Debust all allyes
 
                 #region Bust/debust ALL cr
+
                 case "bust/bust all cr":
                     BustAllCreatures(att, hp, "+/+");
                     break;
+
                 case "debust/debust all cr":
                     BustAllCreatures(att, hp, "-/-");
                     break;
+
                 case "bust/debust all cr":
                     BustAllCreatures(att, hp, "+/-");
                     break;
+
                 case "debust/bust all cr":
                     BustAllCreatures(att, hp, "-/+");
                     break;
-                #endregion
+
+                #endregion Bust/debust ALL cr
 
                 default:
                     Debug.LogError("Ошибка");
@@ -130,7 +155,8 @@ namespace DeadLords
             foreach (Creature cr in Main.Instance.GetObjectManager.CrEnemy)
                 cr.HealDam(value, true);
         }
-        #endregion
+
+        #endregion Исцеление
 
         #region Бусты/Дебусты атаки и хп
 
@@ -186,9 +212,11 @@ namespace DeadLords
                 BustDebust(cr, att, hp, act);
             }
         }
-        #endregion
+
+        #endregion Бусты/Дебусты атаки и хп
 
         #region Прочее
+
         /// <summary>
         /// Мгновенное уничтожение существа cr
         /// </summary>
@@ -207,34 +235,38 @@ namespace DeadLords
         /// <param name="isTargetApponent">Является ли целью аппонент(с чьей коллоды берется карта)</param>
         private void GrabaCard(GameObject speller, bool isTargetApponent)
         {
+            //Инициализируем колоды
+            _playersDeck = Main.Instance.GetObjectManager.Player.GetComponent<Deck>();
+            _enemysDeck = Main.Instance.GetObjectManager.Enemy.GetComponent<Deck>();
+
             if (speller.tag == "Player")
             {
                 if (isTargetApponent)
                 {
-                    int n = (int)Random.Range(0, lc.EnemysDeck.Count);
-                    lc.PlayersHand.Add(lc.EnemysDeck[n]);
-                    lc.EnemysDeck.RemoveAt(n);
+                    int n = (int)Random.Range(0, _enemysDeck.Cards.Count);
+                    _playersHand.Cards.Add(_enemysDeck.Cards[n]);
+                    _enemysDeck.RemoveCard(_enemysDeck.Cards[n]);
                 }   //Берется карта из коллоды врага и добавляется в руку игроку
                 else
                 {
-                    int n = (int)Random.Range(0, lc.PlaeyrsDeck.Count);
-                    lc.PlayersHand.Add(lc.PlaeyrsDeck[n]);
-                    lc.PlaeyrsDeck.RemoveAt(n);
+                    int n = (int)Random.Range(0, _playersDeck.Cards.Count);
+                    _playersHand.Cards.Add(_playersDeck.Cards[n]);
+                    _playersDeck.RemoveCard(_playersDeck.Cards[n]);
                 }   //Берется карта из коллоды и добавляется в руку(Игрок)
             }
             else
             {
                 if (isTargetApponent)
                 {
-                    int n = (int)Random.Range(0, lc.PlaeyrsDeck.Count);
-                    lc.EnemysHand.Add(lc.PlaeyrsDeck[n]);
-                    lc.PlaeyrsDeck.RemoveAt(n);
+                    int n = (int)Random.Range(0, _playersDeck.Cards.Count);
+                    _enemysHand.Cards.Add(_playersDeck.Cards[n]);
+                    _playersDeck.RemoveCard(_playersDeck.Cards[n]);
                 }   //Берется карта из коллоды игрока и добавляется в руку врагу
                 else
                 {
-                    int n = (int)Random.Range(0, lc.EnemysDeck.Count);
-                    lc.EnemysHand.Add(lc.EnemysDeck[n]);
-                    lc.EnemysDeck.RemoveAt(n);
+                    int n = (int)Random.Range(0, _enemysDeck.Cards.Count);
+                    _enemysHand.Cards.Add(_enemysDeck.Cards[n]);
+                    _enemysDeck.RemoveCard(_enemysDeck.Cards[n]);
                 }   //Берется карта из коллоды и добавляется в руку(Враг)
             }
         }
@@ -243,7 +275,7 @@ namespace DeadLords
         {
             targetCr.IsActive = false;
         }
-        #endregion
 
+        #endregion Прочее
     }
 }

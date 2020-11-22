@@ -8,7 +8,7 @@ namespace DeadLords.Controllers
     public class BaseController : MonoBehaviour
     {
         private bool _enabled = false; //По умолчанию контроллер выключен
-        
+
         /// <summary>
         /// Включен ли контроллер
         /// </summary>
@@ -33,6 +33,7 @@ namespace DeadLords.Controllers
         {
             _enabled = false;
         }
+
         //Принцип работы таков, что в Update() проверяется включен ли контроллер.
         //Если нет, то апдейт прекращает выполнение, что разгружает систему
     }

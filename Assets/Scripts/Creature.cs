@@ -13,22 +13,20 @@ namespace DeadLords
 
         public void Death()
         {
-
         }
 
         public void CantAttack()
         {
-
         }
 
         /// <summary>
         /// Атака цели
         /// </summary>
         /// <param name="obj">Цель</param>
-        public void Attack(IChangeValue obj)
+        void Attack(IChangeValue obj)
         {
             if (obj != null)
-            {                
+            {
                 HealDam(_attack, false);
             }
         }   //Добавить анимации и т.д.
@@ -37,7 +35,7 @@ namespace DeadLords
         {
             if (isHeal)
             {
-                if(_curHP < _maxHP)
+                if (_curHP < _maxHP)
                 {
                     _curHP += value;
 
@@ -97,8 +95,18 @@ namespace DeadLords
             }
         }
 
-        public int GetAttack { get { return _attack; } }
-        public int GetMaxHP { get { return _maxHP; } }
+        #region Получение данных
+        public int AttackValue
+        {
+            get { return _attack; }
+            set { _attack = value; }
+        }
+        public int MaxHP
+        {
+            get { return _maxHP; }
+            set { _maxHP = value; }
+        }
+
         public int GetCurHP { get { return _curHP; } }
 
         public bool IsActive
@@ -106,5 +114,6 @@ namespace DeadLords
             get { return _isActive; }
             set { _isActive = value; }
         }
+        #endregion
     }
 }

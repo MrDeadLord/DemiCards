@@ -18,7 +18,7 @@ namespace DeadLords.Helpers
             _start = DateTime.Now;
             _duration = TimeSpan.Zero;
         }
-                
+
         public void Update()
         {
             if (_elapsed > 0)
