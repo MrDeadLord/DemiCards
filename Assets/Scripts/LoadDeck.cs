@@ -16,7 +16,7 @@ namespace DeadLords
         /// <summary>
         /// Временная карта для загрузки
         /// </summary>
-        private Card tempCard = new Card();
+        private Card tempCard;
         /// <summary>
         /// Активная коллода
         /// </summary>
@@ -50,6 +50,8 @@ namespace DeadLords
                 {
                     //Загрузка базовой информации карты
                     CardData ca = new CardData();
+                    tempCard = new Card();
+
                     ca = JsonUtility.FromJson<CardData>(line);
                     tempCard.CardsData = ca;
 

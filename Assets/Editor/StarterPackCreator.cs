@@ -182,15 +182,10 @@ public class StarterPackCreator : EditorWindow
                 , MessageType.Info);
         }
 
-        GUILayout.Space(10);
-        selectedDecksCard = GUILayout.SelectionGrid(selectedDecksCard, deck.ToArray(), deck.Count);
-
-        GUILayout.Space(10);
-        GUILayout.BeginHorizontal();
         if (GUILayout.Button(new GUIContent("Add", "Добавить в коллоду выбранную карту")))
         {
             //Добавляем карту в коллоду выбранному сопернику
-            if(selectedSum == 0)
+            if (selectedSum == 0)
             {
                 completeDeck.Add(allCards[selectedCard]);
 
@@ -205,6 +200,10 @@ public class StarterPackCreator : EditorWindow
 
         }
 
+        GUILayout.Space(10);
+        selectedDecksCard = GUILayout.SelectionGrid(selectedDecksCard, deck.ToArray(), deck.Count);
+
+        GUILayout.Space(10);        
         if (GUILayout.Button(new GUIContent("Delete", "Удалить выбранную карту из коллоды")))
         {
             //Удаляем карту в выбранной коллоде
@@ -222,7 +221,6 @@ public class StarterPackCreator : EditorWindow
             }
                 
         }
-        GUILayout.EndHorizontal();
 
         GUILayout.Space(5);
         if (GUILayout.Button(new GUIContent("Save", "Сохранение в файл")))

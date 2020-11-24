@@ -12,8 +12,8 @@ namespace DeadLords
         Hand _playersHand;
         BaseStats _bs;
 
-        bool _cardsTook = false;
-        bool _cardsPlaced = false;
+        bool _cardsTook = false;    //Флаг взяты ли карты
+        bool _cardsPlaced = false;  //Флаг присвоены ли карты к кнопкам
 
         /// <summary>
         /// Кнопки/места расположения карт

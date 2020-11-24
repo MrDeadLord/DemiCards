@@ -57,12 +57,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Helpers\BonusData.cs" />
-    <Compile Include="Assets\Scripts\ImagenizeButton.cs" />
+    <Compile Include="Assets\Scripts\UI\ImagenizeButton.cs" />
     <Compile Include="Assets\Scripts\PlayersTurn.cs" />
     <Compile Include="Assets\Scripts\Inventory.cs" />
     <Compile Include="Assets\Scripts\Card.cs" />
     <Compile Include="Assets\Test.cs" />
-    <Compile Include="Assets\Scripts\EndTurnButton.cs" />
+    <Compile Include="Assets\Scripts\UI\EndTurnButton.cs" />
     <Compile Include="Assets\Scripts\Item.cs" />
     <Compile Include="Assets\Scripts\UI\CardsButton.cs" />
     <Compile Include="Assets\Scripts\Creature.cs" />

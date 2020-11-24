@@ -5,7 +5,16 @@ namespace DeadLords
 {
     public class Deck : MonoBehaviour
     {
-        public List<Card> cards = new List<Card>(); //временно паблик
+        List<Card> cards = new List<Card>();
+
+        /// <summary>
+        /// Добавление card в колоду
+        /// </summary>
+        /// <param name="card">Добавляемая карта</param>
+        public void AddCard(Card card)
+        {
+            cards.Add(card);
+        }
 
         /// <summary>
         /// Удалить карту из колоды

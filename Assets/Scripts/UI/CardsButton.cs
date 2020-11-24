@@ -1,5 +1,4 @@
 ﻿using DeadLords.Controllers;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -13,17 +12,20 @@ namespace DeadLords
     [RequireComponent(typeof(Card))]
     public class CardsButton : BaseController, ISelectHandler, IPointerDownHandler, IPointerExitHandler
     {
-        string _name;
         Button _cardButt;
         Vector3 _startPosition;
         Quaternion _startRotation;
         Vector3 _startScale;
         Image _img;
 
+        /// <summary>
+        /// Переменная для выключения постоянной инициации
+        /// </summary>
+        bool _loaded = false;
+
         #region Unity-time
         private void Start()
         {
-            _name = gameObject.name;
             _cardButt = GetComponent<Button>();
             _startPosition = transform.position;
             _startRotation = transform.rotation;
@@ -38,7 +40,7 @@ namespace DeadLords
             if (!Enabled)
                 return;
 
-            if (!Main.Instance.deckLoadedPl)
+            if (_loaded)
                 return;
 
             Init();
@@ -50,17 +52,10 @@ namespace DeadLords
         /// <returns>null</returns>
         void Init()
         {
-            //Если карта пустая - убираем из видимости
-            if (GetComponent<Card>().CardsData != null)
-            {
-                On();
-
-                _name = GetComponent<Card>().CardsData.cardName;
-            }
-            else
-            {
-                Off();
-            }
+            gameObject.name = GetComponent<Card>().CardsData.cardName;
+            
+            GetComponent<ImagenizeButton>().Imagine();
+            _loaded = true;
         }
         #endregion
 
@@ -68,7 +63,7 @@ namespace DeadLords
         {
             Enabled = true;
             _cardButt.enabled = true;
-            _img.enabled = true;
+            _img.enabled = true;            
         }
 
         public override void Off()
@@ -76,6 +71,7 @@ namespace DeadLords
             _cardButt.enabled = false;
             _img.enabled = false;
             Enabled = false;
+            _loaded = false;
         }
 
         #region Поведение кнопки

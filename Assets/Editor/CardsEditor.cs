@@ -52,11 +52,10 @@ public class CardsEditor : EditorWindow
     int _cost;
     bool _isManaSpell;
     bool _isCreature;
-    int _bonusIndex;
+    int bonusIndex;
 
     GameObject _creature;
     BonusData _bonus;   //Для интерфейса
-
     #endregion
 
     #region Обязательные методы интерфейса
@@ -180,13 +179,14 @@ public class CardsEditor : EditorWindow
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
-            GUILayout.Label("Цль(-и):");
+            GUILayout.Label("Цeль(-и):");
             GUILayout.Label(_bonus.target);
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
             GUILayout.Label("Значения attack/HP:");
             GUILayout.Label(_bonus.att.ToString());
+            GUILayout.Label("/");
             GUILayout.Label(_bonus.hp.ToString());
             GUILayout.EndHorizontal();
         }
@@ -220,22 +220,19 @@ public class CardsEditor : EditorWindow
         GUILayout.Space(10);
 
         GUILayout.BeginHorizontal();
-        GUILayout.Label(new GUIContent("Уникальное имя для редактора", "Не будет видно в игре(игроку)"));
-        _name = cardsList[selectedCardIndex].cardName;
+        GUILayout.Label(new GUIContent("Уникальное имя для редактора", "Не будет видно в игре(игроку)"));        
         _name = EditorGUILayout.TextField(_name);
         GUILayout.EndHorizontal();
 
         GUILayout.Space(5);
         GUILayout.BeginHorizontal();
-        GUILayout.Label(new GUIContent("Внутриигровое имя", "Название карты которое будет видно непосредственно игроку"));
-        _inGameName = cardsList[selectedCardIndex].inGameName;
+        GUILayout.Label(new GUIContent("Внутриигровое имя", "Название карты которое будет видно непосредственно игроку"));        
         _inGameName = EditorGUILayout.TextField(_inGameName);
         GUILayout.EndHorizontal();
 
         GUILayout.Space(5);
         GUILayout.BeginHorizontal();
-        GUILayout.Label(new GUIContent("Стоимость карты и необходимый ресурс", "Т.е. мана или очки действия"));
-        _cost = cardsList[selectedCardIndex].cost;
+        GUILayout.Label(new GUIContent("Стоимость карты и необходимый ресурс", "Т.е. мана или очки действия"));        
         _cost = EditorGUILayout.IntSlider(_cost, 0, 10);
 
         if (cardsList[selectedCardIndex].manaSpell)
@@ -253,12 +250,7 @@ public class CardsEditor : EditorWindow
         GUILayout.Space(5);
         GUILayout.BeginHorizontal();
         GUILayout.Label(new GUIContent("Тип карты", "Вызов существа или заклинание"));
-
-        if (cardsList[selectedCardIndex].creatureName != string.Empty)
-            spellType = 0;
-        else
-            spellType = 1;
-
+                
         spellType = EditorGUILayout.Popup(spellType, spellTypes);
         if (spellType == 0)
         {
@@ -268,9 +260,9 @@ public class CardsEditor : EditorWindow
         else
         {
             _isCreature = false;
-            _bonusIndex = EditorGUILayout.Popup(_bonusIndex, bonusNames.ToArray());
+            bonusIndex = EditorGUILayout.Popup(bonusIndex, bonusNames.ToArray());
 
-            _bonus = bonusList[_bonusIndex];
+            _bonus = bonusList[bonusIndex];
         }
         GUILayout.EndHorizontal();
 
@@ -286,9 +278,9 @@ public class CardsEditor : EditorWindow
 
         #region Сохранение в кэш/Отмена
         GUILayout.BeginHorizontal();
+        //Save button
         using (new EditorGUI.DisabledGroupScope(_name == string.Empty || _inGameName == string.Empty))
-        {
-            //Save button
+        {            
             if (GUILayout.Button(new GUIContent("Save", "Сохранение изменений. Не сохраняет в файл")))
             {
                 cd.cardName = _name;
@@ -304,7 +296,7 @@ public class CardsEditor : EditorWindow
                 else
                 {
                     cd.creatureName = string.Empty;
-                    cd.cardsBonusIndex = _bonusIndex;
+                    cd.cardsBonusIndex = bonusIndex;
                 }
 
                 cardsList[selectedCardIndex] = cd;
@@ -314,12 +306,62 @@ public class CardsEditor : EditorWindow
             }
         }
 
+        //Cancel button
         using (new EditorGUI.DisabledGroupScope(cardsList.Count == 0))
         {
             if (GUILayout.Button(new GUIContent("Cancel", "Отменить изменения")))
                 editButt = false;
         }
         GUILayout.EndHorizontal();
+        #endregion Сохранение в кэш/Отмена
+
+        #region Инфо о редактируемой карте
+        EditorGUILayout.HelpBox("---Редактируемая карта---", MessageType.Info);
+
+        GUILayout.Space(10);
+        GUILayout.Label("Карта:", EditorStyles.boldLabel);
+
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Уникальное имя(для редактора):");
+        GUILayout.Label(cardsList[selectedCardIndex].cardName);
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Игровое название(для игрока):");
+        GUILayout.Label(cardsList[selectedCardIndex].inGameName);
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Стоимость карты:");
+        GUILayout.Label(cardsList[selectedCardIndex].cost.ToString());
+
+        if (cardsList[selectedCardIndex].manaSpell)
+            GUILayout.Label("mana");
+        else
+            GUILayout.Label("action");
+        GUILayout.EndHorizontal();
+
+        //Если вызов существа
+        if (cardsList[selectedCardIndex].creatureName != string.Empty)
+        {
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Имя призываемого существа:");
+            GUILayout.Label(cardsList[selectedCardIndex].creatureName, EditorStyles.centeredGreyMiniLabel);
+            GUILayout.EndHorizontal();
+        }
+        //Если заклинание
+        else
+        {
+            _bonus = bonusList[cardsList[selectedCardIndex].cardsBonusIndex];
+
+            GUILayout.Space(10);
+            GUILayout.Label("Spell info:", EditorStyles.boldLabel);
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Название(для редактора):");
+            GUILayout.Label(_bonus.unikName);
+            GUILayout.EndHorizontal();
+        }
         #endregion
     }
 
@@ -371,9 +413,9 @@ public class CardsEditor : EditorWindow
         else
         {
             _isCreature = false;
-            _bonusIndex = EditorGUILayout.Popup(_bonusIndex, bonusNames.ToArray());
+            bonusIndex = EditorGUILayout.Popup(bonusIndex, bonusNames.ToArray());
 
-            _bonus = bonusList[_bonusIndex];
+            _bonus = bonusList[bonusIndex];
         }
         GUILayout.EndHorizontal();
 
@@ -408,7 +450,7 @@ public class CardsEditor : EditorWindow
                 else
                 {
                     cd.creatureName = string.Empty;
-                    cd.cardsBonusIndex = _bonusIndex;
+                    cd.cardsBonusIndex = bonusIndex;
                 }                    
 
                 cardsList.Add(cd);
