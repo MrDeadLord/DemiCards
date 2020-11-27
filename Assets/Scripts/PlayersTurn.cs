@@ -1,6 +1,5 @@
 ﻿using DeadLords.Controllers;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace DeadLords
 {
@@ -43,7 +42,6 @@ namespace DeadLords
             {
                 _playersHand.TakingCards(_bs.CardsTake);
                 _cardsTook = true;
-                Debug.Log("Cards collected");
             }
 
             //Расположение карт в интерфейсе
@@ -51,7 +49,6 @@ namespace DeadLords
             {
                 PlacingCards();
                 _cardsPlaced = true;
-                Debug.Log("Cards placed");
             }
 
             if (_cardsTook && _cardsPlaced)

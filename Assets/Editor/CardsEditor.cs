@@ -130,21 +130,31 @@ public class CardsEditor : EditorWindow
         GUILayout.BeginHorizontal();
         GUILayout.Label("Уникальное имя(для редактора):");
         GUILayout.Label(cardsList[selectedCardIndex].cardName);
+        _name = cardsList[selectedCardIndex].cardName;
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
         GUILayout.Label("Игровое название(для игрока):");
         GUILayout.Label(cardsList[selectedCardIndex].inGameName);
+        _inGameName = cardsList[selectedCardIndex].inGameName;
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
         GUILayout.Label("Стоимость карты:");
         GUILayout.Label(cardsList[selectedCardIndex].cost.ToString());
+        _cost = cardsList[selectedCardIndex].cost;
 
+        //Тип стоимости
         if (cardsList[selectedCardIndex].manaSpell)
+        {
             GUILayout.Label("mana");
+            _isManaSpell = true;
+        }
         else
+        {
             GUILayout.Label("action");
+            _isManaSpell = false;
+        }            
         GUILayout.EndHorizontal();
 
         //Если вызов существа
@@ -154,6 +164,8 @@ public class CardsEditor : EditorWindow
             GUILayout.Label("Имя призываемого существа:");
             GUILayout.Label(cardsList[selectedCardIndex].creatureName, EditorStyles.centeredGreyMiniLabel);
             GUILayout.EndHorizontal();
+
+            _isCreature = true;
         }
         //Если заклинание
         else
@@ -175,20 +187,33 @@ public class CardsEditor : EditorWindow
 
             GUILayout.BeginHorizontal();
             GUILayout.Label("Тип заклинания(для редактора):");
-            GUILayout.Label(_bonus.type);
+            GUILayout.Label(_bonus.type.ToString());
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
             GUILayout.Label("Цeль(-и):");
-            GUILayout.Label(_bonus.target);
+            GUILayout.Label(_bonus.target.ToString());
             GUILayout.EndHorizontal();
 
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("Значения attack/HP:");
-            GUILayout.Label(_bonus.att.ToString());
-            GUILayout.Label("/");
-            GUILayout.Label(_bonus.hp.ToString());
-            GUILayout.EndHorizontal();
+            if (_bonus.type != SpellType.heal)
+            {
+                GUILayout.Space(5);
+
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("Значение attack:");
+                GUILayout.Label(_bonus.att.ToString());
+                GUILayout.EndHorizontal();
+            }
+
+            if (_bonus.type != SpellType.damage)
+            {
+                GUILayout.Space(5);
+
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("Значение HP:      ");
+                GUILayout.Label(_bonus.hp.ToString());
+                GUILayout.EndHorizontal();
+            }
         }
 
         #region Сохранение в файл
@@ -207,38 +232,33 @@ public class CardsEditor : EditorWindow
     }
 
     /// <summary>
-    /// Редактирование выбранной карты
+    /// Сохдание новой карты
     /// </summary>
-    private void EditCard()
+    private void CreateCard()
     {
-        if (!editButt)
-            editButt = true;
+        if (!addButt)
+            addButt = true; //Если было запущено ввиду отсутствия карт в списке, нужно отметить, что сейчас действует это окно
 
         CardData cd = new CardData();
 
-        GUILayout.Label("Редактирование карты", EditorStyles.boldLabel);
+        GUILayout.Label("Создание новой карты", EditorStyles.boldLabel);
         GUILayout.Space(10);
 
         GUILayout.BeginHorizontal();
-        GUILayout.Label(new GUIContent("Уникальное имя для редактора", "Не будет видно в игре(игроку)"));        
+        GUILayout.Label(new GUIContent("Уникальное имя для редактора", "Не будет видно в игре(игроку)"));
         _name = EditorGUILayout.TextField(_name);
         GUILayout.EndHorizontal();
 
         GUILayout.Space(5);
         GUILayout.BeginHorizontal();
-        GUILayout.Label(new GUIContent("Внутриигровое имя", "Название карты которое будет видно непосредственно игроку"));        
+        GUILayout.Label(new GUIContent("Внутриигровое имя", "Название карты которое будет видно непосредственно игроку"));
         _inGameName = EditorGUILayout.TextField(_inGameName);
         GUILayout.EndHorizontal();
 
         GUILayout.Space(5);
         GUILayout.BeginHorizontal();
-        GUILayout.Label(new GUIContent("Стоимость карты и необходимый ресурс", "Т.е. мана или очки действия"));        
+        GUILayout.Label(new GUIContent("Стоимость карты и необходимый ресурс", "Т.е. мана или очки действия"));
         _cost = EditorGUILayout.IntSlider(_cost, 0, 10);
-
-        if (cardsList[selectedCardIndex].manaSpell)
-            costType = 1;
-        else
-            costType = 0;
 
         costType = EditorGUILayout.Popup(costType, costTypes);
         if (costType == 0)
@@ -250,7 +270,6 @@ public class CardsEditor : EditorWindow
         GUILayout.Space(5);
         GUILayout.BeginHorizontal();
         GUILayout.Label(new GUIContent("Тип карты", "Вызов существа или заклинание"));
-                
         spellType = EditorGUILayout.Popup(spellType, spellTypes);
         if (spellType == 0)
         {
@@ -268,19 +287,143 @@ public class CardsEditor : EditorWindow
 
         //Помогайка
         GUILayout.Space(10);
-        if (!_isCreature)
+        if (!_isCreature && _bonus.type != SpellType.heal)
             EditorGUILayout.HelpBox("Spell Info:" +
                 "\n" + _bonus.unikName +
                 "\n" + _bonus.type +
                 "\n" + _bonus.fullName +
                 "\n" + _bonus.target +
                 "\n" + _bonus.att + "/" + _bonus.hp, MessageType.Info);
+        else if (!_isCreature && _bonus.type == SpellType.heal)
+            EditorGUILayout.HelpBox("Spell Info:" +
+                "\n" + _bonus.unikName +
+                "\n" + _bonus.type +
+                "\n" + _bonus.fullName +
+                "\n" + _bonus.target +
+                "\n" + _bonus.hp, MessageType.Info);
+
+        #region Сохранение в кэш/отмена
+        GUILayout.Space(5);
+        GUILayout.BeginHorizontal();
+        using (new EditorGUI.DisabledGroupScope(_name == string.Empty || _inGameName == string.Empty))
+        {
+            //Save button
+            if (GUILayout.Button(new GUIContent("Save", "Сохраняет карту и добавляет ее в список. Не сохраняет в файл")))
+            {
+                cd.cardName = _name;
+                cd.inGameName = _inGameName;
+                cd.cost = _cost;
+                cd.manaSpell = _isManaSpell;
+
+                if (_isCreature)
+                {
+                    cd.creatureName = _creature.name;
+                    cd.cardsBonusIndex = 0;
+                }
+                else
+                {
+                    cd.creatureName = string.Empty;
+                    cd.cardsBonusIndex = bonusIndex;
+                }
+
+                cardsList.Add(cd);
+                cardsNames.Add(cd.cardName);
+
+                addButt = false;
+            }
+        }
+
+        using (new EditorGUI.DisabledGroupScope(cardsList.Count == 0))
+        {
+            if (GUILayout.Button(new GUIContent("Cancel", "Отменить изменения")))
+                addButt = false;
+        }
+        GUILayout.EndHorizontal();
+        #endregion
+    }
+
+    /// <summary>
+    /// Редактирование выбранной карты
+    /// </summary>
+    private void EditCard()
+    {
+        if (!editButt)
+            editButt = true;
+
+        CardData cd = new CardData();
+
+        GUILayout.Label("Редактирование карты", EditorStyles.boldLabel);
+        GUILayout.Space(10);
+
+        GUILayout.BeginHorizontal();
+        GUILayout.Label(new GUIContent("Уникальное имя для редактора", "Не будет видно в игре(игроку)"));
+        _name = EditorGUILayout.TextField(_name);
+        GUILayout.EndHorizontal();
+
+        GUILayout.Space(5);
+        GUILayout.BeginHorizontal();
+        GUILayout.Label(new GUIContent("Внутриигровое имя", "Название карты которое будет видно непосредственно игроку"));
+        _inGameName = EditorGUILayout.TextField(_inGameName);
+        GUILayout.EndHorizontal();
+
+        GUILayout.Space(5);
+        GUILayout.BeginHorizontal();
+        GUILayout.Label(new GUIContent("Стоимость карты и необходимый ресурс", "Т.е. мана или очки действия"));
+        _cost = EditorGUILayout.IntSlider(_cost, 0, 10);
+
+        if (cardsList[selectedCardIndex].manaSpell)
+            costType = 1;
+        else
+            costType = 0;
+
+        costType = EditorGUILayout.Popup(costType, costTypes);
+        if (costType == 0)
+            _isManaSpell = false;
+        else
+            _isManaSpell = true;
+        GUILayout.EndHorizontal();
+
+        GUILayout.Space(5);
+        GUILayout.BeginHorizontal();
+        GUILayout.Label(new GUIContent("Тип карты", "Вызов существа или заклинание"));
+
+        spellType = EditorGUILayout.Popup(spellType, spellTypes);
+        if (spellType == 0)
+        {
+            _isCreature = true;
+            _creature = EditorGUILayout.ObjectField(_creature, typeof(GameObject), true) as GameObject;
+        }
+        else
+        {
+            _isCreature = false;
+            bonusIndex = EditorGUILayout.Popup(bonusIndex, bonusNames.ToArray());
+
+            _bonus = bonusList[bonusIndex];
+        }
+        GUILayout.EndHorizontal();
+
+        //Помогайка
+        GUILayout.Space(10);
+        if (!_isCreature && _bonus.type != SpellType.heal)
+            EditorGUILayout.HelpBox("Spell Info:" +
+                "\n" + _bonus.unikName +
+                "\n" + _bonus.type +
+                "\n" + _bonus.fullName +
+                "\n" + _bonus.target +
+                "\n" + _bonus.att + "/" + _bonus.hp, MessageType.Info);
+        else if (!_isCreature && _bonus.type == SpellType.heal)
+            EditorGUILayout.HelpBox("Spell Info:" +
+                "\n" + _bonus.unikName +
+                "\n" + _bonus.type +
+                "\n" + _bonus.fullName +
+                "\n" + _bonus.target +
+                "\n" + _bonus.hp, MessageType.Info);
 
         #region Сохранение в кэш/Отмена
         GUILayout.BeginHorizontal();
         //Save button
         using (new EditorGUI.DisabledGroupScope(_name == string.Empty || _inGameName == string.Empty))
-        {            
+        {
             if (GUILayout.Button(new GUIContent("Save", "Сохранение изменений. Не сохраняет в файл")))
             {
                 cd.cardName = _name;
@@ -362,110 +505,6 @@ public class CardsEditor : EditorWindow
             GUILayout.Label(_bonus.unikName);
             GUILayout.EndHorizontal();
         }
-        #endregion
-    }
-
-    /// <summary>
-    /// Сохдание новой карты
-    /// </summary>
-    private void CreateCard()
-    {
-        if (!addButt)
-            addButt = true; //Если было запущено ввиду отсутствия карт в списке, нужно отметить, что сейчас действует это окно
-
-        CardData cd = new CardData();
-
-        GUILayout.Label("Создание новой карты", EditorStyles.boldLabel);
-        GUILayout.Space(10);
-
-        GUILayout.BeginHorizontal();
-        GUILayout.Label(new GUIContent("Уникальное имя для редактора", "Не будет видно в игре(игроку)"));
-        _name = EditorGUILayout.TextField(_name);
-        GUILayout.EndHorizontal();
-
-        GUILayout.Space(5);
-        GUILayout.BeginHorizontal();
-        GUILayout.Label(new GUIContent("Внутриигровое имя", "Название карты которое будет видно непосредственно игроку"));
-        _inGameName = EditorGUILayout.TextField(_inGameName);
-        GUILayout.EndHorizontal();
-
-        GUILayout.Space(5);
-        GUILayout.BeginHorizontal();
-        GUILayout.Label(new GUIContent("Стоимость карты и необходимый ресурс", "Т.е. мана или очки действия"));
-        _cost = EditorGUILayout.IntSlider(_cost, 0, 10);
-
-        costType = EditorGUILayout.Popup(costType, costTypes);
-        if (costType == 0)
-            _isManaSpell = false;
-        else
-            _isManaSpell = true;
-        GUILayout.EndHorizontal();
-
-        GUILayout.Space(5);
-        GUILayout.BeginHorizontal();
-        GUILayout.Label(new GUIContent("Тип карты", "Вызов существа или заклинание"));
-        spellType = EditorGUILayout.Popup(spellType, spellTypes);
-        if (spellType == 0)
-        {
-            _isCreature = true;
-            _creature = EditorGUILayout.ObjectField(_creature, typeof(GameObject), true) as GameObject;
-        }
-        else
-        {
-            _isCreature = false;
-            bonusIndex = EditorGUILayout.Popup(bonusIndex, bonusNames.ToArray());
-
-            _bonus = bonusList[bonusIndex];
-        }
-        GUILayout.EndHorizontal();
-
-        //Помогайка
-        GUILayout.Space(10);
-        if (!_isCreature)
-            EditorGUILayout.HelpBox("Spell Info:" +
-                "\n" + _bonus.unikName +
-                "\n" + _bonus.type +
-                "\n" + _bonus.fullName +
-                "\n" + _bonus.target +
-                "\n" + _bonus.att + "/" + _bonus.hp, MessageType.Info);
-
-        #region Сохранение в кэш/отмена
-        GUILayout.Space(5);
-        GUILayout.BeginHorizontal();
-        using (new EditorGUI.DisabledGroupScope(_name == string.Empty || _inGameName == string.Empty))
-        {
-            //Save button
-            if (GUILayout.Button(new GUIContent("Save", "Сохраняет карту и добавляет ее в список. Не сохраняет в файл")))
-            {
-                cd.cardName = _name;
-                cd.inGameName = _inGameName;
-                cd.cost = _cost;
-                cd.manaSpell = _isManaSpell;
-
-                if (_isCreature)
-                {
-                    cd.creatureName = _creature.name;
-                    cd.cardsBonusIndex = 0;
-                }                    
-                else
-                {
-                    cd.creatureName = string.Empty;
-                    cd.cardsBonusIndex = bonusIndex;
-                }                    
-
-                cardsList.Add(cd);
-                cardsNames.Add(cd.cardName);
-
-                addButt = false;
-            }
-        }
-
-        using (new EditorGUI.DisabledGroupScope(cardsList.Count == 0))
-        {
-            if (GUILayout.Button(new GUIContent("Cancel", "Отменить изменения")))
-                addButt = false;
-        }
-        GUILayout.EndHorizontal();
         #endregion
     }
 }

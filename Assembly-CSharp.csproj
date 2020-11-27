@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\Item.cs" />
     <Compile Include="Assets\Scripts\UI\CardsButton.cs" />
     <Compile Include="Assets\Scripts\Creature.cs" />
+    <Compile Include="Assets\Scripts\Controllers\CardActivator.cs" />
     <Compile Include="Assets\Scripts\Main.cs" />
     <Compile Include="Assets\Scripts\LeanTween\LTSeq.cs" />
     <Compile Include="Assets\Scripts\Controllers\InputController.cs" />
@@ -79,7 +80,6 @@
     <Compile Include="Assets\Scripts\Helpers\CardData.cs" />
     <Compile Include="Assets\Scripts\Controllers\BaseController.cs" />
     <Compile Include="Assets\Scripts\Controllers\SceneLiveController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\BonusController.cs" />
     <Compile Include="Assets\Scripts\Hand.cs" />
     <Compile Include="Assets\Scripts\LoadDeck.cs" />
     <Compile Include="Assets\Scripts\BaseStats.cs" />
@@ -88,10 +88,11 @@
     <Compile Include="Assets\Scripts\LeanTween\LTDescrOptional.cs" />
     <Compile Include="Assets\Scripts\LeanTween\LTDescr.cs" />
     <Compile Include="Assets\Scripts\Deck.cs" />
+    <Compile Include="Assets\Scripts\Helpers\SpellType.cs" />
+    <Compile Include="Assets\Scripts\Helpers\TargetType.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Bonuses.txt" />
-     <None Include="Assets\AllBonusTypes.txt" />
      <None Include="Assets\AllCards.txt" />
      <None Include="Assets\SaveData\Player&apos;s Deck.txt" />
      <None Include="Assets\SaveData\Enemy&apos;s Deck.txt" />

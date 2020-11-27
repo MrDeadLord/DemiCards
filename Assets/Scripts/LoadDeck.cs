@@ -63,7 +63,7 @@ namespace DeadLords
                     else
                     {
                         foreach (Creature cr in Main.Instance.GetObjectManager.GetCreatures)
-                        {
+                        {                            
                             if (ca.creatureName == cr.name)
                             {
                                 tempCard.CardsCreature = cr;
@@ -72,14 +72,14 @@ namespace DeadLords
                             }
                         }
                     }
-
+                    
                     tempDeck.Add(tempCard);
                 }
 
                 //Добавление загруженой колоды непосредственно игроку и врагу
                 if (gameObject.tag == "Player")
                 {
-                    GetComponent<Deck>().Cards = tempDeck;
+                    GetComponent<Deck>().Cards = tempDeck;                    
                     Main.Instance.deckLoadedPl = true;
                 }
                 else

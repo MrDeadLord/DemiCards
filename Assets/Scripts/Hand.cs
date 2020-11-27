@@ -13,8 +13,6 @@ namespace DeadLords
         /// </summary>
         List<Card> _hand = new List<Card>();
 
-        List<Card> _deck = new List<Card>();
-
         /// <summary>
         /// Добавление карт на руку из коллоды
         /// </summary>
@@ -23,17 +21,11 @@ namespace DeadLords
         {
             for (int i = 0; i < count; i++)
             {
-                _deck = GetComponent<Deck>().Cards;  //Обновление колоды
-
                 //Завершение выполнения, если колода закончилась
-                if (_deck.Count == 0)
+                if (GetComponent<Deck>().Cards.Count == 0)
                     return;
 
-                int r = Random.Range(0, _deck.Count);
-
-                _hand.Add(_deck[r]);  //Добавление на руку
-
-                GetComponent<Deck>().RemoveCard(_deck[r]);   //Удаление из колоды
+                _hand.Add(GetComponent<Deck>().GrabRandCard());  //Добавление на руку
             }
         }
 

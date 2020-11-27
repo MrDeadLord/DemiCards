@@ -7,10 +7,7 @@ TagManager:
   - Enemy
   - CreaturePlayer
   - CreatureEnemy
-  - Players Hand
-  - Players Deck
-  - Enemys Hand
-  - Enemys Deck
+  - Card
   layers:
   - Default
   - TransparentFX

@@ -13,12 +13,12 @@
     /// <summary>
     /// Тип бонуса/заклинания(Для вызова в функции)
     /// </summary>
-    public string type;
+    public SpellType type;
 
     /// <summary>
     /// Цель/цели заклинания/бонуса
     /// </summary>
-    public string target;
+    public TargetType target;
 
     /// <summary>
     /// Значение атаки. Если оно не нужно - 0

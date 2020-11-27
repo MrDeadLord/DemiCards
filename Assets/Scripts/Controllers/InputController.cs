@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace DeadLords.Controllers
 {
+    /// <summary>
+    /// Смартфонное управление
+    /// </summary>
     public class InputController : BaseController
     {
         private Camera _cam;
@@ -19,13 +22,7 @@ namespace DeadLords.Controllers
 
         private void Update()
         {
-        }
-
-        private void WatchTheCards()
-        {
-            if (Input.touches[0].phase == TouchPhase.Began || Input.touches[0].phase == TouchPhase.Moved)
-            {
-            }
+            
         }
     }
 }

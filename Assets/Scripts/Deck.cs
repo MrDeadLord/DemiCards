@@ -26,6 +26,23 @@ namespace DeadLords
         }
 
         /// <summary>
+        /// Взять случайную карту из колоды
+        /// </summary>
+        /// <returns>Взятая карта</returns>
+        public Card GrabRandCard()
+        {
+            int id = Random.Range(0, cards.Count);
+
+            Card card = new Card();
+
+            card = cards[id];
+
+            cards.RemoveAt(id);
+
+            return card;
+        }
+
+        /// <summary>
         /// Непосредственно сама колода
         /// </summary>
         public List<Card> Cards

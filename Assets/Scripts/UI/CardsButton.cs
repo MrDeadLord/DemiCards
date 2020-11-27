@@ -12,11 +12,16 @@ namespace DeadLords
     [RequireComponent(typeof(Card))]
     public class CardsButton : BaseController, ISelectHandler, IPointerDownHandler, IPointerExitHandler
     {
+        [SerializeField] [Tooltip("Картинка, что будет высвечиваться при нажатии на карту")] Image _sizeUpImage;
+
         Button _cardButt;
         Vector3 _startPosition;
         Quaternion _startRotation;
         Vector3 _startScale;
         Image _img;
+
+        Color _alphaOff = new Color(255, 255, 255, 0);
+        Color _alphaOn = new Color(255, 255, 255, 255);
 
         /// <summary>
         /// Переменная для выключения постоянной инициации
@@ -26,6 +31,8 @@ namespace DeadLords
         #region Unity-time
         private void Start()
         {
+            _sizeUpImage.enabled = false;
+
             _cardButt = GetComponent<Button>();
             _startPosition = transform.position;
             _startRotation = transform.rotation;
@@ -45,6 +52,7 @@ namespace DeadLords
 
             Init();
         }
+        #endregion
 
         /// <summary>
         /// Инициализация карт
@@ -57,7 +65,6 @@ namespace DeadLords
             GetComponent<ImagenizeButton>().Imagine();
             _loaded = true;
         }
-        #endregion
 
         public override void On()
         {
@@ -75,29 +82,35 @@ namespace DeadLords
         }
 
         #region Поведение кнопки
-        private void OnClickEvent()
-        {
-            Debug.Log("Clicked");
-        }
-
+                
         public void OnSelect(BaseEventData eventData)
         {
-            //transform.localScale *= 2;
+
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+
         }
 
         public void OnPointerDown(PointerEventData eventData)
-        {
-            Debug.Log("Held down");
-            transform.localScale *= 2;
-            transform.position = Input.mousePosition;
-            transform.rotation.Set(0, 0, 0, 0);
+        {            
+            _sizeUpImage.enabled = true;
+            _sizeUpImage.sprite = _img.sprite;
+
+            _img.color = _alphaOff;
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            transform.position = _startPosition;
-            transform.rotation = _startRotation;
-            transform.localScale = _startScale;
+            _sizeUpImage.enabled = false;
+
+            _img.color = _alphaOn;
+
+            if (Input.GetTouch(0).position.y > 160)
+            {
+                GetComponent<CardActivator>().On();
+            }
         }
         #endregion
     }

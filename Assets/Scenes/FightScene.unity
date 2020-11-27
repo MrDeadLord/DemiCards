@@ -386,6 +386,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1810160919}
     m_Modifications:
+    - target: {fileID: 455115578380936756, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _hand
+      value: 
+      objectReference: {fileID: 1369544277}
     - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Color.r
       value: 1
@@ -396,6 +400,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: m_Color.a
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7359825753416737739, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
@@ -482,6 +490,14 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7359825753416737743, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _sizeUpPlace
+      value: 
+      objectReference: {fileID: 1569985531}
+    - target: {fileID: 7359825753416737743, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _sizeUpImage
+      value: 
+      objectReference: {fileID: 1569985531}
     - target: {fileID: 7359825753416737844, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Name
       value: CardPref 6
@@ -540,6 +556,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1810160919}
     m_Modifications:
+    - target: {fileID: 455115578380936756, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _hand
+      value: 
+      objectReference: {fileID: 1369544277}
     - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Color.r
       value: 1
@@ -550,6 +570,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: m_Color.a
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7359825753416737739, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
@@ -636,6 +660,14 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7359825753416737743, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _sizeUpPlace
+      value: 
+      objectReference: {fileID: 1569985531}
+    - target: {fileID: 7359825753416737743, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _sizeUpImage
+      value: 
+      objectReference: {fileID: 1569985531}
     - target: {fileID: 7359825753416737844, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Name
       value: CardPref 2
@@ -664,6 +696,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1810160919}
     m_Modifications:
+    - target: {fileID: 455115578380936756, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _hand
+      value: 
+      objectReference: {fileID: 1369544277}
     - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Color.r
       value: 1
@@ -674,6 +710,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: m_Color.a
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7359825753416737739, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
@@ -760,6 +800,14 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7359825753416737743, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _sizeUpPlace
+      value: 
+      objectReference: {fileID: 1569985531}
+    - target: {fileID: 7359825753416737743, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _sizeUpImage
+      value: 
+      objectReference: {fileID: 1569985531}
     - target: {fileID: 7359825753416737844, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Name
       value: CardPref 3
@@ -923,6 +971,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1810160919}
+  - {fileID: 1569985530}
   - {fileID: 2078214324}
   m_Father: {fileID: 0}
   m_RootOrder: 8
@@ -1294,6 +1343,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1810160919}
     m_Modifications:
+    - target: {fileID: 455115578380936756, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _hand
+      value: 
+      objectReference: {fileID: 1369544277}
     - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Color.r
       value: 1
@@ -1304,6 +1357,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: m_Color.a
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7359825753416737739, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
@@ -1390,6 +1447,14 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7359825753416737743, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _sizeUpPlace
+      value: 
+      objectReference: {fileID: 1569985531}
+    - target: {fileID: 7359825753416737743, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _sizeUpImage
+      value: 
+      objectReference: {fileID: 1569985531}
     - target: {fileID: 7359825753416737844, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Name
       value: CardPref 1
@@ -1437,6 +1502,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1810160919}
     m_Modifications:
+    - target: {fileID: 455115578380936756, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _hand
+      value: 
+      objectReference: {fileID: 1369544277}
     - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Color.r
       value: 1
@@ -1447,6 +1516,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: m_Color.a
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7359825753416737739, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
@@ -1533,6 +1606,14 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7359825753416737743, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _sizeUpPlace
+      value: 
+      objectReference: {fileID: 1569985531}
+    - target: {fileID: 7359825753416737743, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _sizeUpImage
+      value: 
+      objectReference: {fileID: 1569985531}
     - target: {fileID: 7359825753416737844, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Name
       value: CardPref 0
@@ -1712,6 +1793,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1810160919}
     m_Modifications:
+    - target: {fileID: 455115578380936756, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _hand
+      value: 
+      objectReference: {fileID: 1369544277}
     - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Color.r
       value: 1
@@ -1722,6 +1807,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: m_Color.a
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7359825753416737739, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
@@ -1808,6 +1897,14 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7359825753416737743, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _sizeUpPlace
+      value: 
+      objectReference: {fileID: 1569985531}
+    - target: {fileID: 7359825753416737743, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _sizeUpImage
+      value: 
+      objectReference: {fileID: 1569985531}
     - target: {fileID: 7359825753416737844, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Name
       value: CardPref 7
@@ -1855,6 +1952,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1810160919}
     m_Modifications:
+    - target: {fileID: 455115578380936756, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _hand
+      value: 
+      objectReference: {fileID: 1369544277}
     - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Color.r
       value: 1
@@ -1865,6 +1966,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: m_Color.a
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7359825753416737739, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
@@ -1951,6 +2056,14 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7359825753416737743, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _sizeUpPlace
+      value: 
+      objectReference: {fileID: 1569985531}
+    - target: {fileID: 7359825753416737743, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _sizeUpImage
+      value: 
+      objectReference: {fileID: 1569985531}
     - target: {fileID: 7359825753416737844, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Name
       value: CardPref 8
@@ -2234,7 +2347,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f29076cf319b5a74d8eac8f2d9dc1b3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cards: []
 --- !u!114 &1369544275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2277,7 +2389,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37dae7dbe49ac7f48b386551122ea23e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hand: []
 --- !u!114 &1369544278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2392,6 +2503,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1810160919}
     m_Modifications:
+    - target: {fileID: 455115578380936756, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _hand
+      value: 
+      objectReference: {fileID: 1369544277}
     - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Color.r
       value: 1
@@ -2402,6 +2517,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: m_Color.a
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7359825753416737739, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
@@ -2488,6 +2607,14 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7359825753416737743, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _sizeUpPlace
+      value: 
+      objectReference: {fileID: 1569985531}
+    - target: {fileID: 7359825753416737743, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _sizeUpImage
+      value: 
+      objectReference: {fileID: 1569985531}
     - target: {fileID: 7359825753416737844, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Name
       value: CardPref 5
@@ -2503,6 +2630,81 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7359825753416737739, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
   m_PrefabInstance: {fileID: 1813021369}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1569985529
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1569985530}
+  - component: {fileID: 1569985532}
+  - component: {fileID: 1569985531}
+  m_Layer: 5
+  m_Name: SizeUpImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1569985530
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569985529}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 666458645}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -51}
+  m_SizeDelta: {x: 390, y: 570}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1569985531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569985529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 0
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1569985532
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569985529}
+  m_CullTransparentMesh: 0
 --- !u!1 &1588294675
 GameObject:
   m_ObjectHideFlags: 0
@@ -2612,7 +2814,7 @@ GameObject:
   - component: {fileID: 1810160921}
   m_Layer: 5
   m_Name: Cards
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2662,6 +2864,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1810160919}
     m_Modifications:
+    - target: {fileID: 455115578380936756, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _hand
+      value: 
+      objectReference: {fileID: 1369544277}
     - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Color.r
       value: 1
@@ -2672,6 +2878,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: m_Color.a
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7359825753416737739, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
@@ -2758,6 +2968,14 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7359825753416737743, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _sizeUpPlace
+      value: 
+      objectReference: {fileID: 1569985531}
+    - target: {fileID: 7359825753416737743, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _sizeUpImage
+      value: 
+      objectReference: {fileID: 1569985531}
     - target: {fileID: 7359825753416737844, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Name
       value: CardPref 4
@@ -2805,6 +3023,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1810160919}
     m_Modifications:
+    - target: {fileID: 455115578380936756, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _hand
+      value: 
+      objectReference: {fileID: 1369544277}
     - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Color.r
       value: 1
@@ -2815,6 +3037,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: m_Color.a
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7359825753416737739, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
@@ -2901,6 +3127,14 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7359825753416737743, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _sizeUpPlace
+      value: 
+      objectReference: {fileID: 1569985531}
+    - target: {fileID: 7359825753416737743, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _sizeUpImage
+      value: 
+      objectReference: {fileID: 1569985531}
     - target: {fileID: 7359825753416737844, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Name
       value: CardPref 9
@@ -2918,6 +3152,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1810160919}
     m_Modifications:
+    - target: {fileID: 455115578380936756, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _hand
+      value: 
+      objectReference: {fileID: 1369544277}
     - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Color.r
       value: 1
@@ -2928,6 +3166,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7359825753416737737, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: m_Color.a
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7359825753416737739, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
@@ -3014,6 +3256,14 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7359825753416737743, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _sizeUpPlace
+      value: 
+      objectReference: {fileID: 1569985531}
+    - target: {fileID: 7359825753416737743, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
+      propertyPath: _sizeUpImage
+      value: 
+      objectReference: {fileID: 1569985531}
     - target: {fileID: 7359825753416737844, guid: 26a4b876eeaa0f84d9e9eed72b4f9eed, type: 3}
       propertyPath: m_Name
       value: CardPref 10
@@ -3265,7 +3515,7 @@ RectTransform:
   m_Children:
   - {fileID: 2026842171}
   m_Father: {fileID: 666458645}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}

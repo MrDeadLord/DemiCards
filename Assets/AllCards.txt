@@ -1,4 +1,4 @@
-{"cardName":"Apple +2","inGameName":"Спелое яблочко","cost":1,"manaSpell":false,"creatureName":"","cardsBonusIndex":3}
-{"cardName":"++ ally cr","inGameName":"Призыв к оружию","cost":1,"manaSpell":false,"creatureName":"","cardsBonusIndex":1}
-{"cardName":"+- ally cr","inGameName":"Боевая стимуляция","cost":1,"manaSpell":false,"creatureName":"","cardsBonusIndex":2}
-{"cardName":"Summon Creature1","inGameName":"Призыв Creature1","cost":0,"manaSpell":false,"creatureName":"Creature1","cardsBonusIndex":0}
+{"cardName":"Apple +2","inGameName":"Спелое яблочко","cost":1,"manaSpell":false,"creatureName":"","cardsBonusIndex":0}
+{"cardName":"+1+1 ally cr","inGameName":"Призыв к оружию","cost":1,"manaSpell":true,"creatureName":"","cardsBonusIndex":1}
+{"cardName":"+2-1 ally cr","inGameName":"Забудь о боли","cost":1,"manaSpell":false,"creatureName":"","cardsBonusIndex":2}
+{"cardName":"Summon Creature1","inGameName":"Призыв Creature1","cost":1,"manaSpell":false,"creatureName":"Creature1","cardsBonusIndex":0}

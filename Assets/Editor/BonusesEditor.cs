@@ -22,32 +22,15 @@ public class BonusesEditor : EditorWindow
     List<string> bonusNames = new List<string>();
 
     int selectedBonus = 0;
-    /// <summary>
-    /// Все возможные цели заклинаний
-    /// </summary>
-    string[] targets = { "Summoner", "Enemy", "Summoner and enemy", "Elly creature", "Enemy creature",
-        "All ally's creatures", "All enemy's creatures", "All creatures", "Everyone"};
-    /// <summary>
-    /// Выбранная цель(индекс). Для записи выбранной цели
-    /// </summary>
-    int selectedTarget;
 
-    //Для редактирования типа
-    /// <summary>
-    /// Путь к файлу с именами
-    /// </summary>
-    string _allBonusTypesPath;
-    /// <summary>
-    /// Список всех возможных имен бонусов
-    /// </summary>
-    List<string> _allBonusTypes = new List<string>();
-    int _selectedTypeIndex;
-    string newType = string.Empty;
+    //Переменные карты
 
-    bool _editTypesButt = false;
-
-    //Для создания и редактирования бонусов нужны переменные
-    string _unikName, _type, _fullName, _target;
+    string _unikName, _fullName;
+    /// <summary>
+    /// Выбранная цель
+    /// </summary>
+    TargetType _target;
+    SpellType _type;
     int _att, _hp;
     #endregion
 
@@ -61,7 +44,6 @@ public class BonusesEditor : EditorWindow
     {
         //Если файл есть, открывает, записывает в bonusList. Если файла нет - создает пустой
         path = Application.dataPath + "/Bonuses.txt";
-        _allBonusTypesPath = Application.dataPath + "/AllBonusTypes.txt";
 
         bonusList = bonusList = new List<BonusData>();
 
@@ -76,18 +58,6 @@ public class BonusesEditor : EditorWindow
         }
         else
             File.Create(path);
-
-        //Названия всех возможных имен бонусов хранится отдельно
-        if (File.Exists(_allBonusTypesPath))
-        {
-            if (File.ReadAllLines(_allBonusTypesPath).Length == 0)
-                return;
-
-            foreach (string s in File.ReadAllLines(_allBonusTypesPath))
-                _allBonusTypes.Add(s);
-        }
-        else
-            File.Create(_allBonusTypesPath);
     }
 
     private void OnGUI()
@@ -95,104 +65,100 @@ public class BonusesEditor : EditorWindow
         GUILayout.Label("Работа со списком ВСЕХ бонусов в игре", EditorStyles.boldLabel);
         GUILayout.Space(10);
 
-        if (_allBonusTypes.Count == 0)  //Если нет типов бонусов
-            EditBonusTypes();
-        else if (bonusList.Count == 0 && !_editTypesButt)   ///Ничего не нажато, а бонусов нет. Кнопки находятся в ShowBonus
+        if (bonusList.Count == 0)   ///Ничего не нажато, а бонусов нет. Кнопки находятся в ShowBonus
             AddBonus();
-        else if (!editButt && !addButt && !_editTypesButt)  //Список типов есть, бонусы есть, ничего не нажато. Кнопки находятся в ShowBonus
+        else if (!editButt && !addButt)  //Список типов есть, бонусы есть, ничего не нажато. Кнопки находятся в ShowBonus
             ShowBonus(selectedBonus);
         else if (editButt)
             EditBonus(selectedBonus);
         else if (addButt)
             AddBonus();
-
-        if (_editTypesButt)
-        {
-            addButt = false;
-            editButt = false;
-            EditBonusTypes();
-        }
     }
 
     /// <summary>
-    /// Редактирование имен
+    /// Показ выбранного бонуса/заклинания
     /// </summary>
-    private void EditBonusTypes()
+    /// <param name="selected">Индекс бонуса/заклинания</param>
+    private void ShowBonus(int selected)
     {
-        if (!_editTypesButt)
-            _editTypesButt = true;
+        GUILayout.BeginHorizontal();
+        selectedBonus = EditorGUILayout.Popup(selectedBonus, bonusNames.ToArray());
 
-        var backup = _allBonusTypes;
+        editButt = GUILayout.Button("Edit");
+        addButt = GUILayout.Button("Add new");
+        GUILayout.EndHorizontal();
 
+        GUILayout.Label("Полное описание бонуса:", EditorStyles.boldLabel);
         GUILayout.Space(10);
 
-        GUILayout.Label("Edit bonus types");
-        _selectedTypeIndex = EditorGUILayout.Popup(_selectedTypeIndex, _allBonusTypes.ToArray());
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Название(уникальное имя):");
+        GUILayout.Label(bonusList[selected].unikName);
+        _unikName = bonusList[selected].unikName;
+        GUILayout.EndHorizontal();
 
-        if (_allBonusTypes.Count == 0 || _allBonusTypes[_selectedTypeIndex] == string.Empty)
+        GUILayout.Space(5);
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Тип(для вызова):");
+        GUILayout.Label(_type.ToString());
+        _type = bonusList[selected].type;
+        GUILayout.EndHorizontal();
+
+        GUILayout.Space(5);
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Полное описание бонуса/заклинания(для игрока):");
+        GUILayout.Label(bonusList[selected].fullName);
+        _fullName = bonusList[selected].fullName;
+        GUILayout.EndHorizontal();
+
+        GUILayout.Space(5);
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Цель:");
+        GUILayout.Label(bonusList[selected].target.ToString());
+        _target = bonusList[selected].target;
+        GUILayout.EndHorizontal();
+
+        //Если это хилка, атаку не отображаем
+        if (bonusList[selected].type != SpellType.heal)
         {
+            GUILayout.Space(5);
+
             GUILayout.BeginHorizontal();
-            GUILayout.Label("Добавить новое имя:");
-            newType = EditorGUILayout.TextField(newType);
-
-            using (new EditorGUI.DisabledGroupScope(newType == string.Empty))
-            {
-                if (GUILayout.Button(new GUIContent("Add", "Добавить имя в список")))
-                {
-                    if (_allBonusTypes.Count == 0)
-                        _allBonusTypes.Add(newType);
-                    else
-                        _allBonusTypes[_selectedTypeIndex] = newType;
-
-                    newType = string.Empty;
-
-                    Debug.Log("Type added!");
-                }
-            }
-
+            GUILayout.Label("Значение attack:");
+            GUILayout.Label(bonusList[selected].att.ToString());
+            _att = bonusList[selected].att;
             GUILayout.EndHorizontal();
         }
-        else
+
+        if (bonusList[selected].type != SpellType.damage)
         {
+            GUILayout.Space(5);
+
             GUILayout.BeginHorizontal();
-            GUILayout.Label("Edit tag:");
-            newType = EditorGUILayout.TextField(newType);
-
-            using (new EditorGUI.DisabledGroupScope(newType == string.Empty))
-            {
-                if (GUILayout.Button(new GUIContent("Confurm edit", "Подтвертить новое имя и перезаписать его в список")))
-                    _allBonusTypes[_selectedTypeIndex] = newType;
-            }
-
-            if (GUILayout.Button("Add new"))
-            {
-                if (!_allBonusTypes.Contains(newType))
-                    _allBonusTypes.Add(newType);
-            }
-
+            GUILayout.Label("Значение HP:      ");
+            GUILayout.Label(bonusList[selected].hp.ToString());
+            _hp = bonusList[selected].hp;
             GUILayout.EndHorizontal();
         }
+
+        GUILayout.Space(10);
 
         //Помогайка
         EditorGUILayout.HelpBox("Главные сокращения:" +
                 "\nCreature-cr, destroy - dist," +
-                "\nЕсли был изменен этот список, необходимо сопоставить его с Cards/Bonus скриптом", MessageType.Info);
+                "\nЕсли необходимо сделать, например, +att/-hp, будет написано bust/debust", MessageType.Info);
 
-        #region Кнопки сохранить и отменить
-        GUILayout.BeginHorizontal();
-        if (GUILayout.Button(new GUIContent("Confurm", "Сохраняет имена в файл")))
+        #region Сохранение в файл
+        if (GUILayout.Button(new GUIContent("Save", "Сохраняет все новое/редактированное в файл")))
         {
-            File.WriteAllLines(_allBonusTypesPath, _allBonusTypes);
+            List<string> saveNames = new List<string>();    //Списокдля сохранения
 
-            _editTypesButt = false;
-        }
+            foreach (BonusData bd in bonusList)
+                saveNames.Add(JsonUtility.ToJson(bd));
 
-        if (GUILayout.Button(new GUIContent("Cancel", "Отменяет все изменения в этом окне и возвращает на экран с Info")))
-        {
-            _allBonusTypes = backup;
-            _editTypesButt = false;
+            File.WriteAllLines(path, saveNames.ToArray());
+            Debug.Log("Bonuses saved");
         }
-        GUILayout.EndHorizontal();
         #endregion
     }
 
@@ -214,9 +180,8 @@ public class BonusesEditor : EditorWindow
         GUILayout.Space(5);
         GUILayout.BeginHorizontal();
         GUILayout.Label(new GUIContent("Тип бонуса/заклинания(для вызова метода):", "Может повторяться"));
-        _selectedTypeIndex = EditorGUILayout.Popup(_selectedTypeIndex, _allBonusTypes.ToArray());
-        _type = _allBonusTypes[_selectedTypeIndex];
-        _editTypesButt = GUILayout.Button(new GUIContent("Edit", "Изменить список типов"));
+
+        _type = (SpellType)EditorGUILayout.EnumPopup(_type);
         GUILayout.EndHorizontal();
 
         GUILayout.Space(5);
@@ -229,26 +194,40 @@ public class BonusesEditor : EditorWindow
         GUILayout.Space(5);
         GUILayout.BeginHorizontal();
         GUILayout.Label("Цель(-и):");
-        selectedTarget = EditorGUILayout.Popup(selectedTarget, targets);
-        _target = targets[selectedTarget];
+
+        _target = (TargetType)EditorGUILayout.EnumPopup(_target);
         GUILayout.EndHorizontal();
 
-        GUILayout.Space(5);
-        GUILayout.BeginHorizontal();
-        GUILayout.Label(new GUIContent("Значение attack:", "Если не нужно - 0"));
-        _att = EditorGUILayout.IntSlider(_att, 0, 20);
-        GUILayout.EndHorizontal();
+        //Если НЕ хилка, то отображаем атаку
+        if (_type != SpellType.heal)
+        {
+            GUILayout.Space(5);
+            GUILayout.BeginHorizontal();
+            GUILayout.Label(new GUIContent("Значение attack:", "Если не нужно - 0"));
 
-        GUILayout.Space(5);
-        GUILayout.BeginHorizontal();
-        GUILayout.Label(new GUIContent("Значение HP:      ", "Если не нужно - 0"));
-        _hp = EditorGUILayout.IntSlider(_hp, 0, 20);
-        GUILayout.EndHorizontal();
+            _att = EditorGUILayout.IntSlider(_att, -20, 20);
+            GUILayout.EndHorizontal();
+        }
+        //Если это все же хил, то значение атаки = 0
+        else
+            _att = 0;
+
+        //Если это НЕ атака, то отображаем хп
+        if (_type != SpellType.damage)
+        {
+            GUILayout.Space(5);
+            GUILayout.BeginHorizontal();
+            GUILayout.Label(new GUIContent("Значение HP:      ", "Если не нужно - 0"));
+            _hp = EditorGUILayout.IntSlider(_hp, -20, 20);
+            GUILayout.EndHorizontal();
+        }
+        //Если это все же нанесение урона(т.е. атака), но хп = 0
+        else
+            _hp = 0;
 
         //Помогайка
         EditorGUILayout.HelpBox("Главные сокращения:" +
                 "\nCreature-cr, destroy - dist," +
-                "\nЕсли необходимо сделать, например, +att/-hp, нужно написать bust/debust" +
                 "\nЕсли был изменен список сокращенных имен, необходимо сопоставить его с Bonus скриптом", MessageType.Info);
 
         #region Сохранение
@@ -256,8 +235,7 @@ public class BonusesEditor : EditorWindow
         GUILayout.Label("Сохранить можно только если все поля заполнены");
 
         GUILayout.BeginHorizontal();
-        using (new EditorGUI.DisabledGroupScope(_unikName == string.Empty || _fullName == string.Empty
-            || _target == string.Empty))
+        using (new EditorGUI.DisabledGroupScope(_unikName == string.Empty || _fullName == string.Empty))
         {
             //Кнопка сохранения
             if (GUILayout.Button(new GUIContent("Add bonus", "Завершение редактирование и переход к окну Info")))
@@ -287,84 +265,6 @@ public class BonusesEditor : EditorWindow
     }
 
     /// <summary>
-    /// Показвыбранного бонуса/заклинания
-    /// </summary>
-    /// <param name="selected">Индекс бонуса/заклинания</param>
-    private void ShowBonus(int selected)
-    {
-        GUILayout.BeginHorizontal();
-        selectedBonus = EditorGUILayout.Popup(selectedBonus, bonusNames.ToArray());
-
-        editButt = GUILayout.Button("Edit");
-        addButt = GUILayout.Button("Add new");
-        GUILayout.EndHorizontal();
-
-        GUILayout.Label("Полное описание бонуса:", EditorStyles.boldLabel);
-        GUILayout.Space(10);
-
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("Название(уникальное имя):");
-        GUILayout.Label(bonusList[selected].unikName);
-        _unikName = bonusList[selected].unikName;
-        GUILayout.EndHorizontal();
-
-        GUILayout.Space(5);
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("Тип(для вызова):");
-        GUILayout.Label(bonusList[selected].type);
-        _type = bonusList[selected].type;
-        GUILayout.EndHorizontal();
-
-        GUILayout.Space(5);
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("Полное описание бонуса/заклинания(для игрока):");
-        GUILayout.Label(bonusList[selected].fullName);
-        _fullName = bonusList[selected].fullName;
-        GUILayout.EndHorizontal();
-
-        GUILayout.Space(5);
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("Цель:");
-        GUILayout.Label(bonusList[selected].target);
-        _target = bonusList[selected].target;
-        GUILayout.EndHorizontal();
-
-        GUILayout.Space(5);
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("Значение attack:");
-        GUILayout.Label(bonusList[selected].att.ToString());
-        _att = bonusList[selected].att;
-        GUILayout.EndHorizontal();
-
-        GUILayout.Space(5);
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("Значение HP:      ");
-        GUILayout.Label(bonusList[selected].hp.ToString());
-        _hp = bonusList[selected].hp;
-        GUILayout.EndHorizontal();
-
-        GUILayout.Space(10);
-
-        //Помогайка
-        EditorGUILayout.HelpBox("Главные сокращения:" +
-                "\nCreature-cr, destroy - dist," +
-                "\nЕсли необходимо сделать, например, +att/-hp, будет написано bust/debust", MessageType.Info);
-
-        #region Сохранение в файл
-        if (GUILayout.Button(new GUIContent("Save", "Сохраняет все новое/редактированное в файл")))
-        {
-            List<string> saveNames = new List<string>();    //Списокдля сохранения
-
-            foreach (BonusData bd in bonusList)
-                saveNames.Add(JsonUtility.ToJson(bd));
-
-            File.WriteAllLines(path, saveNames.ToArray());
-            Debug.Log("Bonuses saved");
-        }
-        #endregion
-    }
-
-    /// <summary>
     /// Изменение выбранного бонуса/заклинания
     /// </summary>
     /// <param name="selected">Индекс выбранного бонуса</param>
@@ -383,9 +283,8 @@ public class BonusesEditor : EditorWindow
         GUILayout.Space(5);
         GUILayout.BeginHorizontal();
         GUILayout.Label(new GUIContent("Тип бонуса/заклинания(для вызова метода):", "Может повторяться"));
-        _selectedTypeIndex = EditorGUILayout.Popup(_selectedTypeIndex, _allBonusTypes.ToArray());
-        _type = _allBonusTypes[_selectedTypeIndex];
-        _editTypesButt = GUILayout.Button(new GUIContent("Edit", "Изменить список типов"));
+
+        _type = (SpellType)EditorGUILayout.EnumPopup(_type);
         GUILayout.EndHorizontal();
 
         GUILayout.Space(5);
@@ -396,26 +295,40 @@ public class BonusesEditor : EditorWindow
         GUILayout.Space(5);
         GUILayout.BeginHorizontal();
         GUILayout.Label("Цель:");
-        selectedTarget = EditorGUILayout.Popup(selectedTarget, targets);
-        _target = targets[selectedTarget];
+
+        _target = (TargetType)EditorGUILayout.EnumPopup(_target);
         GUILayout.EndHorizontal();
 
-        GUILayout.Space(5);
-        GUILayout.BeginHorizontal();
-        GUILayout.Label(new GUIContent("Значение attack:", "Если не нужно - 0"));
-        _att = EditorGUILayout.IntSlider(_att, 0, 20);
-        GUILayout.EndHorizontal();
+        //Если НЕ хилка, то отображаем атаку
+        if (_type != SpellType.heal)
+        {
+            GUILayout.Space(5);
+            GUILayout.BeginHorizontal();
+            GUILayout.Label(new GUIContent("Значение attack:", "Если не нужно - 0"));
 
-        GUILayout.Space(5);
-        GUILayout.BeginHorizontal();
-        GUILayout.Label(new GUIContent("Значение HP:", "Если не нужно - 0"));
-        _hp = EditorGUILayout.IntSlider(_hp, 0, 20);
-        GUILayout.EndHorizontal();
+            _att = EditorGUILayout.IntSlider(_att, -20, 20);
+            GUILayout.EndHorizontal();
+        }
+        //Если это все же хил, то значение атаки = 0
+        else
+            _att = 0;
+
+        //Если это НЕ атака, то отображаем хп
+        if (_type != SpellType.damage)
+        {
+            GUILayout.Space(5);
+            GUILayout.BeginHorizontal();
+            GUILayout.Label(new GUIContent("Значение HP:      ", "Если не нужно - 0"));
+            _hp = EditorGUILayout.IntSlider(_hp, -20, 20);
+            GUILayout.EndHorizontal();
+        }
+        //Если это все же нанесение урона(т.е. атака), но хп = 0
+        else
+            _hp = 0;
 
         //Помогайка
         EditorGUILayout.HelpBox("Главные сокращения:" +
                 "\nCreature-cr, destroy - dist," +
-                "\nЕсли необходимо сделать, например, +att/-hp, нужно написать bust/debust" +
                 "\nЕсли был изменен список сокращенных имен, необходимо сопоставить его с Bonus скриптом", MessageType.Info);
 
         #region Сохранение
@@ -423,8 +336,7 @@ public class BonusesEditor : EditorWindow
         GUILayout.Label("Сохранить можно только если все поля заполнены");
 
         GUILayout.BeginHorizontal();
-        using (new EditorGUI.DisabledGroupScope(_unikName == string.Empty || _fullName == string.Empty
-            || _target == string.Empty))
+        using (new EditorGUI.DisabledGroupScope(_unikName == string.Empty || _fullName == string.Empty))
         {
             if (GUILayout.Button(new GUIContent("Confurm", "Завершение редактирование и переход к окну Info")))
             {

@@ -1,114 +1,95 @@
-﻿using DeadLords.Interface;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace DeadLords
 {
-    public class Creature : MonoBehaviour, IChangeValue
+    public class Creature : MonoBehaviour
     {
         [SerializeField] private int _attack;
         [SerializeField] private int _maxHP;
 
-        private int _curHP;
+        private int _curHP;        
         private bool _isActive;
 
         public void Death()
         {
-        }
-
-        public void CantAttack()
-        {
+            Destroy(gameObject);    //Добавить запуск анимации
         }
 
         /// <summary>
-        /// Атака цели
+        /// Лечение
         /// </summary>
-        /// <param name="obj">Цель</param>
-        void Attack(IChangeValue obj)
+        /// <param name="value"></param>
+        public void Heal(int value)
         {
-            if (obj != null)
+            if (_curHP < _maxHP)
             {
-                HealDam(_attack, false);
-            }
-        }   //Добавить анимации и т.д.
+                _curHP += value;
 
-        public void HealDam(int value, bool isHeal)
-        {
-            if (isHeal)
-            {
-                if (_curHP < _maxHP)
-                {
-                    _curHP += value;
-
-                    if (_curHP > _maxHP)
-                        _curHP = _maxHP;
-                }
-            }
-            else
-            {
-                _curHP -= value;
-
-                if (_curHP <= 0)
-                    Death();
+                if (_curHP > _maxHP)
+                    _curHP = _maxHP;
             }
         }
 
-        public void BustDebust(int att, int hp, string act)
+        /// <summary>
+        /// Получение урона. Смерть если _curHP <= 0
+        /// </summary>
+        /// <param name="value">Урон</param>
+        public void TakeDamage(int value)
         {
-            switch (act)
-            {
-                case "+/+":
-                    _attack += att;
-                    _curHP += hp;
-                    break;
+            _curHP -= value;
 
-                case "+/-":
-                    _attack += att;
-                    _curHP -= hp;
+            if (_curHP <= 0)
+                Death();
+        }
 
-                    if (_curHP <= 0)
-                        Death();
-                    break;
+        /// <summary>
+        /// Баф/дебаф атаки и НР существа
+        /// </summary>
+        /// <param name="att">Значение атаки(отричательное если дебаф)</param>
+        /// <param name="hp">Значение НР(отрицательное если дебаф)</param>
+        public void BustDebust(int att, int hp)
+        {
+            _attack += att;
+            _curHP += hp;
 
-                case "-/+":
-                    _attack -= att;
-                    _curHP += hp;
+            if (_attack < 0)
+                _attack = 0;
 
-                    if (_attack < 0)
-                    {
-                        _attack = 0;
-                        CantAttack();
-                    }
-                    break;
+            if (_curHP > _maxHP)
+                _maxHP = _curHP;
 
-                case "-/-":
-                    _attack -= att;
-                    if (_attack < 0)
-                    {
-                        _attack = 0;
-                        CantAttack();
-                    }
-
-                    _curHP -= hp;
-                    if (_curHP <= 0)
-                        Death();
-                    break;
-            }
+            if (_curHP <= 0)
+                Death();
         }
 
         #region Получение данных
+
+        /// <summary>
+        /// Значение атаки существа
+        /// </summary>
         public int AttackValue
         {
             get { return _attack; }
             set { _attack = value; }
         }
+
+        /// <summary>
+        /// Максимально возможное здоровье существа
+        /// </summary>
         public int MaxHP
         {
             get { return _maxHP; }
             set { _maxHP = value; }
         }
 
+        /// <summary>
+        /// Текущее здоровье существа
+        /// </summary>
         public int GetCurHP { get { return _curHP; } }
 
+        /// <summary>
+        /// Активно ли существо. Может ли атаковать
+        /// </summary>
         public bool IsActive
         {
             get { return _isActive; }

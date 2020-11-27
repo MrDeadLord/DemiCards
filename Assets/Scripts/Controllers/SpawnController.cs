@@ -5,6 +5,8 @@ namespace DeadLords.Controllers
 {
     public class SpawnController : BaseController
     {
+        #region Переменные
+
         /// <summary>
         /// Точки спауна существ игрока
         /// </summary>
@@ -20,6 +22,9 @@ namespace DeadLords.Controllers
         /// </summary>
         private Vector3 _spawnPoint;
 
+        /// <summary>
+        /// Индексы для расставления существ
+        /// </summary>
         private int _indexP = 0, _indexE = 0;
 
         /// <summary>
@@ -31,12 +36,15 @@ namespace DeadLords.Controllers
         /// Точки где есть существа врага
         /// </summary>
         private List<Vector3> _exEnemysPoints = new List<Vector3>();
+        #endregion
 
+        #region Unity-time
         private void Start()
         {
             _spawnPlayer = Main.Instance.GetObjectManager.PlayerSpawnPoints.GetComponentsInChildren<Transform>();
             _spawnEnemy = Main.Instance.GetObjectManager.EnemySpawnPoints.GetComponentsInChildren<Transform>();
         }
+        #endregion
 
         /// <summary>
         /// Проверка можно ли спаунить существо
@@ -103,19 +111,17 @@ namespace DeadLords.Controllers
             }
         }
 
-        /// <summary>
-        /// Удаление существа с поля боя
-        /// </summary>
-        /// <param name="target">Умирающее существо</param>
-        public void Death(GameObject target)
-        {
-            if (target.tag == "CreaturePlayer")
-                _exPlPoints.Remove(target.transform.position);
-            else
-                _exEnemysPoints.Remove(target.transform.position);
-        }
+        #region Получение перменных
 
+        /// <summary>
+        /// Список позиций живых существ игрока
+        /// </summary>
         public List<Vector3> PlayersExCr { get { return _exPlPoints; } }
+
+        /// <summary>
+        /// Список позиций живых существ врага
+        /// </summary>
         public List<Vector3> EnemysExCr { get { return _exEnemysPoints; } }
+        #endregion
     }
 }
