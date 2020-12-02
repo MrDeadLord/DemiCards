@@ -23,6 +23,7 @@ namespace DeadLords
         private SpawnController _spawnController;
         private SceneLiveController _sceneLiveController;
         private PlayersTurn _playersTurn;
+        private CardActivator _cardActivator;
 
         private void Awake()
         {
@@ -35,6 +36,7 @@ namespace DeadLords
             _playersTurn = _controllers.AddComponent<PlayersTurn>();
 
             _objectManager = GetComponent<ObjectManager>();
+            _cardActivator = GetComponent<CardActivator>();
         }
 
         #region Получение контроллеров извне
@@ -48,6 +50,8 @@ namespace DeadLords
         public SceneLiveController GetSceneLiveController { get { return _sceneLiveController; } }
 
         public PlayersTurn GetPlayersTurn { get { return _playersTurn; } }
+
+        public CardActivator GetCardActivator { get { return _cardActivator; } }
 
         #endregion Получение контроллеров извне
     }

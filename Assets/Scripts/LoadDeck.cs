@@ -67,7 +67,6 @@ namespace DeadLords
                             if (ca.creatureName == cr.name)
                             {
                                 tempCard.CardsCreature = cr;
-
                                 break;
                             }
                         }

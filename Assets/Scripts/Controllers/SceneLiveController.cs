@@ -31,13 +31,13 @@ namespace DeadLords.Controllers
                 Init();
             else if (!Main.Instance.deckLoadedPl && _firstRound)
                 return;
-
+            
             if (_isPlayersTurn && Main.Instance.deckLoadedPl)
             {
                 Main.Instance.GetPlayersTurn.On();
                 base.Off();
             }
-            else if (!_isPlayersTurn && Main.Instance.deckLoadedEn)
+            else if (!_isPlayersTurn /*&& Main.Instance.deckLoadedEn*/)     //Убрал, пока не сделал деку и пр. врагу
             {
                 Debug.Log("Enemy's turn");  //Здесь же будет base.Off() и контроль будет передаваться ИИ
                 EndOfTurn();
@@ -73,7 +73,7 @@ namespace DeadLords.Controllers
         {
             _totalTurns++;
             _isPlayersTurn = !_isPlayersTurn;
-
+            
             base.On();
         }
 

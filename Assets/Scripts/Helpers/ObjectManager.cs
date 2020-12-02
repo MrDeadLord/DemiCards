@@ -27,7 +27,8 @@ namespace DeadLords.Helpers
         [SerializeField] [Tooltip("Точки расположения карт")] private List<CardsButton> cardsButtons;
 
         [Space(5)]
-        [SerializeField] [Tooltip("Картинки всех карт")] private List<Sprite> cardsImages;
+        [SerializeField] [Tooltip("Картинки(спрайты) всех карт")] private List<Sprite> cardsSprites;
+        [SerializeField] [Tooltip("Материалы всех карт")] private List<Material> cardsMaterials;
 
         [Space(10)]
         [SerializeField] [Tooltip("Полный список всех существ в игре")] private List<Creature> crList = new List<Creature>();
@@ -47,7 +48,8 @@ namespace DeadLords.Helpers
 
         public List<Creature> GetCreatures { get { return crList; } }
 
-        public List<Sprite> GetCardsImages { get { return cardsImages; } }
+        public List<Sprite> GetCardsSprites { get { return cardsSprites; } }
+        public List<Material> GetCardsMaterials { get { return cardsMaterials; } }
 
         #endregion Доступ к переменным извне
     }

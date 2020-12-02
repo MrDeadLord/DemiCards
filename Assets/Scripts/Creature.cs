@@ -4,11 +4,13 @@ namespace DeadLords
 {
     public class Creature : MonoBehaviour
     {
+        #region Переменные        
         [SerializeField] private int _attack;
         [SerializeField] private int _maxHP;
 
         private int _curHP;        
         private bool _isActive;
+        #endregion Переменные
 
         public void Death()
         {

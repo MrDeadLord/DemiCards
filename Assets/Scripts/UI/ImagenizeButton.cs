@@ -10,12 +10,12 @@ namespace DeadLords
     public class ImagenizeButton : MonoBehaviour
     {
         Button _button;
-        List<Sprite> _images = new List<Sprite>();
+        List<Sprite> _sprites = new List<Sprite>();
 
         private void Start()
         {
             _button = GetComponent<Button>();
-            _images = Main.Instance.GetObjectManager.GetCardsImages;
+            _sprites = Main.Instance.GetObjectManager.GetCardsSprites;
         }
 
         /// <summary>
@@ -23,12 +23,10 @@ namespace DeadLords
         /// </summary>
         public void Imagine()
         {
-            foreach (Sprite sp in _images)
+            foreach(Sprite sp in _sprites)
             {
                 if (sp.name == gameObject.name)
-                {
                     _button.image.sprite = sp;
-                }
             }
         }
     }

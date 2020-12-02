@@ -10,16 +10,19 @@ namespace DeadLords
     /// </summary>
     [RequireComponent(typeof(Button))]
     [RequireComponent(typeof(Card))]
-    public class CardsButton : BaseController, ISelectHandler, IPointerDownHandler, IPointerExitHandler
+    public class CardsButton : BaseController, IPointerEnterHandler, IPointerExitHandler
     {
+        #region Переменные
         [SerializeField] [Tooltip("Картинка, что будет высвечиваться при нажатии на карту")] Image _sizeUpImage;
+        [SerializeField] [Tooltip("Карта, что отображается при использовании")] ActCard _actCard;
 
         Button _cardButt;
-        Vector3 _startPosition;
-        Quaternion _startRotation;
-        Vector3 _startScale;
+        /// <summary>
+        /// Картинка внутри карты (на руках)
+        /// </summary>
         Image _img;
 
+        //Цвета для отключения видимости объектов
         Color _alphaOff = new Color(255, 255, 255, 0);
         Color _alphaOn = new Color(255, 255, 255, 255);
 
@@ -27,6 +30,7 @@ namespace DeadLords
         /// Переменная для выключения постоянной инициации
         /// </summary>
         bool _loaded = false;
+        #endregion Переменные
 
         #region Unity-time
         private void Start()
@@ -34,9 +38,6 @@ namespace DeadLords
             _sizeUpImage.enabled = false;
 
             _cardButt = GetComponent<Button>();
-            _startPosition = transform.position;
-            _startRotation = transform.rotation;
-            _startScale = transform.localScale;
             _img = GetComponent<Image>();
 
             Off();
@@ -55,13 +56,13 @@ namespace DeadLords
         #endregion
 
         /// <summary>
-        /// Инициализация карт
+        /// Инициализация карт(Присвоение нужного имени и картинки)
         /// </summary>
         /// <returns>null</returns>
         void Init()
         {
             gameObject.name = GetComponent<Card>().CardsData.cardName;
-            
+
             GetComponent<ImagenizeButton>().Imagine();
             _loaded = true;
         }
@@ -70,35 +71,28 @@ namespace DeadLords
         {
             Enabled = true;
             _cardButt.enabled = true;
-            _img.enabled = true;            
+            _img.enabled = true;
         }
 
         public override void Off()
         {
             _cardButt.enabled = false;
             _img.enabled = false;
+
             Enabled = false;
             _loaded = false;
         }
 
         #region Поведение кнопки
-                
-        public void OnSelect(BaseEventData eventData)
+
+        public void OnPointerEnter(PointerEventData eventData)
         {
-
-        }
-
-        public void OnPointerClick(PointerEventData eventData)
-        {
-
-        }
-
-        public void OnPointerDown(PointerEventData eventData)
-        {            
             _sizeUpImage.enabled = true;
             _sizeUpImage.sprite = _img.sprite;
 
             _img.color = _alphaOff;
+
+            _actCard.Card = GetComponent<Card>();
         }
 
         public void OnPointerExit(PointerEventData eventData)
@@ -106,11 +100,6 @@ namespace DeadLords
             _sizeUpImage.enabled = false;
 
             _img.color = _alphaOn;
-
-            if (Input.GetTouch(0).position.y > 160)
-            {
-                GetComponent<CardActivator>().On();
-            }
         }
         #endregion
     }
