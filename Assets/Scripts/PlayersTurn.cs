@@ -1,5 +1,4 @@
 ﻿using DeadLords.Controllers;
-using System.Collections.Generic;
 
 namespace DeadLords
 {
@@ -33,7 +32,11 @@ namespace DeadLords
             //Расположение карт в интерфейсе
             _playersHand.PlacingCards();
 
+            //Включение контроллера, что отвечает за управление
             Main.Instance.GetInputController.On();
+
+            //Влючение интерфейса выделения игрока
+            Main.Instance.GetObjectManager.Player.GetComponentInChildren<Selector>().On();
 
             Off();
         }

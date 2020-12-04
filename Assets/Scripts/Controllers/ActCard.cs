@@ -6,7 +6,7 @@ namespace DeadLords.Controllers
     public class ActCard : BaseController
     {
         #region Переменные
-        public Card Card { get; set; }
+        Card _card = new Card();
 
         Hand _hand;
         Renderer _renderer;
@@ -26,6 +26,8 @@ namespace DeadLords.Controllers
             _mat = GetComponent<Material>();
 
             _allMats = Main.Instance.GetObjectManager.GetCardsMaterials;
+
+            Off();
         }
 
         private void Update()
@@ -42,7 +44,7 @@ namespace DeadLords.Controllers
             name = Card.CardsData.cardName;
 
             _renderer.enabled = true;
-            
+
             foreach (Material mat in _allMats)
             {
                 if (mat.name == name)
@@ -55,6 +57,12 @@ namespace DeadLords.Controllers
             Enabled = false;
 
             _renderer.enabled = false;
+        }
+
+        public Card Card
+        {
+            get { return _card; }
+            set { _card = value; }
         }
     }
 }

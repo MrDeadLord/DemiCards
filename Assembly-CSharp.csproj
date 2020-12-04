@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scripts\Helpers\ObjectManager.cs" />
     <Compile Include="Assets\Scripts\LeanTween\LeanSmooth.cs" />
     <Compile Include="Assets\Scripts\LeanTween\LeanTest.cs" />
+    <Compile Include="Assets\Scripts\Controllers\TargetSelector.cs" />
     <Compile Include="Assets\Scripts\Helpers\Timer.cs" />
     <Compile Include="Assets\Scripts\LeanTween\LeanTween.cs" />
     <Compile Include="Assets\Scripts\IChangeValue.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Assets\Scripts\LeanTween\LTDescr.cs" />
     <Compile Include="Assets\Scripts\Controllers\ActCard.cs" />
     <Compile Include="Assets\Scripts\Deck.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Selector.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Bonuses.txt" />
@@ -643,11 +645,17 @@
     <Reference Include="Unity.Timeline">
       <HintPath>Library\ScriptAssemblies\Unity.Timeline.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Postprocessing.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Postprocessing.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Rider.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Postprocessing.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.Postprocessing.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualStudio.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
@@ -657,12 +665,6 @@
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Postprocessing.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.Postprocessing.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Postprocessing.Runtime">
-      <HintPath>Library\ScriptAssemblies\Unity.Postprocessing.Runtime.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -7,22 +7,41 @@ namespace DeadLords.Controllers
     /// </summary>
     public class InputController : BaseController
     {
+        TargetSelector _ts;
+        Canvas _cardsCanv;
+        Vector3 _startScale, _downScale;
+
+        private void Start()
+        {
+            _ts = Main.Instance.GetTargetSelector;
+            _cardsCanv = Main.Instance.GetObjectManager.GetCardsCanvas;
+            _startScale = _cardsCanv.transform.localScale;
+            _downScale = _startScale / 2;
+        }
+
         private void Update()
         {
             if (!Enabled)
                 return;
 
-            //Если начало касания было в районе карты, а сейчас находится выше - кативируем
-            if(Input.GetTouch(0).deltaPosition.y < 150
-                && Input.GetTouch(0).deltaPosition.y > 30
-                && Input.GetTouch(0).position.y > 150)
+            if (Input.mousePosition.y > 150 && Input.touches[0].phase != TouchPhase.Ended)
             {
-                Main.Instance.GetCardActivator.On();
+                _ts.On();
+
+                _cardsCanv.transform.localScale = _downScale;
             }
 
-            if (Main.Instance.GetCardActivator.Enabled)
+            if (_ts.Enabled)
             {
+                //Отмена каста
+                if (Input.mousePosition.y < 80 && Input.touches[0].phase == TouchPhase.Ended)
+                {
+                    _ts.Off();
 
+                    _cardsCanv.transform.localScale = _startScale;
+
+                    Off();
+                }                    
             }
         }
     }

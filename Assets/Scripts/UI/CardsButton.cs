@@ -30,6 +30,8 @@ namespace DeadLords
         /// Переменная для выключения постоянной инициации
         /// </summary>
         bool _loaded = false;
+
+        InputController _ic;
         #endregion Переменные
 
         #region Unity-time
@@ -40,6 +42,8 @@ namespace DeadLords
             _cardButt = GetComponent<Button>();
             _img = GetComponent<Image>();
 
+            _ic = Main.Instance.GetInputController;
+
             Off();
         }
 
@@ -48,10 +52,8 @@ namespace DeadLords
             if (!Enabled)
                 return;
 
-            if (_loaded)
-                return;
-
-            Init();
+            if (!_loaded)
+                Init();
         }
         #endregion
 
@@ -87,12 +89,17 @@ namespace DeadLords
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            if (Input.touches[0].phase == TouchPhase.Ended)
+                return;
+
             _sizeUpImage.enabled = true;
             _sizeUpImage.sprite = _img.sprite;
 
             _img.color = _alphaOff;
 
             _actCard.Card = GetComponent<Card>();
+
+            _ic.On();
         }
 
         public void OnPointerExit(PointerEventData eventData)

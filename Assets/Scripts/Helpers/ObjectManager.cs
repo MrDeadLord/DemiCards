@@ -13,10 +13,9 @@ namespace DeadLords.Helpers
         [SerializeField] [Tooltip("Точки появления существ противника")] private Transform enemySpawnPoints;
 
         [Space(10)]
-        [Header("Все живые на поле боя")]
+        [Header("Игроки")]
         [SerializeField] GameObject player;
         [SerializeField] GameObject enemy;
-
 
         [Space(10)]
         [SerializeField] [Tooltip("Существа игрока")] private Creature[] crPlayer;
@@ -25,6 +24,7 @@ namespace DeadLords.Helpers
         [Space(10)]
         [Header("Карты")]
         [SerializeField] [Tooltip("Точки расположения карт")] private List<CardsButton> cardsButtons;
+        [SerializeField] [Tooltip("Канвас карт")] private Canvas cardsCanv;
 
         [Space(5)]
         [SerializeField] [Tooltip("Картинки(спрайты) всех карт")] private List<Sprite> cardsSprites;
@@ -45,6 +45,8 @@ namespace DeadLords.Helpers
         public GameObject Enemy { get { return enemy; } }
 
         public List<CardsButton> GetCardsButtons { get { return cardsButtons; } }
+
+        public Canvas GetCardsCanvas { get { return cardsCanv; } }
 
         public List<Creature> GetCreatures { get { return crList; } }
 
