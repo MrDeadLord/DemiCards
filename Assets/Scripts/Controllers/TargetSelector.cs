@@ -6,7 +6,6 @@ namespace DeadLords.Controllers
     public class TargetSelector : BaseController
     {
         #region Переменные
-        [SerializeField] Hand _hand;
         [SerializeField] [Tooltip("модель, что будет всплывать во время предактивации карты")] ActCard _actCard;
         [SerializeField] [Tooltip("0-старт, 1-союзн., 2-враги, 3-все")] Transform[] _cameraPositions;
 
@@ -16,6 +15,8 @@ namespace DeadLords.Controllers
         List<Selector> _crPlayerSel = new List<Selector>();
         List<Selector> _crEnemySel = new List<Selector>();
         List<Selector> _spawnPointsPlSels = new List<Selector>();
+
+        List<CardsButton> _cardsButtons;
         #endregion
 
         #region Unity-time
@@ -23,8 +24,10 @@ namespace DeadLords.Controllers
         {
             _camera = Camera.main.transform;
 
-            _playerSel = Main.Instance.GetObjectManager.Player.GetComponent<Selector>();
-            _enemySel = Main.Instance.GetObjectManager.Enemy.GetComponent<Selector>();
+            _playerSel = Main.Instance.GetObjectManager.Player.GetComponentInChildren<Selector>();
+            _enemySel = Main.Instance.GetObjectManager.Enemy.GetComponentInChildren<Selector>();
+
+            _cardsButtons = Main.Instance.GetObjectManager.GetCardsButtons;
 
             Init();
         }
@@ -32,23 +35,20 @@ namespace DeadLords.Controllers
 
         public override void On()
         {
-            Enabled = true;
+            base.On();
 
             _actCard.On();
+
+            foreach(CardsButton cb in _cardsButtons)
+                if(cb.name == _actCard.name)
+                {
+                    cb.ToggleSelector(true);
+                }
 
             PlaceCam();
             EnableSelection();
 
             //Запуск спецэффектов
-        }
-
-        public override void Off()
-        {
-            base.Off();
-
-            _actCard.Off();
-
-            Cancel();
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace DeadLords.Controllers
         /// <summary>
         /// Отмена действия карты. Возврат камеры и карт на места
         /// </summary>
-        void Cancel()
+        public void Cancel()
         {
             //Размещение камеры на стартовой позиции
             _camera.position = _cameraPositions[0].position;
@@ -217,6 +217,16 @@ namespace DeadLords.Controllers
 
             foreach (Selector sel in _crEnemySel)
                 sel.Off();
+
+            _actCard.Cancel();
+
+            foreach (CardsButton cb in _cardsButtons)
+                if (cb.name == _actCard.name)
+                {
+                    cb.ToggleSelector(false);
+                }
+
+            Off();
         }
     }
 }

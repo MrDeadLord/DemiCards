@@ -19,6 +19,11 @@ namespace DeadLords
 
         private void Start() { _cardsButtons = Main.Instance.GetObjectManager.GetCardsButtons; }
 
+        private void Update()
+        {
+            Debug.Log(_hand.Count);
+        }
+
         /// <summary>
         /// Добавление карт на руку из коллоды
         /// </summary>
@@ -33,16 +38,20 @@ namespace DeadLords
 
                 _hand.Add(GetComponent<Deck>().GrabRandCard());  //Добавление на руку
             }
-        }
 
+            PlacingCards();
+        }
+                
         /// <summary>
         /// Расстановка карт в интерфейс для игрока
         /// </summary>
-        public void PlacingCards()
+        void PlacingCards()
         {
+            //Отключение всех кнопок карт
             foreach (CardsButton cb in _cardsButtons)
                 cb.Off();
 
+            //Включение нужных карт по кол-ву
             switch (_hand.Count)
             {
                 case 1:
@@ -146,6 +155,7 @@ namespace DeadLords
                     break;
             }
 
+            //Присвоение карт к кнопкам
             InitCards();
         }
 

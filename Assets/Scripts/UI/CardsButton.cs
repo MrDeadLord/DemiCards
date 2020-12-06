@@ -15,6 +15,7 @@ namespace DeadLords
         #region Переменные
         [SerializeField] [Tooltip("Картинка, что будет высвечиваться при нажатии на карту")] Image _sizeUpImage;
         [SerializeField] [Tooltip("Карта, что отображается при использовании")] ActCard _actCard;
+        [SerializeField] [Tooltip("Эффект выделения")] GameObject _selector;
 
         Button _cardButt;
         /// <summary>
@@ -44,6 +45,8 @@ namespace DeadLords
 
             _ic = Main.Instance.GetInputController;
 
+            ToggleSelector(false);
+
             Off();
         }
 
@@ -57,16 +60,10 @@ namespace DeadLords
         }
         #endregion
 
-        /// <summary>
-        /// Инициализация карт(Присвоение нужного имени и картинки)
-        /// </summary>
-        /// <returns>null</returns>
-        void Init()
+        public void ToggleSelector(bool def)
         {
-            gameObject.name = GetComponent<Card>().CardsData.cardName;
-
-            GetComponent<ImagenizeButton>().Imagine();
-            _loaded = true;
+            foreach (Renderer rend in _selector.GetComponentsInChildren<Renderer>())
+                rend.enabled = def;
         }
 
         public override void On()
@@ -83,6 +80,18 @@ namespace DeadLords
 
             Enabled = false;
             _loaded = false;
+        }
+
+        /// <summary>
+        /// Инициализация карт(Присвоение нужного имени и картинки)
+        /// </summary>
+        /// <returns>null</returns>
+        void Init()
+        {
+            gameObject.name = GetComponent<Card>().CardsData.cardName;
+
+            GetComponent<ImagenizeButton>().Imagine();
+            _loaded = true;
         }
 
         #region Поведение кнопки

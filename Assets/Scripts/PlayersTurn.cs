@@ -29,9 +29,6 @@ namespace DeadLords
             //Взятие карт в руку
             _playersHand.TakingCards(_bs.CardsTake);
 
-            //Расположение карт в интерфейсе
-            _playersHand.PlacingCards();
-
             //Включение контроллера, что отвечает за управление
             Main.Instance.GetInputController.On();
 

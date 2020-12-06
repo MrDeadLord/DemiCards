@@ -8,7 +8,7 @@ namespace DeadLords
     public class Card : MonoBehaviour
     {
         #region Переменные
-        [SerializeField] [Tooltip("Полное содержание карты")] private CardData _cardData = new CardData();
+        CardData _cardData = new CardData();
 
         /// <summary>
         /// Полное содержание бонуса(если карта - заклинание)

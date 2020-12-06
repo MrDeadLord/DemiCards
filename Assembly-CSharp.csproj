@@ -68,16 +68,11 @@
     <Compile Include="Assets\Scripts\Creature.cs" />
     <Compile Include="Assets\Scripts\Controllers\CardActivator.cs" />
     <Compile Include="Assets\Scripts\Main.cs" />
-    <Compile Include="Assets\Scripts\LeanTween\LTSeq.cs" />
     <Compile Include="Assets\Scripts\Controllers\InputController.cs" />
     <Compile Include="Assets\Scripts\Helpers\ObjectManager.cs" />
-    <Compile Include="Assets\Scripts\LeanTween\LeanSmooth.cs" />
-    <Compile Include="Assets\Scripts\LeanTween\LeanTest.cs" />
     <Compile Include="Assets\Scripts\Controllers\TargetSelector.cs" />
     <Compile Include="Assets\Scripts\Helpers\Timer.cs" />
-    <Compile Include="Assets\Scripts\LeanTween\LeanTween.cs" />
     <Compile Include="Assets\Scripts\IChangeValue.cs" />
-    <Compile Include="Assets\Scripts\LeanTween\LeanAudio.cs" />
     <Compile Include="Assets\Scripts\Helpers\CardData.cs" />
     <Compile Include="Assets\Scripts\Controllers\BaseController.cs" />
     <Compile Include="Assets\Scripts\Helpers\SpellType.cs" />
@@ -87,9 +82,6 @@
     <Compile Include="Assets\Scripts\BaseStats.cs" />
     <Compile Include="Assets\Scripts\Helpers\TargetType.cs" />
     <Compile Include="Assets\Scripts\Controllers\SpawnController.cs" />
-    <Compile Include="Assets\Scripts\LeanTween\LeanTweenExt.cs" />
-    <Compile Include="Assets\Scripts\LeanTween\LTDescrOptional.cs" />
-    <Compile Include="Assets\Scripts\LeanTween\LTDescr.cs" />
     <Compile Include="Assets\Scripts\Controllers\ActCard.cs" />
     <Compile Include="Assets\Scripts\Deck.cs" />
     <Compile Include="Assets\Scripts\Controllers\Selector.cs" />

@@ -10,10 +10,6 @@ namespace DeadLords.Controllers
 
         Hand _hand;
         Renderer _renderer;
-        /// <summary>
-        /// Материал активируемой карты
-        /// </summary>
-        Material _mat;
         List<Material> _allMats = new List<Material>();
 
         #endregion Переменные
@@ -23,33 +19,34 @@ namespace DeadLords.Controllers
         {
             _hand = Main.Instance.GetObjectManager.Player.GetComponent<Hand>();
             _renderer = GetComponent<Renderer>();
-            _mat = GetComponent<Material>();
 
             _allMats = Main.Instance.GetObjectManager.GetCardsMaterials;
 
             Off();
         }
-
-        private void Update()
-        {
-            if (!Enabled)
-                return;
-        }
         #endregion Unity-time
+
+        /// <summary>
+        /// Отмена действия карты. Возвращение ее в руку
+        /// </summary>
+        public void Cancel()
+        {
+            Off();
+        }
 
         public override void On()
         {
             Enabled = true;
 
-            name = Card.CardsData.cardName;
+            name = Card.CardsData.cardName; //присвоение имени
 
-            _renderer.enabled = true;
+            _renderer.enabled = true;   //включение рендера
 
             foreach (Material mat in _allMats)
             {
                 if (mat.name == name)
-                    _mat = mat;
-            }
+                    _renderer.material = mat;
+            }   //Выбор нужного материала            
         }
 
         public override void Off()
