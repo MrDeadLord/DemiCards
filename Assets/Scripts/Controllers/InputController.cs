@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace DeadLords.Controllers
 {
@@ -11,7 +10,7 @@ namespace DeadLords.Controllers
         TargetSelector _ts;
 
         Canvas _cardsCanv;
-        
+
         Vector3 _startScale, _downScale;
 
         private void Start()
@@ -34,18 +33,8 @@ namespace DeadLords.Controllers
                 _cardsCanv.transform.localScale = _downScale;
             }
 
-            if (_ts.Enabled)
-            {
-                //Отмена каста
-                if (Input.mousePosition.y < 80 && Input.touches[0].phase == TouchPhase.Ended)
-                {
-                    _ts.Cancel();
-
-                    _cardsCanv.transform.localScale = _startScale;
-
-                    Off();
-                }                    
-            }
+            if (Input.touches[0].phase == TouchPhase.Ended)
+                _cardsCanv.transform.localScale = _startScale;
         }
     }
 }

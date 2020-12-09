@@ -10,12 +10,12 @@ namespace DeadLords.Controllers
         /// <summary>
         /// Точки спауна существ игрока
         /// </summary>
-        private Transform[] _spawnPlayer;
+        private List<Transform> _spawnPlayer = new List<Transform>();
 
         /// <summary>
         /// Точки спауна существ врага
         /// </summary>
-        private Transform[] _spawnEnemy;
+        private List<Transform> _spawnEnemy = new List<Transform>();
 
         /// <summary>
         /// Точка, где появится призываемое существо
@@ -41,8 +41,13 @@ namespace DeadLords.Controllers
         #region Unity-time
         private void Start()
         {
-            _spawnPlayer = Main.Instance.GetObjectManager.PlayerSpawnPoints.GetComponentsInChildren<Transform>();
-            _spawnEnemy = Main.Instance.GetObjectManager.EnemySpawnPoints.GetComponentsInChildren<Transform>();
+            foreach (Transform tr in Main.Instance.GetObjectManager.PlayerSpawnPoints.GetComponentsInChildren<Transform>())
+                _spawnPlayer.Add(tr);
+            _spawnPlayer.RemoveAt(0);   //Почему-то точка родителя считается нулевой
+
+            foreach (Transform trans in Main.Instance.GetObjectManager.EnemySpawnPoints.GetComponentsInChildren<Transform>())
+                _spawnEnemy.Add(trans);
+            _spawnEnemy.RemoveAt(0);
         }
         #endregion
 
@@ -55,14 +60,14 @@ namespace DeadLords.Controllers
         {
             if (summoner == "Player")
             {
-                if (_exPlPoints.Count == _spawnPlayer.Length)
+                if (_exPlPoints.Count == _spawnPlayer.Count)
                     return false;
                 else
                     return true;
             }
             else
             {
-                if (_exEnemysPoints.Count == _spawnEnemy.Length)
+                if (_exEnemysPoints.Count == _spawnEnemy.Count)
                     return false;
                 else
                     return true;
@@ -81,7 +86,7 @@ namespace DeadLords.Controllers
                 //Проверяем точки по порядку, пока не найдем свободную
                 while (_exPlPoints.Contains(_spawnPlayer[_indexP].position))
                 {
-                    if (_indexP < _spawnPlayer.Length)
+                    if (_indexP < _spawnPlayer.Count)
                         _indexP++;
                     else
                         _indexP = 0;
@@ -97,7 +102,7 @@ namespace DeadLords.Controllers
             {
                 while (_exEnemysPoints.Contains(_spawnEnemy[_indexE].position))
                 {
-                    if (_indexE < _spawnEnemy.Length)
+                    if (_indexE < _spawnEnemy.Count)
                         _indexE++;
                     else
                         _indexE = 0;

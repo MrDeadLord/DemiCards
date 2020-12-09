@@ -60,6 +60,10 @@ namespace DeadLords
         }
         #endregion
 
+        /// <summary>
+        /// Вкл/выкл селектора карты
+        /// </summary>
+        /// <param name="def">True - влк.</param>
         public void ToggleSelector(bool def)
         {
             foreach (Renderer rend in _selector.GetComponentsInChildren<Renderer>())
@@ -107,7 +111,7 @@ namespace DeadLords
             _img.color = _alphaOff;
 
             _actCard.Card = GetComponent<Card>();
-
+            
             _ic.On();
         }
 

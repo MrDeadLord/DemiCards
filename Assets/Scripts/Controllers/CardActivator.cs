@@ -1,41 +1,42 @@
-﻿using System.Collections.Generic;
+﻿using DeadLords.Controllers;
 using UnityEngine;
-using DeadLords.Controllers;
 
 namespace DeadLords
 {
     public class CardActivator : MonoBehaviour
     {
-        Card _card;
         SpawnController _sc;
+        Hand _hand;
 
         private void Start()
         {
-            _card = GetComponent<Card>();
             _sc = Main.Instance.GetSpawnController;
+            _hand = Main.Instance.GetObjectManager.Player.GetComponent<Hand>();
         }
 
         /// <summary>
         /// Активация карты. Независимо от типа
         /// </summary>
-        public void ActivateCard()
+        public void ActivateCard(Card card)
         {
-            if (_card.CardsCreature != null)
-                Summon();
+            if (card.CardsCreature != null)
+                Summon(card);
             else
-                CastSpell();
+                CastSpell(card);
+
+            _hand.RemoveCard(card);
+            _hand.TakingCards(0);
         }
 
         //SUMMON и ACTIVATE ВЫНЕСТИ В ОТДЕЛЬНЫЙ КЛАСС
         /// <summary>
         /// Призыв существа
         /// </summary>
-        void Summon()
+        void Summon(Card card)
         {
-            if (_sc.CanSpawn(transform.parent.tag))
+            if (_sc.CanSpawn("Player"))
             {
-                _sc.Spawn(_card.CardsCreature.gameObject, transform.parent.tag);
-                Destroy(gameObject);
+                _sc.Spawn(card.CardsCreature.gameObject, "Player");
             }
             else
             {
@@ -46,9 +47,9 @@ namespace DeadLords
         /// <summary>
         /// Активация заклинания
         /// </summary>
-        void CastSpell()
+        void CastSpell(Card card)
         {
-
+            Debug.Log("Spell activated");
         }
     }
 }

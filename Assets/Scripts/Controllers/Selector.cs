@@ -9,11 +9,15 @@ namespace DeadLords.Controllers
     {
         Animator _anim;
         Renderer _rend;
+        Camera _cam;
+        Collider _coll;
 
         private void Start()
         {
             _anim = GetComponentInChildren<Animator>();
             _rend = GetComponentInChildren<Renderer>();
+            _cam = Camera.main;
+            _coll = GetComponentInParent<Collider>();
 
             Off();
         }
@@ -23,20 +27,25 @@ namespace DeadLords.Controllers
             if (!Enabled)
                 return;
 
-            //Ниженаписаное описать в инпут сонтролере
-            /*Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
+            //Если анимация не включена, то при косании пальцем цели - запускает эту анимацию
+            if (!_anim.GetBool("Selected"))
             {
-                if (hit.collider == GetComponentInParent<Collider>())
-                {
-                    _anim.SetBool("Selected", true);
-                    return;
-                }                    
-            }
+                Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
 
-            _anim.SetBool("Selected", false);*/
+                if (Physics.Raycast(ray, out hit))
+                {
+                    if (hit.collider == _coll)
+                    {
+                        _anim.SetBool("Selected", true);
+
+                        return;
+                    }
+                }
+            }
+            
+            if (_anim.GetBool("Selected"))
+                Main.Instance.GetTargetSelector.targetSet = true;
         }
 
         public override void On()
@@ -44,6 +53,8 @@ namespace DeadLords.Controllers
             Enabled = true;
 
             _rend.enabled = true;
+
+            _anim.SetBool("Selected", false);
         }
 
         public override void Off()
