@@ -18,7 +18,6 @@ namespace DeadLords
         public bool deckLoadedEn { get; set; }
 
         private GameObject _controllers;
-        private InputController _inputController;
         private ObjectManager _objectManager;
         private SpawnController _spawnController;
         private SceneLiveController _sceneLiveController;
@@ -30,7 +29,6 @@ namespace DeadLords
             Instance = this;
 
             _controllers = new GameObject("Controllers");
-            _inputController = _controllers.AddComponent<InputController>();
             _spawnController = _controllers.AddComponent<SpawnController>();
             _sceneLiveController = _controllers.AddComponent<SceneLiveController>();
             _playersTurn = _controllers.AddComponent<PlayersTurn>();
@@ -40,11 +38,6 @@ namespace DeadLords
         }
 
         #region Получение контроллеров извне
-
-        /// <summary>
-        /// Контроллер, отвечающий за управление
-        /// </summary>
-        public InputController GetInputController { get { return _inputController; } }
 
         /// <summary>
         /// Здесь хранится большинство информации, что нужна в разных скриптах

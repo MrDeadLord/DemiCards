@@ -28,10 +28,7 @@ namespace DeadLords
 
             //Взятие карт в руку
             _playersHand.TakingCards(_bs.CardsTake);
-
-            //Включение контроллера, что отвечает за управление
-            Main.Instance.GetInputController.On();
-
+            
             //Влючение интерфейса выделения игрока
             Main.Instance.GetObjectManager.Player.GetComponentInChildren<Selector>().On();
 

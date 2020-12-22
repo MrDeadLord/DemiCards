@@ -427,7 +427,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 158523009}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.2, z: 15}
+  m_LocalPosition: {x: 0, y: 2.47, z: 15}
   m_LocalScale: {x: 2.0355, y: 2.4317634, z: 2.0355}
   m_Children:
   - {fileID: 672136980}
@@ -592,7 +592,6 @@ MonoBehaviour:
   - {fileID: 75685839}
   - {fileID: 1508033649}
   - {fileID: 845429399}
-  cardsCanv: {fileID: 232897307}
   cardsSprites:
   - {fileID: 21300000, guid: ab8b371aa85473b49af8f5b3a66d2aa7, type: 3}
   - {fileID: 21300000, guid: 103bc515555bf1948be063f6b33cb05f, type: 3}
@@ -616,8 +615,8 @@ GameObject:
   m_Component:
   - component: {fileID: 232897304}
   - component: {fileID: 232897307}
-  - component: {fileID: 232897306}
   - component: {fileID: 232897305}
+  - component: {fileID: 232897306}
   m_Layer: 5
   m_Name: Cards Canvas
   m_TagString: Untagged
@@ -672,28 +671,32 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &232897306
-MonoBehaviour:
+--- !u!61 &232897306
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 232897303}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
-  m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
-  m_PhysicalUnit: 3
-  m_FallbackScreenDPI: 96
-  m_DefaultSpriteDPI: 96
-  m_DynamicPixelsPerUnit: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 285.33}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1089, y: 577.0538}
+  m_EdgeRadius: 0
 --- !u!223 &232897307
 Canvas:
   m_ObjectHideFlags: 0
@@ -1345,6 +1348,7 @@ GameObject:
   - component: {fileID: 666458644}
   - component: {fileID: 666458643}
   - component: {fileID: 666458642}
+  - component: {fileID: 666458646}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1400,7 +1404,7 @@ Canvas:
   m_GameObject: {fileID: 666458641}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 963194227}
   m_PlaneDistance: 10
   m_PixelPerfect: 0
@@ -1434,6 +1438,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &666458646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 666458641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2304735ee567b14e8b7d8ea58fa4ff4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &672136979
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3848,7 +3864,6 @@ GameObject:
   - component: {fileID: 1761113939}
   - component: {fileID: 1761113941}
   - component: {fileID: 1761113942}
-  - component: {fileID: 1761113943}
   m_Layer: 0
   m_Name: Activation card
   m_TagString: Untagged
@@ -3940,18 +3955,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 686f4564e091ac841aafa33bb4f660ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1761113943
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1761113937}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84db5f72f4cb9cb44ab2c76970d750a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1761455434
@@ -4591,6 +4594,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1369544273}
     m_Modifications:
+    - target: {fileID: -4059551040045550847, guid: 765f518c0390acb4abc33f458fd0360d,
+        type: 3}
+      propertyPath: _selectable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3562759322011727599, guid: 765f518c0390acb4abc33f458fd0360d,
         type: 3}
       propertyPath: m_RootOrder

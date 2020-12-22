@@ -19,12 +19,20 @@ namespace DeadLords
         /// </summary>
         public void ActivateCard(Card card)
         {
-            if (card.CardsCreature != null)
+            Debug.Log("Activating card: " + card.CardsData);
+            if (card.CardsData.creatureName != string.Empty)
                 Summon(card);
             else
                 CastSpell(card);
 
-            _hand.RemoveCard(card);
+            if (_hand.Cards.Contains(card))
+            {
+                _hand.Cards.Remove(card);
+                Debug.Log("Card " + card.CardsData.cardName + " deleted");
+                Debug.Log("now we have(cards): " + _hand.Cards.Count);
+            }
+                
+
             _hand.TakingCards(0);
         }
 

@@ -39,7 +39,7 @@ namespace DeadLords.Controllers
             }
             else if (!_isPlayersTurn /*&& Main.Instance.deckLoadedEn*/)     //Убрал, пока не сделал деку и пр. врагу
             {
-                Debug.Log("Enemy's turn");  //Здесь же будет base.Off() и контроль будет передаваться ИИ
+                Debug.Log("------------Enemy's turn--------------");  //Здесь же будет base.Off() и контроль будет передаваться ИИ
                 EndOfTurn();
             }
         }

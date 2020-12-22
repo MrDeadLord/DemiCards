@@ -42,11 +42,21 @@ namespace DeadLords.Controllers
         {
             if (!Enabled)
                 return;
-            
-            if (Input.touches[0].phase == TouchPhase.Ended && targetSet)
-                Cancel(true);
-            else if (Input.touches[0].phase == TouchPhase.Ended && !targetSet)
-                Cancel(false);
+
+            //Устранение вечной ошибки следующего if()
+            if (Input.touches.Length == 0)
+                return;
+                        
+            if (targetSet)
+            {
+                if (Input.touches[0].phase == TouchPhase.Ended)
+                    Cancel(true);
+            }
+            else
+            {
+                if (Input.touches[0].phase == TouchPhase.Ended)
+                    Cancel(false);
+            }
         }
         #endregion
 
@@ -100,7 +110,7 @@ namespace DeadLords.Controllers
             foreach (Selector sel in _crEnemySel)
                 sel.Off();
 
-            Off();
+            base.Off();
         }
 
         /// <summary>

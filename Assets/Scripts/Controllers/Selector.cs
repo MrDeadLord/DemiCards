@@ -7,6 +7,8 @@ namespace DeadLords.Controllers
     /// </summary>
     public class Selector : BaseController
     {
+        [SerializeField] bool _selectable = true;
+
         Animator _anim;
         Renderer _rend;
         Camera _cam;
@@ -28,7 +30,7 @@ namespace DeadLords.Controllers
                 return;
 
             //Если анимация не включена, то при косании пальцем цели - запускает эту анимацию
-            if (!_anim.GetBool("Selected"))
+            if (!_anim.GetBool("Selected") && _selectable)
             {
                 Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;

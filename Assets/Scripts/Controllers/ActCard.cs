@@ -6,7 +6,7 @@ namespace DeadLords.Controllers
     public class ActCard : BaseController
     {
         #region Переменные
-        Card _card;
+        Card _card = new Card();
 
         Renderer _renderer;
         List<Material> _allMats = new List<Material>();
@@ -17,7 +17,6 @@ namespace DeadLords.Controllers
         #region Unity-time
         private void Start()
         {
-            _card = GetComponent<Card>();
             _renderer = GetComponent<Renderer>();
 
             _allMats = Main.Instance.GetObjectManager.GetCardsMaterials;
@@ -33,7 +32,9 @@ namespace DeadLords.Controllers
         /// </summary>
         /// <param name="isDone"></param>
         public void Cancel(bool isDone)
-        {            
+        {
+            Off();
+
             if (isDone)
             {
                 _activator.ActivateCard(_card);
@@ -44,23 +45,21 @@ namespace DeadLords.Controllers
             {
                 //Запуск анимации отмены
             }
-
-            Off();
         }
 
         public override void On()
         {
             Enabled = true;
 
-            name = Card.CardsData.cardName; //присвоение имени
-
             _renderer.enabled = true;   //включение рендера
-            
+
             foreach (Material mat in _allMats)
             {
-                if (mat.name == name)
+                if (mat.name == _card.CardsData.cardName)
                     _renderer.material = mat;
-            }   //Выбор нужного материала            
+            }   //Выбор нужного материала
+
+            gameObject.name = _card.CardsData.cardName;
         }
 
         public override void Off()
@@ -68,6 +67,8 @@ namespace DeadLords.Controllers
             Enabled = false;
 
             _renderer.enabled = false;
+
+            _card = null;
         }
 
         public Card Card

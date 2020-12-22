@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace DeadLords.Controllers
 {
     /// <summary>
     /// Смартфонное управление
     /// </summary>
-    public class InputController : BaseController
+    public class InputController : BaseController, IPointerEnterHandler, IPointerExitHandler
     {
         TargetSelector _ts;
 
@@ -13,10 +14,12 @@ namespace DeadLords.Controllers
 
         Vector3 _startScale, _downScale;
 
+        bool _active = false;
+
         private void Start()
         {
             _ts = Main.Instance.GetTargetSelector;
-            _cardsCanv = Main.Instance.GetObjectManager.GetCardsCanvas;
+            _cardsCanv = GetComponent<Canvas>();
             _startScale = _cardsCanv.transform.localScale;
             _downScale = _startScale / 2;
         }
@@ -26,15 +29,29 @@ namespace DeadLords.Controllers
             if (!Enabled)
                 return;
 
-            if (Input.mousePosition.y > 150 && Input.touches[0].phase != TouchPhase.Ended)
+            //Устранение вечной ошибки следующего if()
+            if (Input.touches.Length == 0)
+                return;
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            if (_active)
             {
-                _ts.On();
-
-                _cardsCanv.transform.localScale = _downScale;
-            }
-
-            if (Input.touches[0].phase == TouchPhase.Ended)
                 _cardsCanv.transform.localScale = _startScale;
+                _ts.Cancel(false);
+
+                _active = false;
+            }
+                
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            _ts.On();
+            
+            _active = true;
+            _cardsCanv.transform.localScale = _downScale;
         }
     }
 }

@@ -17,6 +17,8 @@ namespace DeadLords
         [SerializeField] [Tooltip("Карта, что отображается при использовании")] ActCard _actCard;
         [SerializeField] [Tooltip("Эффект выделения")] GameObject _selector;
 
+        InputController _inpContr;
+
         Button _cardButt;
         /// <summary>
         /// Картинка внутри карты (на руках)
@@ -31,19 +33,17 @@ namespace DeadLords
         /// Переменная для выключения постоянной инициации
         /// </summary>
         bool _loaded = false;
-
-        InputController _ic;
         #endregion Переменные
 
         #region Unity-time
         private void Start()
         {
+            _inpContr = GetComponentInParent<InputController>();
+
             _sizeUpImage.enabled = false;
 
             _cardButt = GetComponent<Button>();
             _img = GetComponent<Image>();
-
-            _ic = Main.Instance.GetInputController;
 
             ToggleSelector(false);
 
@@ -102,8 +102,14 @@ namespace DeadLords
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            if (Input.touches.Length == 0)
+                return;
+
             if (Input.touches[0].phase == TouchPhase.Ended)
                 return;
+
+            if (!_inpContr.Enabled)
+                _inpContr.On();
 
             _sizeUpImage.enabled = true;
             _sizeUpImage.sprite = _img.sprite;
@@ -111,8 +117,6 @@ namespace DeadLords
             _img.color = _alphaOff;
 
             _actCard.Card = GetComponent<Card>();
-            
-            _ic.On();
         }
 
         public void OnPointerExit(PointerEventData eventData)

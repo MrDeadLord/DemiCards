@@ -18,13 +18,12 @@ namespace DeadLords.Helpers
         [SerializeField] GameObject enemy;
 
         [Space(10)]
-        [SerializeField] [Tooltip("Существа игрока")] private Creature[] crPlayer;
-        [SerializeField] [Tooltip("Существа врага")] private Creature[] crEnemy;
+        [SerializeField] [Tooltip("Существа игрока")] private List<Creature> crPlayer = new List<Creature>();
+        [SerializeField] [Tooltip("Существа врага")] private List<Creature> crEnemy;
 
         [Space(10)]
         [Header("Карты")]
         [SerializeField] [Tooltip("Точки расположения карт")] private List<CardsButton> cardsButtons;
-        [SerializeField] [Tooltip("Канвас карт")] private Canvas cardsCanv;
 
         [Space(5)]
         [SerializeField] [Tooltip("Картинки(спрайты) всех карт")] private List<Sprite> cardsSprites;
@@ -38,15 +37,13 @@ namespace DeadLords.Helpers
         public Transform PlayerSpawnPoints { get { return playerSpawnPoints; } }
         public Transform EnemySpawnPoints { get { return enemySpawnPoints; } }
 
-        public Creature[] CrPlayer { get { return crPlayer; } }
-        public Creature[] CrEnemy { get { return crEnemy; } }
+        public List<Creature> CrPlayer { get { return crPlayer; } }
+        public List<Creature> CrEnemy { get { return crEnemy; } }
 
         public GameObject Player { get { return player; } }
         public GameObject Enemy { get { return enemy; } }
 
         public List<CardsButton> GetCardsButtons { get { return cardsButtons; } }
-
-        public Canvas GetCardsCanvas { get { return cardsCanv; } }
 
         public List<Creature> GetCreatures { get { return crList; } }
 

@@ -20,7 +20,7 @@ namespace DeadLords
         private void Start() { _cardsButtons = Main.Instance.GetObjectManager.GetCardsButtons; }
 
         /// <summary>
-        /// Добавление карт на руку из коллоды
+        /// Добавление карт на руку из колоды
         /// </summary>
         /// <param name="count">Кол-во карт</param>
         public void TakingCards(int count)
@@ -170,11 +170,6 @@ namespace DeadLords
                     i++;
                 }
             }
-        }
-
-        public void RemoveCard(Card card)
-        {
-            _hand.Remove(card);
         }
 
         #region Получение переменных

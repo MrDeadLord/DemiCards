@@ -10,32 +10,37 @@ namespace DeadLords.Controllers
         /// <summary>
         /// Точки спауна существ игрока
         /// </summary>
-        private List<Transform> _spawnPlayer = new List<Transform>();
+        List<Transform> _spawnPlayer = new List<Transform>();
 
         /// <summary>
         /// Точки спауна существ врага
         /// </summary>
-        private List<Transform> _spawnEnemy = new List<Transform>();
+        List<Transform> _spawnEnemy = new List<Transform>();
 
         /// <summary>
         /// Точка, где появится призываемое существо
         /// </summary>
-        private Vector3 _spawnPoint;
+        Vector3 _spawnPoint;
 
         /// <summary>
         /// Индексы для расставления существ
         /// </summary>
-        private int _indexP = 0, _indexE = 0;
+        int _indexP = 0, _indexE = 0;
 
         /// <summary>
         /// Точки, где есть существа игрока
         /// </summary>
-        private List<Vector3> _exPlPoints = new List<Vector3>();
+        List<Vector3> _exPlPoints = new List<Vector3>();
 
         /// <summary>
         /// Точки где есть существа врага
         /// </summary>
-        private List<Vector3> _exEnemysPoints = new List<Vector3>();
+        List<Vector3> _exEnemysPoints = new List<Vector3>();
+
+        /// <summary>
+        /// Живые существа игрока
+        /// </summary>
+        List<Creature> _aliveCrPl;
         #endregion
 
         #region Unity-time
@@ -48,6 +53,8 @@ namespace DeadLords.Controllers
             foreach (Transform trans in Main.Instance.GetObjectManager.EnemySpawnPoints.GetComponentsInChildren<Transform>())
                 _spawnEnemy.Add(trans);
             _spawnEnemy.RemoveAt(0);
+
+            _aliveCrPl = Main.Instance.GetObjectManager.CrPlayer;            
         }
         #endregion
 
@@ -92,11 +99,13 @@ namespace DeadLords.Controllers
                         _indexP = 0;
                 }
 
-                _spawnPoint = _spawnPlayer[_indexP].transform.position;
+                _spawnPoint = _spawnPlayer[_indexP].position;
 
                 GameObject newCr = Instantiate(spawnObj, _spawnPoint, Quaternion.identity);
                 newCr.tag = "CreaturePlayer";
                 _exPlPoints.Add(newCr.transform.position);
+
+                _aliveCrPl.Add(newCr.GetComponent<Creature>());
             }
             else
             {
@@ -108,7 +117,7 @@ namespace DeadLords.Controllers
                         _indexE = 0;
                 }
 
-                _spawnPoint = _spawnEnemy[_indexE].transform.position;
+                _spawnPoint = _spawnEnemy[_indexE].position;
 
                 GameObject newCr = Instantiate(spawnObj, _spawnPoint, Quaternion.identity);
                 newCr.tag = "CreatureEnemy";
