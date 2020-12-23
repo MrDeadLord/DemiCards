@@ -46,11 +46,17 @@ namespace DeadLords
         {
             if (File.Exists(pathDeck))
             {
+                int i = 0;  //Id for cards
+
                 foreach (string line in File.ReadAllLines(pathDeck))
                 {
                     //Загрузка базовой информации карты
                     CardData ca = new CardData();
-                    tempCard = new Card();
+                    
+                    //Creating new Card with uniq id
+                    tempCard = new Card();                    
+                    tempCard.id = i;
+                    i++;
 
                     ca = JsonUtility.FromJson<CardData>(line);
                     tempCard.CardsData = ca;

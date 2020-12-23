@@ -13,12 +13,14 @@ namespace DeadLords
         /// <summary>
         /// Полное содержание бонуса(если карта - заклинание)
         /// </summary>
-        private BonusData _cardsBonus = new BonusData();
+        BonusData _cardsBonus = new BonusData();
 
         /// <summary>
         /// Существо, если это призыв. Иначе - null
         /// </summary>
-        private Creature _creature = new Creature();
+        Creature _creature = new Creature();
+
+        public int id { get; set; }
         #endregion
 
         /// <summary>
@@ -31,6 +33,21 @@ namespace DeadLords
             _cardsBonus = card.CardsBonus;
             _creature = card.CardsCreature;
         }
+
+        #region Чтобы работало сравнение
+        public override int GetHashCode()
+        {
+            return id;
+        }
+
+        public override bool Equals(object other)
+        {
+            if (other == null || !(other is Card))
+                return false;
+            else
+                return GetHashCode() == ((Card)other).GetHashCode();
+        }
+        #endregion Чтобы работало сравнение
 
         #region Получение переменных
         /// <summary>

@@ -24,7 +24,7 @@ namespace DeadLords.Controllers
             _downScale = _startScale / 2;
         }
 
-        private void Update()
+        /*private void Update()
         {
             if (!Enabled)
                 return;
@@ -32,7 +32,7 @@ namespace DeadLords.Controllers
             //Устранение вечной ошибки следующего if()
             if (Input.touches.Length == 0)
                 return;
-        }
+        }*/
 
         public void OnPointerEnter(PointerEventData eventData)
         {

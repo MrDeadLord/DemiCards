@@ -17,21 +17,28 @@ namespace DeadLords
         /// <summary>
         /// Активация карты. Независимо от типа
         /// </summary>
-        public void ActivateCard(Card card)
+        public void ActivateCard(int id)
         {
-            Debug.Log("Activating card: " + card.CardsData);
-            if (card.CardsData.creatureName != string.Empty)
-                Summon(card);
-            else
-                CastSpell(card);
+            Card cd = new Card();
 
-            if (_hand.Cards.Contains(card))
+            foreach (Card c in _hand.Cards)
             {
-                _hand.Cards.Remove(card);
-                Debug.Log("Card " + card.CardsData.cardName + " deleted");
-                Debug.Log("now we have(cards): " + _hand.Cards.Count);
+                if(c.id == id)
+                {
+                    cd = c;
+                    break;
+                }
             }
-                
+
+            if (cd.CardsData.creatureName != string.Empty)
+                Summon(cd);
+            else
+                CastSpell(cd);
+
+            if (_hand.Cards.Contains(cd))
+            {
+                _hand.Cards.Remove(cd);
+            }
 
             _hand.TakingCards(0);
         }

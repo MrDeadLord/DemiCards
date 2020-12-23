@@ -33,24 +33,24 @@ namespace DeadLords.Controllers
         /// <param name="isDone"></param>
         public void Cancel(bool isDone)
         {
-            Off();
-
             if (isDone)
             {
-                _activator.ActivateCard(_card);
+                _activator.ActivateCard(_card.id);
 
                 //Запуск анимации вызова карты
             }
-            else
+            /*else
             {
                 //Запуск анимации отмены
-            }
+            }*/
+
+            Off();
         }
 
         public override void On()
         {
             Enabled = true;
-
+            Debug.Log("actCard ON");
             _renderer.enabled = true;   //включение рендера
 
             foreach (Material mat in _allMats)
