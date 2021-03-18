@@ -17,18 +17,8 @@ namespace DeadLords
         /// <summary>
         /// Активация карты. Независимо от типа
         /// </summary>
-        public void ActivateCard(int id)
+        public void ActivateCard(Card cd)
         {
-            Card cd = new Card();
-
-            foreach (Card c in _hand.Cards)
-            {
-                if(c.id == id)
-                {
-                    cd = c;
-                    break;
-                }
-            }
 
             if (cd.CardsData.creatureName != string.Empty)
                 Summon(cd);
@@ -39,6 +29,8 @@ namespace DeadLords
             {
                 _hand.Cards.Remove(cd);
             }
+            else
+                Debug.LogError("Hand doesn't contain activated card");
 
             _hand.TakingCards(0);
         }
@@ -51,7 +43,10 @@ namespace DeadLords
         {
             if (_sc.CanSpawn("Player"))
             {
-                _sc.Spawn(card.CardsCreature.gameObject, "Player");
+                if (card.CardsCreature == null)
+                    Debug.LogError("No creature on ActCard");
+                else
+                    _sc.Spawn(card.CardsCreature.gameObject, "Player");
             }
             else
             {

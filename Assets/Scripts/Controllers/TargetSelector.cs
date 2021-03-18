@@ -134,24 +134,24 @@ namespace DeadLords.Controllers
         void PlaceCam()
         {
             //Расположение камеры
-            if (_actCard.Card.CardsCreature != null
-                || _actCard.Card.CardsBonus.target == TargetType.allSummonerCreatures
-                || _actCard.Card.CardsBonus.target == TargetType.summoner
-                || _actCard.Card.CardsBonus.target == TargetType.summonerCreature)
+            if (_actCard.card.CardsCreature != null
+                || _actCard.card.CardsBonus.target == TargetType.allSummonerCreatures
+                || _actCard.card.CardsBonus.target == TargetType.summoner
+                || _actCard.card.CardsBonus.target == TargetType.summonerCreature)
             {
                 _camera.transform.position = _cameraPositions[1].position;
                 _camera.transform.rotation = _cameraPositions[1].rotation;
             }
-            else if (_actCard.Card.CardsBonus.target == TargetType.opponent
-                || _actCard.Card.CardsBonus.target == TargetType.opponentCreature
-                || _actCard.Card.CardsBonus.target == TargetType.allOpponentCreatures)
+            else if (_actCard.card.CardsBonus.target == TargetType.opponent
+                || _actCard.card.CardsBonus.target == TargetType.opponentCreature
+                || _actCard.card.CardsBonus.target == TargetType.allOpponentCreatures)
             {
                 _camera.transform.position = _cameraPositions[2].position;
                 _camera.transform.rotation = _cameraPositions[2].rotation;
             }
-            else if (_actCard.Card.CardsBonus.target == TargetType.allCreatures
-                || _actCard.Card.CardsBonus.target == TargetType.allPlayers
-                || _actCard.Card.CardsBonus.target == TargetType.everyone)
+            else if (_actCard.card.CardsBonus.target == TargetType.allCreatures
+                || _actCard.card.CardsBonus.target == TargetType.allPlayers
+                || _actCard.card.CardsBonus.target == TargetType.everyone)
             {
                 _camera.transform.position = _cameraPositions[3].position;
                 _camera.transform.rotation = _cameraPositions[3].rotation;
@@ -169,7 +169,7 @@ namespace DeadLords.Controllers
         void EnableSelection()
         {
             //Если вызов существа - подсвечиваем возможные точки спауна
-            if (_actCard.Card.CardsCreature != null)
+            if (_actCard.card.CardsCreature != null)
             {
                 //Включение всех точей спауна
                 foreach (Selector sel in _spawnPointsPlSels)
@@ -193,7 +193,7 @@ namespace DeadLords.Controllers
             }
 
             //Если заклинание - подсвечиваем возможную цель. Если целей несколько, сразу же выбирает их
-            switch (_actCard.Card.CardsBonus.target)
+            switch (_actCard.card.CardsBonus.target)
             {
                 case TargetType.everyone:
                     _enemySel.On();

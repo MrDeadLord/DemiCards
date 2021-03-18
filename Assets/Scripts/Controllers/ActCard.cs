@@ -6,7 +6,7 @@ namespace DeadLords.Controllers
     public class ActCard : BaseController
     {
         #region Переменные
-        Card _card = new Card();
+        public Card card { get; set; }
 
         Renderer _renderer;
         List<Material> _allMats = new List<Material>();
@@ -35,7 +35,7 @@ namespace DeadLords.Controllers
         {
             if (isDone)
             {
-                _activator.ActivateCard(_card.id);
+                _activator.ActivateCard(card);
 
                 //Запуск анимации вызова карты
             }
@@ -50,16 +50,19 @@ namespace DeadLords.Controllers
         public override void On()
         {
             Enabled = true;
-            Debug.Log("actCard ON");
+
             _renderer.enabled = true;   //включение рендера
+
+            if (card == null)
+                return;
 
             foreach (Material mat in _allMats)
             {
-                if (mat.name == _card.CardsData.cardName)
+                if (mat.name == card.CardsData.cardName)
                     _renderer.material = mat;
             }   //Выбор нужного материала
 
-            gameObject.name = _card.CardsData.cardName;
+            gameObject.name = card.CardsData.cardName;
         }
 
         public override void Off()
@@ -68,13 +71,7 @@ namespace DeadLords.Controllers
 
             _renderer.enabled = false;
 
-            _card = null;
-        }
-
-        public Card Card
-        {
-            get { return _card; }
-            set { _card = value; }
+            card = null;
         }
     }
 }

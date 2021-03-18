@@ -116,7 +116,7 @@ namespace DeadLords
 
             _img.color = _alphaOff;
 
-            _actCard.Card = GetComponent<Card>();
+            _actCard.card = GetComponent<Card>();
         }
 
         public void OnPointerExit(PointerEventData eventData)
