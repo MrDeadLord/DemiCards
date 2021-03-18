@@ -14,7 +14,8 @@ using UnityEngine;
 
 public class MultiplyCreate : EditorWindow
 {
-    #region Переменные
+    #region ========== Variables ========
+
     /// <summary>
     /// Умножаемый объект
     /// </summary>
@@ -35,14 +36,15 @@ public class MultiplyCreate : EditorWindow
     private string objName = "multiplied";  //Стандартное имя
     bool isGrouped;
     string parentsName = "Parrent"; //Стандартное имя родителя
-    
+
     /// <summary>
     /// На сколько будет поворачиватся каждый последующий объект
     /// </summary>
     private Quaternion nextRotation;
 
-    private Vector3 startRot, nextRot;  //Временные переменные
-    #endregion
+    private Vector3 startRot, nextRot, offset;  //Временные переменные
+
+    #endregion ========== Variables ========
 
     [MenuItem("DeadLords/Create Multiply Objects %#d", false, 1)]
     public static void MultiplyWindow()
@@ -69,7 +71,7 @@ public class MultiplyCreate : EditorWindow
 
         count = EditorGUILayout.IntSlider("Кол-во объектов", count, 1, 100);
 
-        spaceBetween = EditorGUILayout.Slider("Расстояние между объектами", spaceBetween, 1, 50);
+        spaceBetween = EditorGUILayout.Slider("Расстояние между объектами", spaceBetween, 0, 50);
 
         directionIndex = EditorGUILayout.Popup("Направление умножения", directionIndex, directions);
 
@@ -82,11 +84,15 @@ public class MultiplyCreate : EditorWindow
         GUILayout.Space(5);
         nextRot = EditorGUILayout.Vector3Field("Поворот следующих объектов", nextRot);
 
-        #region Доп. параметры
+        #region ===== Доп. параметры ====
+
         GUILayout.Space(10);
         isAdvanced = EditorGUILayout.BeginToggleGroup("Доп. параметры", isAdvanced);
 
         objName = EditorGUILayout.TextField("Имя объектов", objName);
+
+        GUILayout.Space(5);        
+        offset = EditorGUILayout.Vector3Field("Дополнительное смещение последующих объектов", offset);
 
         GUILayout.Space(5);
         isGrouped = EditorGUILayout.BeginToggleGroup("Группировать под один объект", isGrouped);
@@ -94,7 +100,8 @@ public class MultiplyCreate : EditorWindow
         EditorGUILayout.EndToggleGroup();
 
         EditorGUILayout.EndToggleGroup();
-        #endregion
+
+        #endregion ===== Доп. параметры ====
 
         if (GUILayout.Button("Создать объекты"))
         {
@@ -104,10 +111,10 @@ public class MultiplyCreate : EditorWindow
                 parent.transform.position = startPosition;
                 parent.transform.rotation = startRotation;
 
-                CreateObject(parent.transform);
+                CreateObjects(parent.transform);
             }
             else
-                CreateObject(null);
+                CreateObjects(null);
         }
     }
 
@@ -115,8 +122,10 @@ public class MultiplyCreate : EditorWindow
     /// Создание объектов в зависимости от выбранных параметров
     /// </summary>
     /// <param name="parent">Объект под который нужно объеденить. Если не нужно - null</param>
-    private void CreateObject(Transform parent)
+    private void CreateObjects(Transform parent)
     {
+        Vector3 rot = new Vector3(0, 0, 0);
+
         switch (directionIndex)
         {
             //+x Ибо по умолчанию это именно +x
@@ -131,9 +140,10 @@ public class MultiplyCreate : EditorWindow
                     }
                     else
                     {
-                        spawnPosition.x += spaceBetween;
-                        nextRot *= i;
-                        nextRotation = Quaternion.Euler(nextRot);
+                        spawnPosition.x += spaceBetween;    // Добавление расстояния между объектами
+                        spawnPosition += offset;    // Добавление оффсета, если он есть
+                        rot += nextRot;
+                        nextRotation = Quaternion.Euler(rot);   // Vector3 => Quaternion
 
                         GameObject temp = Instantiate(gameObj, spawnPosition, nextRotation, parent);
                         temp.name = objName + "(" + i + ")";
@@ -153,8 +163,9 @@ public class MultiplyCreate : EditorWindow
                     else
                     {
                         spawnPosition.x -= spaceBetween;
-                        nextRot *= i;
-                        nextRotation = Quaternion.Euler(nextRot);
+                        spawnPosition += offset;
+                        rot += nextRot;
+                        nextRotation = Quaternion.Euler(rot);
 
                         GameObject temp = Instantiate(gameObj, spawnPosition, nextRotation, parent);
                         temp.name = objName + "(" + i + ")";
@@ -174,8 +185,9 @@ public class MultiplyCreate : EditorWindow
                     else
                     {
                         spawnPosition.y += spaceBetween;
-                        nextRot *= i;
-                        nextRotation = Quaternion.Euler(nextRot);
+                        spawnPosition += offset;
+                        rot += nextRot;
+                        nextRotation = Quaternion.Euler(rot);
 
                         GameObject temp = Instantiate(gameObj, spawnPosition, nextRotation, parent);
                         temp.name = objName + "(" + i + ")";
@@ -195,8 +207,9 @@ public class MultiplyCreate : EditorWindow
                     else
                     {
                         spawnPosition.y -= spaceBetween;
-                        nextRot *= i;
-                        nextRotation = Quaternion.Euler(nextRot);
+                        spawnPosition += offset;
+                        rot += nextRot;
+                        nextRotation = Quaternion.Euler(rot);
 
                         GameObject temp = Instantiate(gameObj, spawnPosition, nextRotation, parent);
                         temp.name = objName + "(" + i + ")";
@@ -216,8 +229,9 @@ public class MultiplyCreate : EditorWindow
                     else
                     {
                         spawnPosition.z += spaceBetween;
-                        nextRot *= i;
-                        nextRotation = Quaternion.Euler(nextRot);
+                        spawnPosition += offset;
+                        rot += nextRot;
+                        nextRotation = Quaternion.Euler(rot);
 
                         GameObject temp = Instantiate(gameObj, spawnPosition, nextRotation, parent);
                         temp.name = objName + "(" + i + ")";
@@ -237,6 +251,7 @@ public class MultiplyCreate : EditorWindow
                     else
                     {
                         spawnPosition.z -= spaceBetween;
+                        spawnPosition += offset;
                         nextRot *= i;
                         nextRotation = Quaternion.Euler(nextRot);
 
@@ -245,6 +260,6 @@ public class MultiplyCreate : EditorWindow
                     }
                 }
                 break;
-        }        
+        }
     }
 }

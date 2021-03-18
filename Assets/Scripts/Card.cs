@@ -7,7 +7,8 @@ namespace DeadLords
     /// </summary>
     public class Card : MonoBehaviour
     {
-        #region Переменные
+        #region ========== Variables ========
+
         CardData _cardData = new CardData();
 
         /// <summary>
@@ -19,7 +20,32 @@ namespace DeadLords
         /// Существо, если это призыв. Иначе - null
         /// </summary>
         private Creature _creature = new Creature();
-        #endregion
+
+        #endregion ========== Variables ========
+
+        #region ========== Methods ========
+
+        public void Enable(Card card)
+        {
+            gameObject.SetActive(true);
+
+            Assignment(card);
+
+            // Присвоение материала карте
+            foreach (var mat in Main.Instance.GetObjectManager.GetCardsMaterials)
+            {
+                if(_cardData.cardName == mat.name)
+                {
+                    GetComponent<Renderer>().material = mat;
+                    return;
+                }
+            }                     
+        }
+
+        public void Disable()
+        {
+            gameObject.SetActive(false);
+        }
 
         /// <summary>
         /// Присваивание карты (карта = card)
@@ -31,6 +57,8 @@ namespace DeadLords
             _cardsBonus = card.CardsBonus;
             _creature = card.CardsCreature;
         }
+
+        #endregion ========== Methods ========
 
         #region Получение переменных
         /// <summary>

@@ -8,7 +8,6 @@ namespace DeadLords.Controllers
         #region Переменные
         public bool targetSet { get; set; }
 
-        [SerializeField] [Tooltip("модель, что будет всплывать во время предактивации карты")] ActCard _actCard;
         [SerializeField] [Tooltip("0-старт, 1-союзн., 2-враги, 3-все")] Transform[] _cameraPositions;
 
         Camera _camera;
@@ -20,7 +19,6 @@ namespace DeadLords.Controllers
 
         List<Vector3> _crPlayerExisting = new List<Vector3>();
 
-        List<CardsButton> _cardsButtons;
         #endregion
 
         #region Unity-time
@@ -30,8 +28,6 @@ namespace DeadLords.Controllers
 
             _playerSel = Main.Instance.GetObjectManager.Player.GetComponentInChildren<Selector>();
             _enemySel = Main.Instance.GetObjectManager.Enemy.GetComponentInChildren<Selector>();
-
-            _cardsButtons = Main.Instance.GetObjectManager.GetCardsButtons;
 
             _crPlayerExisting = Main.Instance.GetSpawnController.PlayersExCr;
 
@@ -46,7 +42,7 @@ namespace DeadLords.Controllers
             //Устранение вечной ошибки следующего if()
             if (Input.touches.Length == 0)
                 return;
-                        
+
             if (targetSet)
             {
                 if (Input.touches[0].phase == TouchPhase.Ended)
@@ -64,16 +60,8 @@ namespace DeadLords.Controllers
         {
             base.On();
 
-            _actCard.On();
-
-            foreach (CardsButton cb in _cardsButtons)
-                if (cb.name == _actCard.name)
-                {
-                    cb.ToggleSelector(true);
-                }
-
-            PlaceCam();
-            EnableSelection();
+            /*PlaceCam();
+            EnableSelection();*/
 
             //Запуск спецэффектов
         }
@@ -86,16 +74,6 @@ namespace DeadLords.Controllers
             //Размещение камеры на стартовой позиции
             _camera.transform.position = _cameraPositions[0].position;
             _camera.transform.rotation = _cameraPositions[0].rotation;
-
-            //Удаление карты с колоды, если использовали карту
-            _actCard.Cancel(isDone);
-
-            //Отключение селектора
-            foreach (CardsButton cb in _cardsButtons)
-                if (cb.name == _actCard.name)
-                {
-                    cb.ToggleSelector(false);
-                }
 
             _playerSel.Animator.SetBool("Selected", false);
 
@@ -128,7 +106,7 @@ namespace DeadLords.Controllers
                 _spawnPointsPlSels.Add(sel);
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Расположение камеры
         /// </summary>
         void PlaceCam()
@@ -271,6 +249,6 @@ namespace DeadLords.Controllers
                     _playerSel.Animator.SetBool("Selected", true);
                     break;
             }
-        }
+        }*/
     }
 }

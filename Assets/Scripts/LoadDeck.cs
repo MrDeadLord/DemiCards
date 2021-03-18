@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using DeadLords.Controllers;
 
 namespace DeadLords
 {
@@ -9,6 +10,8 @@ namespace DeadLords
     /// </summary>
     public class LoadDeck : MonoBehaviour
     {
+        #region ========== Variables ========
+
         /// <summary>
         /// Путь к коллоде
         /// </summary>
@@ -21,6 +24,8 @@ namespace DeadLords
         /// Активная коллода
         /// </summary>
         private List<Card> tempDeck = new List<Card>();
+
+        #endregion ========== Variables ========
 
         private void Start()
         {
@@ -38,6 +43,8 @@ namespace DeadLords
 
             Load();
         }
+
+        #region ========== Methods ========
 
         /// <summary>
         /// Загрузка и присвоение карте всех переменных, кроме имени самой карты
@@ -104,5 +111,7 @@ namespace DeadLords
 
             return bd;
         }
+
+        #endregion ========== Methods ========
     }
 }

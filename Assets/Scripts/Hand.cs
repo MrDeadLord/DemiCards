@@ -12,12 +12,22 @@ namespace DeadLords
         /// Карты на руке игрока
         /// </summary>
         List<Card> _hand = new List<Card>();
-        /// <summary>
-        /// Кнопки/места расположения карт
-        /// </summary>
-        List<CardsButton> _cardsButtons = new List<CardsButton>();
 
-        private void Start() { _cardsButtons = Main.Instance.GetObjectManager.GetCardsButtons; }
+        /// <summary>
+        /// Карты видные игроку
+        /// </summary>
+        List<Card> _handVisual = new List<Card>();
+
+        #region ========== Methods ========
+
+        #region ========== Unity-time ========
+        
+        private void Start()
+        {
+            _handVisual = Main.Instance.GetObjectManager.PlayersHand;
+        }
+
+        #endregion ========== Unity-time ========
 
         /// <summary>
         /// Добавление карт на руку из колоды
@@ -27,11 +37,12 @@ namespace DeadLords
         {
             for (int i = 0; i < count; i++)
             {
-                //Завершение выполнения, если колода закончилась
+                // Завершение выполнения, если колода закончилась
                 if (GetComponent<Deck>().Cards.Count == 0)
                     return;
 
-                _hand.Add(GetComponent<Deck>().GrabRandCard());  //Добавление на руку
+                // Добавление карты из коллоды на руку
+                _hand.Add(GetComponent<Deck>().GrabRandCard());
             }
 
             PlacingCards();
@@ -42,137 +53,91 @@ namespace DeadLords
         /// </summary>
         void PlacingCards()
         {
-            //Отключение всех кнопок карт
-            foreach (CardsButton cb in _cardsButtons)
-                cb.Off();
+            // Отключение всех кнопок карт
+            foreach (Card card in _handVisual)
+                card.Disable();
 
-            //Включение нужных карт по кол-ву
+            // Включение нужных карт по кол-ву и присвоение им карт
             switch (_hand.Count)
             {
                 case 1:
-                    _cardsButtons[5].On();
+                    _handVisual[5].Enable(_hand[0]);
                     break;
 
                 case 2:
-                    _cardsButtons[3].On();
-                    _cardsButtons[7].On();
+                    _handVisual[2].Enable(_hand[0]);
+                    _handVisual[6].Enable(_hand[1]);
                     break;
 
                 case 3:
-                    _cardsButtons[3].On();
-                    _cardsButtons[5].On();
-                    _cardsButtons[7].On();
+                    _handVisual[1].Enable(_hand[0]);
+                    _handVisual[4].Enable(_hand[1]);
+                    _handVisual[7].Enable(_hand[2]);
                     break;
 
                 case 4:
-                    _cardsButtons[2].On();
-                    _cardsButtons[4].On();
-                    _cardsButtons[6].On();
-                    _cardsButtons[8].On();
+                    _handVisual[0].Enable(_hand[0]);
+                    _handVisual[2].Enable(_hand[1]);
+                    _handVisual[6].Enable(_hand[2]);
+                    _handVisual[8].Enable(_hand[3]);
                     break;
 
                 case 5:
-                    _cardsButtons[1].On();
-                    _cardsButtons[3].On();
-                    _cardsButtons[5].On();
-                    _cardsButtons[7].On();
-                    _cardsButtons[9].On();
+                    _handVisual[0].Enable(_hand[0]);
+                    _handVisual[2].Enable(_hand[1]);
+                    _handVisual[4].Enable(_hand[2]);
+                    _handVisual[6].Enable(_hand[3]);
+                    _handVisual[8].Enable(_hand[4]);
                     break;
 
                 case 6:
-                    _cardsButtons[0].On();
-                    _cardsButtons[2].On();
-                    _cardsButtons[4].On();
-                    _cardsButtons[6].On();
-                    _cardsButtons[8].On();
-                    _cardsButtons[10].On();
+                    _handVisual[2].Enable(_hand[0]);
+                    _handVisual[3].Enable(_hand[1]);
+                    _handVisual[4].Enable(_hand[2]);
+                    _handVisual[5].Enable(_hand[3]);
+                    _handVisual[6].Enable(_hand[4]);
+                    _handVisual[7].Enable(_hand[5]);
                     break;
 
                 case 7:
-                    _cardsButtons[2].On();
-                    _cardsButtons[3].On();
-                    _cardsButtons[4].On();
-                    _cardsButtons[5].On();
-                    _cardsButtons[6].On();
-                    _cardsButtons[7].On();
-                    _cardsButtons[8].On();
+                    _handVisual[1].Enable(_hand[0]);
+                    _handVisual[2].Enable(_hand[1]);
+                    _handVisual[3].Enable(_hand[2]);
+                    _handVisual[4].Enable(_hand[3]);
+                    _handVisual[5].Enable(_hand[4]);
+                    _handVisual[6].Enable(_hand[5]);
+                    _handVisual[7].Enable(_hand[6]);
                     break;
 
                 case 8:
-                    _cardsButtons[1].On();
-                    _cardsButtons[2].On();
-                    _cardsButtons[3].On();
-                    _cardsButtons[4].On();
-                    _cardsButtons[5].On();
-                    _cardsButtons[6].On();
-                    _cardsButtons[8].On();
-                    _cardsButtons[11].On();
+                    _handVisual[1].Enable(_hand[0]);
+                    _handVisual[2].Enable(_hand[1]);
+                    _handVisual[3].Enable(_hand[2]);
+                    _handVisual[4].Enable(_hand[3]);
+                    _handVisual[5].Enable(_hand[4]);
+                    _handVisual[6].Enable(_hand[5]);
+                    _handVisual[7].Enable(_hand[6]);
+                    _handVisual[8].Enable(_hand[7]);
                     break;
 
                 case 9:
-                    _cardsButtons[1].On();
-                    _cardsButtons[2].On();
-                    _cardsButtons[3].On();
-                    _cardsButtons[4].On();
-                    _cardsButtons[5].On();
-                    _cardsButtons[6].On();
-                    _cardsButtons[7].On();
-                    _cardsButtons[8].On();
-                    _cardsButtons[9].On();
-                    break;
-
-                case 10:
-                    _cardsButtons[0].On();
-                    _cardsButtons[2].On();
-                    _cardsButtons[3].On();
-                    _cardsButtons[4].On();
-                    _cardsButtons[5].On();
-                    _cardsButtons[6].On();
-                    _cardsButtons[7].On();
-                    _cardsButtons[8].On();
-                    _cardsButtons[9].On();
-                    _cardsButtons[10].On();
-                    break;
-
-                case 11:
-                    _cardsButtons[0].On();
-                    _cardsButtons[1].On();
-                    _cardsButtons[2].On();
-                    _cardsButtons[3].On();
-                    _cardsButtons[4].On();
-                    _cardsButtons[5].On();
-                    _cardsButtons[6].On();
-                    _cardsButtons[7].On();
-                    _cardsButtons[8].On();
-                    _cardsButtons[9].On();
-                    _cardsButtons[10].On();
-                    _cardsButtons[11].On();
+                    _handVisual[0].Enable(_hand[0]);
+                    _handVisual[1].Enable(_hand[1]);
+                    _handVisual[2].Enable(_hand[2]);
+                    _handVisual[3].Enable(_hand[3]);
+                    _handVisual[4].Enable(_hand[4]);
+                    _handVisual[5].Enable(_hand[5]);
+                    _handVisual[6].Enable(_hand[6]);
+                    _handVisual[7].Enable(_hand[7]);
+                    _handVisual[8].Enable(_hand[8]);
                     break;
             }
+        }               
 
-            //Присвоение карт к кнопкам
-            InitCards();
-        }
-
-        /// <summary>
-        /// Присвоение карт
-        /// </summary>
-        void InitCards()
-        {
-            int i = 0;  //Счетчик очередности
-
-            foreach (CardsButton cb in _cardsButtons)
-            {
-                if (cb.Enabled)
-                {
-                    cb.GetComponent<Card>().Assignment(_hand[i]);
-
-                    i++;
-                }
-            }
-        }
+        #endregion ========== Methods ========
 
         #region Получение переменных
+
         /// <summary>
         /// Карты на руке игрока
         /// </summary>
@@ -181,6 +146,7 @@ namespace DeadLords
             get { return _hand; }
             set { _hand = value; }
         }
+
         #endregion
     }
 }

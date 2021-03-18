@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using DeadLords.Controllers;
 
 namespace DeadLords
 {
@@ -8,9 +9,9 @@ namespace DeadLords
         List<Card> cards = new List<Card>();
 
         /// <summary>
-        /// Добавление card в колоду
+        /// Добавление CardData в колоду
         /// </summary>
-        /// <param name="card">Добавляемая карта</param>
+        /// <param name="CardData">Добавляемая карта</param>
         public void AddCard(Card card)
         {
             cards.Add(card);
@@ -19,7 +20,7 @@ namespace DeadLords
         /// <summary>
         /// Удалить карту из колоды
         /// </summary>
-        /// <param name="card">Удаляемая карта</param>
+        /// <param name="CardData">Удаляемая карта</param>
         public void RemoveCard(Card card)
         {
             cards.Remove(card);

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using DeadLords.Controllers;
 
 namespace DeadLords.Helpers
 {
@@ -9,22 +9,16 @@ namespace DeadLords.Helpers
     /// </summary>
     public class ObjectManager : MonoBehaviour
     {
+        [SerializeField] [Tooltip("Карты на руках игрока")] List<Card> cardsVisual = new List<Card>();
+
+        [Space(10)]
         [SerializeField] [Tooltip("Точки появления созданий игрока")] private Transform playerSpawnPoints;
         [SerializeField] [Tooltip("Точки появления существ противника")] private Transform enemySpawnPoints;
 
-        [Space(10)]
         [Header("Игроки")]
         [SerializeField] GameObject player;
         [SerializeField] GameObject enemy;
-
-        [Space(10)]
-        [SerializeField] [Tooltip("Существа игрока")] private List<Creature> crPlayer = new List<Creature>();
-        [SerializeField] [Tooltip("Существа врага")] private List<Creature> crEnemy;
-
-        [Space(10)]
-        [Header("Карты")]
-        [SerializeField] [Tooltip("Точки расположения карт")] private List<CardsButton> cardsButtons;
-
+                
         [Space(5)]
         [SerializeField] [Tooltip("Картинки(спрайты) всех карт")] private List<Sprite> cardsSprites;
         [SerializeField] [Tooltip("Материалы всех карт")] private List<Material> cardsMaterials;
@@ -32,24 +26,24 @@ namespace DeadLords.Helpers
         [Space(10)]
         [SerializeField] [Tooltip("Полный список всех существ в игре")] private List<Creature> crList = new List<Creature>();
 
-        #region Доступ к переменным извне
+        public List<Creature> CrPlayer { get; set; }
+        public List<Creature> CrEnemy { get; set; }
+
+        #region ==== Publics ====
+
+        public List<Card> PlayersHand { get { return cardsVisual; } set { cardsVisual = value; } }
 
         public Transform PlayerSpawnPoints { get { return playerSpawnPoints; } }
         public Transform EnemySpawnPoints { get { return enemySpawnPoints; } }
-
-        public List<Creature> CrPlayer { get { return crPlayer; } }
-        public List<Creature> CrEnemy { get { return crEnemy; } }
-
+                
         public GameObject Player { get { return player; } }
         public GameObject Enemy { get { return enemy; } }
-
-        public List<CardsButton> GetCardsButtons { get { return cardsButtons; } }
 
         public List<Creature> GetCreatures { get { return crList; } }
 
         public List<Sprite> GetCardsSprites { get { return cardsSprites; } }
         public List<Material> GetCardsMaterials { get { return cardsMaterials; } }
 
-        #endregion Доступ к переменным извне
+        #endregion ==== Publics ====
     }
 }
