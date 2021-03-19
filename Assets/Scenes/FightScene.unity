@@ -516,16 +516,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardsVisual:
-  - {fileID: 0}
+  - {fileID: 1659582970}
+  - {fileID: 2078294408}
+  - {fileID: 360407207}
+  - {fileID: 1971061854}
+  - {fileID: 820046918}
   - {fileID: 2140323669}
   - {fileID: 1658006883}
   - {fileID: 720746843}
   - {fileID: 1707335425}
-  - {fileID: 820046918}
-  - {fileID: 1971061854}
-  - {fileID: 360407207}
-  - {fileID: 2078294408}
-  - {fileID: 1659582970}
   playerSpawnPoints: {fileID: 826395388}
   enemySpawnPoints: {fileID: 1259410949}
   player: {fileID: 1369544269}

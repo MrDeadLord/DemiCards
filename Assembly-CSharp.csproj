@@ -65,7 +65,6 @@
     <Compile Include="Assets\Scripts\Controllers\Selector.cs" />
     <Compile Include="Assets\Scripts\Main.cs" />
     <Compile Include="Assets\Scripts\Controllers\TargetSelector.cs" />
-    <Compile Include="Assets\Scripts\PlayersTurn.cs" />
     <Compile Include="Assets\Scripts\Creature.cs" />
     <Compile Include="Assets\Scripts\Card.cs" />
     <Compile Include="Assets\Scripts\Deck.cs" />

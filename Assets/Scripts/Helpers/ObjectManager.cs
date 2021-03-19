@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using DeadLords.Controllers;
 
 namespace DeadLords.Helpers
 {

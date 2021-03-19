@@ -9,6 +9,8 @@ namespace DeadLords
     {
         #region ========== Variables ========
 
+        [SerializeField] [Tooltip("Physical card's model")] Renderer cardsRenderer;
+
         CardData _cardData = new CardData();
 
         /// <summary>
@@ -23,6 +25,11 @@ namespace DeadLords
 
         #endregion ========== Variables ========
 
+        private void Start()
+        {
+            gameObject.SetActive(false);
+        }
+
         #region ========== Methods ========
 
         public void Enable(Card card)
@@ -36,7 +43,7 @@ namespace DeadLords
             {
                 if(_cardData.cardName == mat.name)
                 {
-                    GetComponent<Renderer>().material = mat;
+                    cardsRenderer.material = mat;
                     return;
                 }
             }                     

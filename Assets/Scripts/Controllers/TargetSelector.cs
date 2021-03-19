@@ -96,11 +96,17 @@ namespace DeadLords.Controllers
         /// </summary>
         public void Init()
         {
-            foreach (Creature cr in Main.Instance.GetObjectManager.CrPlayer)
-                _crPlayerSel.Add(cr.GetComponentInChildren<Selector>());
+            if (Main.Instance.GetObjectManager.CrPlayer != null)
+            {
+                foreach (Creature cr in Main.Instance.GetObjectManager.CrPlayer)
+                    _crPlayerSel.Add(cr.GetComponentInChildren<Selector>());
+            }
 
-            foreach (Creature cr in Main.Instance.GetObjectManager.CrEnemy)
-                _crEnemySel.Add(cr.GetComponentInChildren<Selector>());
+            if (Main.Instance.GetObjectManager.CrEnemy != null)
+            {
+                foreach (Creature cr in Main.Instance.GetObjectManager.CrEnemy)
+                    _crEnemySel.Add(cr.GetComponentInChildren<Selector>());
+            }
 
             foreach (Selector sel in Main.Instance.GetObjectManager.PlayerSpawnPoints.GetComponentsInChildren<Selector>())
                 _spawnPointsPlSels.Add(sel);

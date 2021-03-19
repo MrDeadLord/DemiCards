@@ -8,18 +8,26 @@ namespace DeadLords.Controllers
     /// </summary>
     public class SceneLiveController : BaseController
     {
-        #region Переменные
+        #region ========== Variables ========
 
         [SerializeField] int _totalTurns = 0;
 
         bool _isPlayersTurn;    //true если ходит игрок, иначе - противник
         bool _firstRound = true;   //Флаг первого раунда
-        #endregion Переменные
 
-        #region Unity-time
+        Hand _playersHand;
+        int _cardsTake;
+
+        #endregion ========== Variables ========
+
+        #region ========== Unity-time ==========
+
         private void Start()
         {
             On();
+
+            _playersHand = Main.Instance.GetObjectManager.Player.GetComponent<Hand>();
+            _cardsTake = Main.Instance.GetObjectManager.Player.GetComponent<BaseStats>().CardsTake;
         }
 
         private void Update()
@@ -31,10 +39,10 @@ namespace DeadLords.Controllers
                 Init();
             else if (!Main.Instance.deckLoadedPl && _firstRound)
                 return;
-            
+
             if (_isPlayersTurn && Main.Instance.deckLoadedPl)
             {
-                Main.Instance.GetPlayersTurn.On();
+                PlayersTurn();
                 base.Off();
             }
             else if (!_isPlayersTurn /*&& Main.Instance.deckLoadedEn*/)     //Убрал, пока не сделал деку и пр. врагу
@@ -43,7 +51,7 @@ namespace DeadLords.Controllers
                 EndOfTurn();
             }
         }
-        #endregion
+        #endregion  ========== Unity-time ==========
 
         /// <summary>
         /// Определение кто будет ходить(Сейчас, при загрузке уровня)
@@ -66,6 +74,17 @@ namespace DeadLords.Controllers
             _firstRound = false;
         }
 
+        #region ========== Methods ========
+
+        void PlayersTurn()
+        {
+            //Взятие карт в руку
+            _playersHand.TakingCards(_cardsTake);
+
+            //Влючение интерфейса выделения игрока
+            Main.Instance.GetObjectManager.Player.GetComponentInChildren<Selector>().On();
+        }
+
         /// <summary>
         /// Завершение хода. TotalTurns++
         /// </summary>
@@ -73,9 +92,11 @@ namespace DeadLords.Controllers
         {
             _totalTurns++;
             _isPlayersTurn = !_isPlayersTurn;
-            
+
             base.On();
         }
+
+        #endregion ========== Methods ========
 
         #region Получение перменных извне
         public bool IsPlayersTurn

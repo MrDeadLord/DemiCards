@@ -21,7 +21,6 @@ namespace DeadLords
         private ObjectManager _objectManager;
         private SpawnController _spawnController;
         private SceneLiveController _sceneLiveController;
-        private PlayersTurn _playersTurn;
         private TargetSelector _TargetSelector;
 
         private void Awake()
@@ -31,7 +30,6 @@ namespace DeadLords
             _controllers = new GameObject("Controllers");
             _spawnController = _controllers.AddComponent<SpawnController>();
             _sceneLiveController = _controllers.AddComponent<SceneLiveController>();
-            _playersTurn = _controllers.AddComponent<PlayersTurn>();
 
             _objectManager = GetComponent<ObjectManager>();
             _TargetSelector = GetComponent<TargetSelector>();
@@ -50,8 +48,6 @@ namespace DeadLords
         public SpawnController GetSpawnController { get { return _spawnController; } }
 
         public SceneLiveController GetSceneLiveController { get { return _sceneLiveController; } }
-
-        public PlayersTurn GetPlayersTurn { get { return _playersTurn; } }
 
         public TargetSelector GetTargetSelector { get { return _TargetSelector; } }
 
