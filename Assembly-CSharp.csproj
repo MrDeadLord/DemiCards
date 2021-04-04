@@ -82,6 +82,7 @@
     <Compile Include="Assets\Test.cs" />
     <Compile Include="Assets\Scripts\Controllers\InputController.cs" />
     <Compile Include="Assets\Scripts\BaseStats.cs" />
+    <Compile Include="Assets\Scripts\Controllers\InputControllerHand.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Bonuses.txt" />

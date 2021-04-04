@@ -5,9 +5,8 @@ namespace DeadLords.Controllers
 {
     public class TargetSelector : BaseController
     {
-        #region Переменные
-        public bool targetSet { get; set; }
-
+        #region ========== Variables ========
+        
         [SerializeField] [Tooltip("0-старт, 1-союзн., 2-враги, 3-все")] Transform[] _cameraPositions;
 
         Camera _camera;
@@ -19,9 +18,12 @@ namespace DeadLords.Controllers
 
         List<Vector3> _crPlayerExisting = new List<Vector3>();
 
-        #endregion
+        Card _actCard;
 
-        #region Unity-time
+        #endregion ========== Variables ========
+
+        #region ========== Unity-time ==========
+
         private void Start()
         {
             _camera = Camera.main;
@@ -30,8 +32,6 @@ namespace DeadLords.Controllers
             _enemySel = Main.Instance.GetObjectManager.Enemy.GetComponentInChildren<Selector>();
 
             _crPlayerExisting = Main.Instance.GetSpawnController.PlayersExCr;
-
-            Init();
         }
 
         private void Update()
@@ -39,121 +39,38 @@ namespace DeadLords.Controllers
             if (!Enabled)
                 return;
 
-            //Устранение вечной ошибки следующего if()
-            if (Input.touches.Length == 0)
-                return;
-
-            if (targetSet)
-            {
-                if (Input.touches[0].phase == TouchPhase.Ended)
-                    Cancel(true);
-            }
-            else
-            {
-                if (Input.touches[0].phase == TouchPhase.Ended)
-                    Cancel(false);
-            }
+            Init();
         }
-        #endregion
+
+        #endregion ========== Unity-time ==========
 
         public override void On()
         {
             base.On();
 
-            /*PlaceCam();
-            EnableSelection();*/
+            PlaceCam();
 
             //Запуск спецэффектов
         }
 
-        /// <summary>
-        /// Отмена действия карты. Возврат камеры на место. True - удаление карты с руки.
-        /// </summary>
-        public void Cancel(bool isDone)
+        public override void Off()
         {
-            //Размещение камеры на стартовой позиции
-            _camera.transform.position = _cameraPositions[0].position;
-            _camera.transform.rotation = _cameraPositions[0].rotation;
-
-            _playerSel.Animator.SetBool("Selected", false);
-
-            _enemySel.Off();
-
-            foreach (Selector sel in _spawnPointsPlSels)
-                sel.Off();
-
-            foreach (Selector sel in _crPlayerSel)
-                sel.Off();
-
-            foreach (Selector sel in _crEnemySel)
-                sel.Off();
-
             base.Off();
-        }
 
-        /// <summary>
-        /// Инициализация. Присвоение актуальных живых существ и активных точек спауна
-        /// </summary>
-        public void Init()
-        {
-            if (Main.Instance.GetObjectManager.CrPlayer != null)
-            {
-                foreach (Creature cr in Main.Instance.GetObjectManager.CrPlayer)
-                    _crPlayerSel.Add(cr.GetComponentInChildren<Selector>());
-            }
-
-            if (Main.Instance.GetObjectManager.CrEnemy != null)
-            {
-                foreach (Creature cr in Main.Instance.GetObjectManager.CrEnemy)
-                    _crEnemySel.Add(cr.GetComponentInChildren<Selector>());
-            }
-
-            foreach (Selector sel in Main.Instance.GetObjectManager.PlayerSpawnPoints.GetComponentsInChildren<Selector>())
-                _spawnPointsPlSels.Add(sel);
-        }
-
-        /*/// <summary>
-        /// Расположение камеры
-        /// </summary>
-        void PlaceCam()
-        {
-            //Расположение камеры
-            if (_actCard.Card.CardsCreature != null
-                || _actCard.Card.CardsBonus.target == TargetType.allSummonerCreatures
-                || _actCard.Card.CardsBonus.target == TargetType.summoner
-                || _actCard.Card.CardsBonus.target == TargetType.summonerCreature)
-            {
-                _camera.transform.position = _cameraPositions[1].position;
-                _camera.transform.rotation = _cameraPositions[1].rotation;
-            }
-            else if (_actCard.Card.CardsBonus.target == TargetType.opponent
-                || _actCard.Card.CardsBonus.target == TargetType.opponentCreature
-                || _actCard.Card.CardsBonus.target == TargetType.allOpponentCreatures)
-            {
-                _camera.transform.position = _cameraPositions[2].position;
-                _camera.transform.rotation = _cameraPositions[2].rotation;
-            }
-            else if (_actCard.Card.CardsBonus.target == TargetType.allCreatures
-                || _actCard.Card.CardsBonus.target == TargetType.allPlayers
-                || _actCard.Card.CardsBonus.target == TargetType.everyone)
-            {
-                _camera.transform.position = _cameraPositions[3].position;
-                _camera.transform.rotation = _cameraPositions[3].rotation;
-            }
-            else
-            {
-                _camera.transform.position = _cameraPositions[0].position;
-                _camera.transform.rotation = _cameraPositions[0].rotation;
-            }
+            Cancel();
         }
 
         /// <summary>
         /// Включение необходимых выделений
         /// </summary>
-        void EnableSelection()
+        public void EnableSelection(Card selectedCard)
         {
+            On();
+
+            _actCard = selectedCard;
+
             //Если вызов существа - подсвечиваем возможные точки спауна
-            if (_actCard.Card.CardsCreature != null)
+            if (selectedCard.CardsCreature != null)
             {
                 //Включение всех точей спауна
                 foreach (Selector sel in _spawnPointsPlSels)
@@ -177,7 +94,7 @@ namespace DeadLords.Controllers
             }
 
             //Если заклинание - подсвечиваем возможную цель. Если целей несколько, сразу же выбирает их
-            switch (_actCard.Card.CardsBonus.target)
+            switch (selectedCard.CardsBonus.target)
             {
                 case TargetType.everyone:
                     _enemySel.On();
@@ -255,6 +172,87 @@ namespace DeadLords.Controllers
                     _playerSel.Animator.SetBool("Selected", true);
                     break;
             }
-        }*/
+        }
+
+        /// <summary>
+        /// Сброс всех анимаций по выбору целей
+        /// </summary>
+        public void Cancel()
+        {
+            //Размещение камеры на стартовой позиции
+            _camera.transform.position = _cameraPositions[0].position;
+            _camera.transform.rotation = _cameraPositions[0].rotation;
+
+            _playerSel.Animator.SetBool("Selected", false);
+
+            _enemySel.Off();
+
+            foreach (Selector sel in _spawnPointsPlSels)
+                sel.Off();
+
+            foreach (Selector sel in _crPlayerSel)
+                sel.Off();
+
+            foreach (Selector sel in _crEnemySel)
+                sel.Off();
+        }
+
+        /// <summary>
+        /// Инициализация. Присвоение актуальных живых существ и активных точек спауна
+        /// </summary>
+        public void Init()
+        {
+            if (Main.Instance.GetObjectManager.CrPlayer != null)
+            {
+                foreach (Creature cr in Main.Instance.GetObjectManager.CrPlayer)
+                    _crPlayerSel.Add(cr.GetComponentInChildren<Selector>());
+            }
+
+            if (Main.Instance.GetObjectManager.CrEnemy != null)
+            {
+                foreach (Creature cr in Main.Instance.GetObjectManager.CrEnemy)
+                    _crEnemySel.Add(cr.GetComponentInChildren<Selector>());
+            }
+
+            foreach (Selector sel in Main.Instance.GetObjectManager.PlayerSpawnPoints.GetComponentsInChildren<Selector>())
+                _spawnPointsPlSels.Add(sel);
+        }
+
+        /// <summary>
+        /// Расположение камеры
+        /// </summary>
+        void PlaceCam()
+        {
+            //Расположение камеры
+            if (_actCard.CardsCreature != null
+                || _actCard.CardsBonus.target == TargetType.allSummonerCreatures
+                || _actCard.CardsBonus.target == TargetType.summoner
+                || _actCard.CardsBonus.target == TargetType.summonerCreature)
+            {
+                _camera.transform.position = _cameraPositions[1].position;
+                _camera.transform.rotation = _cameraPositions[1].rotation;
+            }
+            else if (_actCard.CardsBonus.target == TargetType.opponent
+                || _actCard.CardsBonus.target == TargetType.opponentCreature
+                || _actCard.CardsBonus.target == TargetType.allOpponentCreatures)
+            {
+                _camera.transform.position = _cameraPositions[2].position;
+                _camera.transform.rotation = _cameraPositions[2].rotation;
+            }
+            else if (_actCard.CardsBonus.target == TargetType.allCreatures
+                || _actCard.CardsBonus.target == TargetType.allPlayers
+                || _actCard.CardsBonus.target == TargetType.everyone)
+            {
+                _camera.transform.position = _cameraPositions[3].position;
+                _camera.transform.rotation = _cameraPositions[3].rotation;
+            }
+            else
+            {
+                _camera.transform.position = _cameraPositions[0].position;
+                _camera.transform.rotation = _cameraPositions[0].rotation;
+            }
+        }
+
+        
     }
 }

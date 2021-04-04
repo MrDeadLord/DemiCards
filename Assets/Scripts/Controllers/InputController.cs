@@ -8,20 +8,24 @@ namespace DeadLords.Controllers
     /// </summary>
     public class InputController : BaseController, IPointerEnterHandler, IPointerExitHandler
     {
-        TargetSelector _ts;
+        #region ========== Variables ========
 
-        Canvas _cardsCanv;
+        [SerializeField] InputControllerHand _inpHand;
+
+        RectTransform _cardsPanel;
 
         Vector3 _startScale, _downScale;
 
+        // Флаг для понимания был палец на панели или еще нет
         bool _active = false;
+
+        #endregion ========== Variables ========
 
         private void Start()
         {
-            _ts = Main.Instance.GetTargetSelector;
-            _cardsCanv = GetComponent<Canvas>();
-            _startScale = _cardsCanv.transform.localScale;
-            _downScale = _startScale / 2;
+            _cardsPanel = GetComponent<RectTransform>();
+            _startScale = _cardsPanel.transform.localScale;
+            _downScale.y = _startScale.y / 2;
         }
 
         private void Update()
@@ -29,29 +33,37 @@ namespace DeadLords.Controllers
             if (!Enabled)
                 return;
 
-            //Устранение вечной ошибки следующего if()
+            // Если экрана не касаются, то курсор сбрасывается на позицию по умолчанию НАВЕРНОЕ. Проверить!
             if (Input.touches.Length == 0)
-                return;
+                Cursor.lockState = CursorLockMode.Confined;
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
             if (_active)
             {
-                _cardsCanv.transform.localScale = _startScale;
-                _ts.Cancel(false);
+                _cardsPanel.transform.localScale = _startScale; // Восстановление норм размера
 
-                _active = false;
+                _active = false;    // Карта не выбрана
+                _inpHand.Off();     // Выбор карт отключаем
             }
-                
+            else
+            {
+                // Если карта еще не выбрана, то включаем выбор карт
+                _inpHand.On();
+            }
+
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            _ts.On();
-            
-            _active = true;
-            _cardsCanv.transform.localScale = _downScale;
+            if (_active)
+            {
+                _cardsPanel.transform.localScale = _downScale;
+                _inpHand.ActivationPhase();
+            }            
         }
+
+        public bool CardSelected { set { _active = value; } }
     }
 }

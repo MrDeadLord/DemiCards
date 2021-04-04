@@ -25,13 +25,14 @@ namespace DeadLords
 
         #endregion ========== Variables ========
 
-        private void Start()
-        {
-            gameObject.SetActive(false);
-        }
+        private void Start() { gameObject.SetActive(false); }
 
         #region ========== Methods ========
 
+        /// <summary>
+        /// Enabling visability & assign material
+        /// </summary>
+        /// <param name="card"></param>
         public void Enable(Card card)
         {
             gameObject.SetActive(true);
@@ -41,14 +42,25 @@ namespace DeadLords
             // Присвоение материала карте
             foreach (var mat in Main.Instance.GetObjectManager.GetCardsMaterials)
             {
-                if(_cardData.cardName == mat.name)
+                if (_cardData.cardName == mat.name)
                 {
                     cardsRenderer.material = mat;
                     return;
                 }
-            }                     
+            }
         }
 
+        /// <summary>
+        /// Enabling visability
+        /// </summary>
+        public void Enable()
+        {
+            gameObject.SetActive(true);
+        }
+
+        /// <summary>
+        /// Disabling visability
+        /// </summary>
         public void Disable()
         {
             gameObject.SetActive(false);

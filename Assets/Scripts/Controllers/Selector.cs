@@ -47,7 +47,7 @@ namespace DeadLords.Controllers
             }
             
             if (_anim.GetBool("Selected"))
-                Main.Instance.GetTargetSelector.targetSet = true;
+                Main.Instance.GetObjectManager.TargetSet = true;
         }
 
         public override void On()

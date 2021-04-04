@@ -544,6 +544,7 @@ GameObject:
   - component: {fileID: 8496195089071705596}
   - component: {fileID: 730031331213889026}
   - component: {fileID: 4487619772363019404}
+  - component: {fileID: 5742775743551035748}
   - component: {fileID: 5154733933350697275}
   m_Layer: 0
   m_Name: Card
@@ -600,6 +601,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardsRenderer: {fileID: 6687617853457414599}
+--- !u!114 &5742775743551035748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4320395127795071035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 686f4564e091ac841aafa33bb4f660ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!65 &5154733933350697275
 BoxCollider:
   m_ObjectHideFlags: 0
